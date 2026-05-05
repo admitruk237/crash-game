@@ -1,4 +1,4 @@
-import { BetStatus } from './common';
+import { type BetStatus } from './common';
 
 export interface Balance {
   balance: number;
