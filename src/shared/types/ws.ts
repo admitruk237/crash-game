@@ -1,9 +1,16 @@
-import type { BetStatus, Phase, RejectReason } from './common';
+import type { BetStatus, Phase, RejectReason, RoundTier } from './common';
 
 interface ActiveBet {
   amount: number;
   autoCashOutAt: number | null;
   status: BetStatus;
+}
+
+export interface PublicPlayer {
+  username: string;
+  amount: number;
+  status: BetStatus;
+  multiplier: number | null;
 }
 
 export interface RoundStateEvent {
@@ -14,19 +21,19 @@ export interface RoundStateEvent {
   currentMultiplier: number;
   crashPoint: number | null;
   yourBet: ActiveBet | null;
-  playerCount: number;
+  players: PublicPlayer[];
 }
 
 export interface RoundWaitingEvent {
   roundId: string;
   endsAt: string;
-  playerCount: number;
+  players: PublicPlayer[];
 }
 
 export interface RoundStartEvent {
   roundId: string;
   startedAt: string;
-  playerCount: number;
+  players: PublicPlayer[];
 }
 
 export interface RoundTickEvent {
@@ -38,8 +45,11 @@ export interface RoundTickEvent {
 export interface RoundCrashEvent {
   roundId: string;
   crashPoint: number;
-  playerCount: number;
+  tier: RoundTier;
+  players: PublicPlayer[];
 }
+
+// Server → Client (player-targeted)
 
 export interface BetPlacedEvent {
   betId: string;
@@ -67,6 +77,26 @@ export interface BetRejectedEvent {
   reason: RejectReason;
   message: string;
 }
+
+// Server → Client (broadcast)
+
+export interface PlayersBetEvent {
+  username: string;
+  amount: number;
+}
+
+export interface PlayersCashoutEvent {
+  username: string;
+  multiplier: number;
+  winAmount: number;
+}
+
+export interface PlayersLostEvent {
+  username: string;
+  amount: number;
+}
+
+// Client → Server
 
 export interface BetPlacePayload {
   amount: number;

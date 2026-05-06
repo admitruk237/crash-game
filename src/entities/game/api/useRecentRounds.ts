@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { queryKey } from '../model/queryKeys';
 import { apiClient } from '@/shared/lib/apiClient';
@@ -6,12 +7,20 @@ import { type RecentRound } from '@/shared/types/api';
 import { useRecentStore } from '../model/recentStore';
 
 export const useRecentRounds = (limit = 10) => {
-  return useQuery({
+  const setInitial = useRecentStore((s) => s.setInitial);
+  const query = useQuery({
     queryKey: [...queryKey.roundsRecent, limit],
     queryFn: async () => {
       const { rounds } = await apiClient<{ rounds: RecentRound[] }>(API_ROUTES.roundsRecent(limit));
-      useRecentStore.getState().setInitial(rounds);
       return rounds;
     },
   });
+
+  useEffect(() => {
+    if (query.data) {
+      setInitial(query.data);
+    }
+  }, [query.data, setInitial]);
+
+  return query;
 };

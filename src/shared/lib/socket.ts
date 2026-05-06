@@ -10,7 +10,10 @@ export const getSocket = (): Socket => {
   const apiKey = useSessionStore.getState().apiKey;
   if (!apiKey) throw new Error('Cannot connect WS without API Key');
 
-  socket = io(WS_URL, { auth: { apiKey } });
+  socket = io(WS_URL, {
+    auth: { apiKey },
+    transports: ['websocket'],
+  });
 
   return socket;
 };

@@ -1,4 +1,4 @@
-import { type BetStatus } from './common';
+import { type BetStatus, type RoundTier } from './common';
 
 export interface Balance {
   balance: number;
@@ -19,4 +19,5 @@ export interface RecentRound {
   roundId: string;
   crashPoint: number;
   crashedAt: string;
+  tier: RoundTier;
 }

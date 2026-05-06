@@ -1,6 +1,8 @@
 export type Phase = 'waiting' | 'running' | 'crashed';
 
-export type BetStatus = 'placed' | 'cashedOut' | 'lost';
+export type BetStatus = 'placed' | 'cashed_out' | 'lost';
+
+export type RoundTier = 'low' | 'mid' | 'high';
 
 export type RejectReason =
   | 'betting_closed'
@@ -10,3 +12,5 @@ export type RejectReason =
   | 'insufficient_balance'
   | 'invalid_auto_cashout'
   | 'invalid_payload';
+
+export type ConnectionStatus = 'connected' | 'connecting' | 'disconnected';

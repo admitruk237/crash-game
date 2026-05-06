@@ -70,8 +70,10 @@ onClick: () => void
 - Use Tailwind CSS ONLY
 - Do NOT use inline styles
 - Use clear and readable classnames
-- NEVER use hardcoded hex/rgb/hsl colors in components (e.g., text-[#EF4444])
-- ALWAYS use CSS variables or semantic Tailwind classes (e.g., text-text-loss)
+- NEVER use hardcoded hex/rgb/hsl colors in components (e.g., text-[#EF4444]) UNLESS manually added by the USER.
+- **Respect User Styling**: NEVER revert or overwrite manual UI/UX changes made by the USER (colors, spacing, typography, etc.). If the USER changes a color or a class after your initial implementation, that change is the new "ground truth".
+- ALWAYS prioritize the USER's recent manual tweaks over "clean" or "semantic" refactorings.
+- ALWAYS use CSS variables or semantic Tailwind classes when possible, but respect manual overrides.
 
 ---
 
@@ -119,6 +121,7 @@ When I send a commit:
 
 - If I ask for code → give code without explanation
 - If I ask for explanation → be concise
+- Якщо я щось питаю або стверджую — СПОЧАТКУ дай відповідь/підтвердження, а вже потім переходь до дій або коду.
 - If task is complex → ALWAYS start with a plan
 
 ---

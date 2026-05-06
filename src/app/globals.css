@@ -7,8 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-menlo: var(--font-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -39,6 +40,12 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-main: var(--text-main);
+  --color-accent: var(--clr-accent);
+  --color-description: var(--text-muted);
+  --color-btn-disabled: var(--clr-btn-disabled);
+  --color-accent-soft: var(--clr-accent-soft);
+  --color-accent-muted: var(--clr-accent-muted);
 
   /* Custom variables */
   --color-card-inner: var(--card-inner);
@@ -59,74 +66,76 @@
 }
 
 :root {
-  --background: #07080f;
-  --foreground: #7a8599;
-  --card: #0e1119;
-  --card-foreground: #7a8599;
-  --popover: #0e1119;
-  --popover-foreground: #7a8599;
-  --primary: #7a8599;
-  --primary-foreground: #07080f;
-  --secondary: #7a8599;
-  --secondary-foreground: #07080f;
-  --muted: #111620;
-  --muted-foreground: #4a5568;
-  --accent: #111620;
-  --accent-foreground: #7a8599;
-  --destructive: #ef4444;
+  /* --- Base Palette --- */
+  --bg-deep: #07080f;
+  --bg-card: #0e1119;
+  --bg-inner: #111620;
+  --text-main: #7a8599;
+  --text-muted: #4a5568;
+  --clr-border: #1a1f2e;
+  --clr-btn-disabled: #4a5568;
+  --clr-primary: #7a8599;
+  --clr-accent: #fbbf24;
+  --clr-accent-soft: #fbbf241a;
+  --clr-accent-muted: #fbbf244d;
+  --clr-success: #22c55e;
+  --clr-error: #ef4444;
+
+  /* --- Semantic Mapping --- */
+  --background: var(--bg-deep);
+  --foreground: var(--text-main);
+
+  --card: var(--bg-card);
+  --card-foreground: var(--text-main);
+  --card-inner: var(--bg-inner);
+
+  --popover: var(--bg-card);
+  --popover-foreground: var(--text-main);
+
+  --primary: var(--clr-primary);
+  --primary-foreground: var(--bg-deep);
+
+  --secondary: var(--clr-primary);
+  --secondary-foreground: var(--bg-deep);
+
+  --muted: var(--bg-inner);
+  --muted-foreground: var(--text-muted);
+
+  --accent: var(--bg-inner);
+  --accent-foreground: var(--text-main);
+
+  --destructive: var(--clr-error);
   --destructive-foreground: #ffffff;
-  --border: rgba(122, 133, 153, 0.2);
-  --input: rgba(122, 133, 153, 0.2);
-  --ring: #7a8599;
+
+  --border: var(--clr-border);
+  --input: var(--clr-border);
+  --ring: var(--clr-primary);
+
   --radius: 0.625rem;
 
-  /* Custom */
-  --card-inner: #111620;
-  --success: #22c55e;
+  --success: var(--clr-success);
+
+  /* Badges */
   --badge-crashed-bg: #46080966;
   --badge-crashed-border: #82181a;
   --badge-waiting-text: #ffb900;
   --badge-waiting-bg: #46190166;
   --badge-waiting-border: #7b3306;
 
-  --sidebar: #0e1119;
-  --sidebar-foreground: #7a8599;
-  --sidebar-primary: #7a8599;
-  --sidebar-primary-foreground: #07080f;
-  --sidebar-accent: #111620;
-  --sidebar-accent-foreground: #7a8599;
-  --sidebar-border: rgba(122, 133, 153, 0.1);
-  --sidebar-ring: #7a8599;
+  /* Sidebar */
+  --sidebar: var(--bg-card);
+  --sidebar-foreground: var(--text-main);
+  --sidebar-primary: var(--clr-primary);
+  --sidebar-primary-foreground: var(--bg-deep);
+  --sidebar-accent: var(--bg-inner);
+  --sidebar-accent-foreground: var(--text-main);
+  --sidebar-border: var(--clr-border);
+  --sidebar-ring: var(--clr-primary);
 }
 
+/* Прибираємо дублікати з .dark, оскільки колірна схема ідентична */
 .dark {
-  --background: #07080f;
-  --foreground: #7a8599;
-  --card: #0e1119;
-  --card-foreground: #7a8599;
-  --popover: #0e1119;
-  --popover-foreground: #7a8599;
-  --primary: #7a8599;
-  --primary-foreground: #07080f;
-  --secondary: #7a8599;
-  --secondary-foreground: #07080f;
-  --muted: #111620;
-  --muted-foreground: #4a5568;
-  --accent: #111620;
-  --accent-foreground: #7a8599;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: rgba(122, 133, 153, 0.1);
-  --input: rgba(122, 133, 153, 0.1);
-  --ring: #7a8599;
-
-  --card-inner: #111620;
-  --success: #22c55e;
-  --badge-crashed-bg: #46080966;
-  --badge-crashed-border: #82181a;
-  --badge-waiting-text: #ffb900;
-  --badge-waiting-bg: #46190166;
-  --badge-waiting-border: #7b3306;
+  color-scheme: dark;
 }
 
 @layer base {
