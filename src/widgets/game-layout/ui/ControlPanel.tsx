@@ -6,13 +6,17 @@ import { AutoCashOutControl } from '@/features/game-controls/ui/AutoCashOutContr
 import { MainGameButton } from '@/features/game-controls/ui/MainGameButton';
 import { useGameStore } from '@/entities/game/model/store';
 import CoinIcon from '@/shared/assets/icons/coin.svg';
+import { Card } from '@/shared/ui';
 
 export const ControlPanel = () => {
   const { balance } = useGameStore();
 
   return (
-    <aside className="w-[260px] min-h-[311px] bg-card rounded-[14px] border border-border/50 flex flex-col shrink-0 transition-all duration-300 ease-in-out">
-      <div className="p-[16px] flex flex-col gap-[16px]">
+    <Card
+      variant="game"
+      className="w-[260px] p-[16px] min-h-[311px] flex flex-col shrink-0 transition-all duration-300 ease-in-out"
+    >
+      <div className="flex flex-col gap-[16px]">
         <BetAmountControl />
         <AutoCashOutControl />
         <div className="pt-4 border-t border-border/50">
@@ -33,6 +37,6 @@ export const ControlPanel = () => {
           </span>
         </div>
       </div>
-    </aside>
+    </Card>
   );
 };

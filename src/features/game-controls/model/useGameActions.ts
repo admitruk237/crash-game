@@ -23,7 +23,7 @@ export const useGameActions = () => {
     if (actionInFlight || !myBet) return;
 
     setActionInFlight(true);
-    socket.emit('bet:cashOut');
+    socket.emit('bet:cashout', {});
   };
 
   return {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useGameStore } from '@/entities/game/model/store';
-import { Input, Label, Switch } from '@/shared/ui';
+import { Input, SectionTitle, Switch } from '@/shared/ui';
 import { useGameControlsStore } from '../model/store';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -19,9 +19,7 @@ export const AutoCashOutControl = () => {
   return (
     <div className="flex flex-col gap-0">
       <div className="flex items-center justify-between pb-4">
-        <Label className="text-main font-medium text-[12px] leading-[16px] tracking-[0.6px] uppercase">
-          Auto Cash Out
-        </Label>
+        <SectionTitle>Auto Cash Out</SectionTitle>
         <Switch
           checked={isAutoCashOutEnabled}
           onCheckedChange={setAutoCashOutEnabled}

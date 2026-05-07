@@ -56,6 +56,10 @@
   --color-badge-waiting-text: var(--badge-waiting-text);
   --color-badge-waiting-bg: var(--badge-waiting-bg);
   --color-badge-waiting-border: var(--badge-waiting-border);
+  --color-badge-win-bg: var(--badge-win-bg);
+  --color-badge-win-border: var(--badge-win-border);
+  --color-badge-win-text: var(--badge-win-text);
+  --color-badge-crashed-text: var(--badge-crashed-text);
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -120,9 +124,13 @@
   /* Badges */
   --badge-crashed-bg: #46080966;
   --badge-crashed-border: #82181a;
+  --badge-crashed-text: #ff6467;
   --badge-waiting-text: #ffb900;
   --badge-waiting-bg: #46190166;
   --badge-waiting-border: #7b3306;
+  --badge-win-bg: #032e1566;
+  --badge-win-border: #0d542b;
+  --badge-win-text: #05df72;
 
   /* Sidebar */
   --sidebar: var(--bg-card);

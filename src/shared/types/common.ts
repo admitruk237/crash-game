@@ -6,7 +6,13 @@ export const Phases = {
 
 export type Phase = (typeof Phases)[keyof typeof Phases];
 
-export type BetStatus = 'placed' | 'cashed_out' | 'lost';
+export const BetStatuses = {
+  PLACED: 'placed',
+  CASHED_OUT: 'cashed_out',
+  LOST: 'lost',
+} as const;
+
+export type BetStatus = (typeof BetStatuses)[keyof typeof BetStatuses];
 
 export type RoundTier = 'low' | 'mid' | 'high';
 

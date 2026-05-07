@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Card, CardContent } from '@/shared/ui/card';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
-import { Label } from '@/shared/ui/label';
+import { SectionTitle } from '@/shared/ui/section-title';
 import { cn } from '@/shared/lib/utils';
 import { useSessionStore } from '@/entities/session/model/store';
 import { disconnectSocket, getSocket } from '@/shared/lib/socket';
@@ -31,7 +31,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <Card className="bg-card p-[25px]">
+    <Card variant="game" className="p-[25px]">
       <CardContent className="p-0">
         <form
           onSubmit={(e) => {
@@ -41,9 +41,7 @@ export const LoginForm = () => {
           className="space-y-4"
         >
           <div className="space-y-2">
-            <Label className="font-sans font-medium text-[12px] leading-[16px] tracking-[0.6px] uppercase text-main">
-              Username
-            </Label>
+            <SectionTitle>Username</SectionTitle>
             <Input
               placeholder="Enter your username"
               value={username}

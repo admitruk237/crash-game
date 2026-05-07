@@ -1,7 +1,7 @@
 'use client';
 
 import { useGameStore } from '@/entities/game/model/store';
-import { Button, Input, Label } from '@/shared/ui';
+import { Button, Input, SectionTitle } from '@/shared/ui';
 import { useGameControlsStore } from '../model/store';
 
 export const BetAmountControl = () => {
@@ -18,9 +18,7 @@ export const BetAmountControl = () => {
 
   return (
     <div className="flex flex-col gap-2">
-      <Label className="text-main font-medium text-[12px] leading-[16px] tracking-[0.6px] uppercase">
-        Bet Amount
-      </Label>
+      <SectionTitle>Bet Amount</SectionTitle>
       <Input
         type="number"
         value={betAmount}
