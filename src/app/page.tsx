@@ -1,12 +1,10 @@
 import { AuthGuard } from '@/entities/session/ui/AuthGuard';
+import { GamePage } from '@/widgets/game-layout/ui/GamePage';
 
 export default function Home() {
   return (
     <AuthGuard>
-      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-black text-white">
-        <h1 className="text-4xl font-bold tracking-tight">Crash Game</h1>
-        <p className="mt-4 text-zinc-400">Ready for development.</p>
-      </main>
+      <GamePage />
     </AuthGuard>
   );
 }

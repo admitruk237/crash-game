@@ -46,6 +46,7 @@
   --color-btn-disabled: var(--clr-btn-disabled);
   --color-accent-soft: var(--clr-accent-soft);
   --color-accent-muted: var(--clr-accent-muted);
+  --color-text-bright: var(--text-bright);
 
   /* Custom variables */
   --color-card-inner: var(--card-inner);
@@ -71,6 +72,7 @@
   --bg-card: #0e1119;
   --bg-inner: #111620;
   --text-main: #7a8599;
+  --text-bright: #e8ecf2;
   --text-muted: #4a5568;
   --clr-border: #1a1f2e;
   --clr-btn-disabled: #4a5568;

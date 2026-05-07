@@ -1,4 +1,10 @@
-export type Phase = 'waiting' | 'running' | 'crashed';
+export const Phases = {
+  WAITING: 'waiting',
+  RUNNING: 'running',
+  CRASHED: 'crashed',
+} as const;
+
+export type Phase = (typeof Phases)[keyof typeof Phases];
 
 export type BetStatus = 'placed' | 'cashed_out' | 'lost';
 
