@@ -47,13 +47,31 @@ export const BetAmountControl = () => {
         )}
       </div>
       <div className="flex gap-2 justify-between mt-3">
-        <Button variant="betAction" size="none" onClick={halfBet} disabled={isLocked}>
+        <Button
+          variant="betAction"
+          size="none"
+          onClick={halfBet}
+          disabled={isLocked}
+          className="flex-1 h-[26px] rounded-[8px] border border-border/50 text-[12px] font-medium"
+        >
           ½
         </Button>
-        <Button variant="betAction" size="none" onClick={doubleBet} disabled={isLocked}>
+        <Button
+          variant="betAction"
+          size="none"
+          onClick={doubleBet}
+          disabled={isLocked}
+          className="flex-1 h-[26px] rounded-[8px] border border-border/50 text-[12px] font-medium"
+        >
           ×2
         </Button>
-        <Button variant="betAction" size="none" onClick={handleMax} disabled={isLocked}>
+        <Button
+          variant="betAction"
+          size="none"
+          onClick={handleMax}
+          disabled={isLocked}
+          className="flex-1 h-[26px] rounded-[8px] border border-border/50 text-[12px] font-medium"
+        >
           Max
         </Button>
       </div>

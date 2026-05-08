@@ -12,7 +12,7 @@ interface Props {
 
 export const Players = ({ players }: Props) => {
   return (
-    <Card variant="game" className="w-[240px] p-[16px]">
+    <Card variant="game" className="lg:w-[240px] w-full h-full p-[16px]">
       <SectionTitle icon={<Users className="w-4 h-4" />}>
         Live Players ({players.length})
       </SectionTitle>

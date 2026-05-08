@@ -15,7 +15,7 @@ export const ControlPanel = ({ balance }: Props) => {
   return (
     <Card
       variant="game"
-      className="w-[260px] p-[16px] min-h-[311px] flex flex-col shrink-0 transition-all duration-300 ease-in-out"
+      className="lg:w-[260px] w-full p-[16px] min-h-[311px] flex flex-col shrink-0 transition-all duration-300 ease-in-out"
     >
       <div className="flex flex-col gap-[16px]">
         <BetAmountControl />
