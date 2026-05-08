@@ -13,6 +13,10 @@ export const BetAmountControl = () => {
   const balance = balanceData?.balance ?? null;
   const isLocked = (phase === 'running' || phase === 'crashed') && Boolean(myBet);
 
+  const parsedAmount = parseFloat(betAmount);
+  const isTooHigh = balance !== null && parsedAmount > balance;
+  const isTooLow = betAmount !== '' && parsedAmount <= 0;
+
   const handleMax = () => {
     if (balance !== null) {
       maxBet(balance);
@@ -22,14 +26,27 @@ export const BetAmountControl = () => {
   return (
     <div className="flex flex-col gap-2">
       <SectionTitle>Bet Amount</SectionTitle>
-      <Input
-        type="number"
-        value={betAmount}
-        onChange={(e) => setBetAmount(e.target.value)}
-        suffix="USD"
-        disabled={isLocked}
-      />
-      <div className="flex gap-2 justify-between">
+      <div className="relative">
+        <Input
+          type="number"
+          value={betAmount}
+          onChange={(e) => setBetAmount(e.target.value)}
+          suffix="USD"
+          disabled={isLocked}
+          className={isTooHigh || isTooLow ? 'border-destructive' : ''}
+        />
+        {isTooLow && (
+          <span className="absolute -bottom-4 left-0 text-[10px] text-destructive">
+            Bet must be greater than 0
+          </span>
+        )}
+        {isTooHigh && (
+          <span className="absolute -bottom-4 left-0 text-[10px] text-destructive">
+            Insufficient balance
+          </span>
+        )}
+      </div>
+      <div className="flex gap-2 justify-between mt-3">
         <Button variant="betAction" size="none" onClick={halfBet} disabled={isLocked}>
           ½
         </Button>

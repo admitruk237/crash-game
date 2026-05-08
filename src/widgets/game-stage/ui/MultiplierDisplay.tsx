@@ -8,15 +8,10 @@ export const MultiplierDisplay = () => {
   if (phase === 'waiting') {
     return (
       <div className="flex flex-col items-center gap-1">
-        <span
-          className="text-[60px] font-normal leading-[60px] tracking-[-3px] text-[#FBBF24]"
-          style={{ fontFamily: 'Menlo, monospace' }}
-        >
+        <span className="text-6xl font-normal tracking-[-3px] text-accent font-menlo">
           {countdown}s
         </span>
-        <span className="text-[16px] font-normal leading-24px text-[#7A8599]">
-          Next round starting...
-        </span>
+        <span className="text-base font-normal text-zinc-400">Next round starting...</span>
       </div>
     );
   }
@@ -33,7 +28,7 @@ export const MultiplierDisplay = () => {
   }
 
   return (
-    <span className="text-[96px] font-normal leading-none text-success tabular-nums drop-shadow-[0_0_30px_rgba(34,197,94,0.4)]">
+    <span className="text-[96px] font-normal leading-none text-success tabular-nums multiplier-glow">
       {displayed.toFixed(2)}×
     </span>
   );
