@@ -1,26 +1,52 @@
 import { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { queryKey } from '../model/queryKeys';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient } from '@/shared/lib/apiClient';
 import { API_ROUTES } from '@/shared/config/apiRoutes';
-import { type RecentRound } from '@/shared/types/api';
-import { useRecentStore } from '../model/recentStore';
+import { queryKey } from '../model/queryKeys';
+import { getSocket } from '@/shared/lib/socket';
+import type { RecentRound } from '@/shared/types/api';
+import type { RoundCrashEvent } from '@/shared/types/ws';
 
-export const useRecentRounds = (limit = 10) => {
-  const setInitial = useRecentStore((s) => s.setInitial);
-  const query = useQuery({
-    queryKey: [...queryKey.roundsRecent, limit],
-    queryFn: async () => {
-      const { rounds } = await apiClient<{ rounds: RecentRound[] }>(API_ROUTES.roundsRecent(limit));
-      return rounds;
-    },
-  });
+interface RecentRoundsResponse {
+  rounds: RecentRound[];
+}
+
+export const useRecentRounds = (limit = 20) => {
+  const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (query.data) {
-      setInitial(query.data);
-    }
-  }, [query.data, setInitial]);
+    const s = getSocket();
 
-  return query;
+    const onCrash = (e: RoundCrashEvent) => {
+      queryClient.setQueryData<RecentRoundsResponse>([...queryKey.roundsRecent, limit], (old) => ({
+        rounds: [
+          {
+            roundId: e.roundId,
+            crashPoint: e.crashPoint,
+            crashedAt: new Date().toISOString(),
+            tier: e.tier,
+          },
+          ...(old?.rounds ?? []),
+        ].slice(0, limit),
+      }));
+    };
+
+    const onReconnect = () => {
+      queryClient.invalidateQueries({ queryKey: [...queryKey.roundsRecent, limit] });
+    };
+
+    s.on('round:crash', onCrash);
+    s.on('connect', onReconnect);
+
+    return () => {
+      s.off('round:crash', onCrash);
+      s.off('connect', onReconnect);
+    };
+  }, [queryClient, limit]);
+
+  return useQuery({
+    queryKey: [...queryKey.roundsRecent, limit],
+    queryFn: () => apiClient<RecentRoundsResponse>(API_ROUTES.roundsRecent(limit)),
+    staleTime: Infinity,
+  });
 };

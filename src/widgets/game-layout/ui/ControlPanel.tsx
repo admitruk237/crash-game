@@ -4,13 +4,14 @@ import Image from 'next/image';
 import { BetAmountControl } from '@/features/game-controls/ui/BetAmountControl';
 import { AutoCashOutControl } from '@/features/game-controls/ui/AutoCashOutControl';
 import { MainGameButton } from '@/features/game-controls/ui/MainGameButton';
-import { useGameStore } from '@/entities/game/model/store';
 import CoinIcon from '@/shared/assets/icons/coin.svg';
 import { Card } from '@/shared/ui';
 
-export const ControlPanel = () => {
-  const { balance } = useGameStore();
+interface Props {
+  balance: number | null;
+}
 
+export const ControlPanel = ({ balance }: Props) => {
   return (
     <Card
       variant="game"

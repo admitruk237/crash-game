@@ -1,18 +1,6 @@
-export const Phases = {
-  WAITING: 'waiting',
-  RUNNING: 'running',
-  CRASHED: 'crashed',
-} as const;
+export type Phase = 'waiting' | 'running' | 'crashed';
 
-export type Phase = (typeof Phases)[keyof typeof Phases];
-
-export const BetStatuses = {
-  PLACED: 'placed',
-  CASHED_OUT: 'cashed_out',
-  LOST: 'lost',
-} as const;
-
-export type BetStatus = (typeof BetStatuses)[keyof typeof BetStatuses];
+export type BetStatus = 'placed' | 'cashed_out' | 'lost';
 
 export type RoundTier = 'low' | 'mid' | 'high';
 

@@ -7,14 +7,14 @@ import { useGameControlsStore } from './store';
 export const useGameActions = () => {
   const { actionInFlight, setActionInFlight, myBet } = useGameStore();
   const { betAmount, isAutoCashOutEnabled, autoCashOutMultiplier } = useGameControlsStore();
-  const socket = getSocket();
 
   const placeBet = () => {
-    if (actionInFlight) return;
+    const amount = parseFloat(betAmount);
+    if (isNaN(amount) || amount <= 0 || actionInFlight) return;
 
     setActionInFlight(true);
-    socket.emit('bet:place', {
-      amount: parseFloat(betAmount),
+    getSocket().emit('bet:place', {
+      amount,
       autoCashOutAt: isAutoCashOutEnabled ? parseFloat(autoCashOutMultiplier) : null,
     });
   };
@@ -23,7 +23,7 @@ export const useGameActions = () => {
     if (actionInFlight || !myBet) return;
 
     setActionInFlight(true);
-    socket.emit('bet:cashout', {});
+    getSocket().emit('bet:cashout', {});
   };
 
   return {

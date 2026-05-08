@@ -19,6 +19,7 @@ export interface RoundStateEvent {
   startedAt: string | null;
   endsAt: string | null;
   currentMultiplier: number;
+  elapsedMs?: number;
   crashPoint: number | null;
   yourBet: ActiveBet | null;
   players: PublicPlayer[];
@@ -49,8 +50,6 @@ export interface RoundCrashEvent {
   players: PublicPlayer[];
 }
 
-// Server → Client (player-targeted)
-
 export interface BetPlacedEvent {
   betId: string;
   roundId: string;
@@ -78,8 +77,6 @@ export interface BetRejectedEvent {
   message: string;
 }
 
-// Server → Client (broadcast)
-
 export interface PlayersBetEvent {
   username: string;
   amount: number;
@@ -95,8 +92,6 @@ export interface PlayersLostEvent {
   username: string;
   amount: number;
 }
-
-// Client → Server
 
 export interface BetPlacePayload {
   amount: number;

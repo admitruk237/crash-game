@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 import { getSocket } from '@/shared/lib/socket';
 import { useGameStore } from './store';
-import { useRecentStore } from './recentStore';
 import type {
   BetCashedOutEvent,
   BetLostEvent,
@@ -63,12 +62,6 @@ export const useGameSocket = () => {
       game.setMultiplier(e.crashPoint);
       game.setCrashPoint(e.crashPoint);
       game.setPlayers(e.players);
-      useRecentStore.getState().prepend({
-        roundId: e.roundId,
-        crashPoint: e.crashPoint,
-        crashedAt: new Date().toISOString(),
-        tier: e.tier,
-      });
     };
 
     const onBetPlaced = (e: BetPlacedEvent) => {
@@ -79,20 +72,17 @@ export const useGameSocket = () => {
         autoCashOutAt: e.autoCashOutAt,
         status: 'placed',
       });
-      game.setBalance(e.balance);
       if (game.actionInFlight) game.setActionInFlight(false);
     };
 
-    const onCashedOut = (e: BetCashedOutEvent) => {
+    const onCashedOut = (_e: BetCashedOutEvent) => {
       const game = useGameStore.getState();
-      game.setBalance(e.balance);
       game.setMyBet(null);
       if (game.actionInFlight) game.setActionInFlight(false);
     };
 
-    const onLost = (e: BetLostEvent) => {
+    const onLost = (_e: BetLostEvent) => {
       const game = useGameStore.getState();
-      game.setBalance(e.balance);
       game.setMyBet(null);
       if (game.actionInFlight) game.setActionInFlight(false);
     };

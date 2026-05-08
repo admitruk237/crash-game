@@ -1,14 +1,17 @@
 'use client';
 
 import { useGameStore } from '@/entities/game/model/store';
+import { useBalance } from '@/entities/game/api/useBalance';
 import { Button, Input, SectionTitle } from '@/shared/ui';
 import { useGameControlsStore } from '../model/store';
 
 export const BetAmountControl = () => {
   const { betAmount, setBetAmount, halfBet, doubleBet, maxBet } = useGameControlsStore();
-  const { balance, phase, myBet } = useGameStore();
+  const { phase, myBet } = useGameStore();
+  const { data: balanceData } = useBalance();
 
-  const isLocked = phase === 'running' && Boolean(myBet);
+  const balance = balanceData?.balance ?? null;
+  const isLocked = (phase === 'running' || phase === 'crashed') && Boolean(myBet);
 
   const handleMax = () => {
     if (balance !== null) {

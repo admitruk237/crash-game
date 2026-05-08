@@ -18,7 +18,6 @@ interface GameState {
   crashPoint: number | null;
   players: PublicPlayer[];
   myBet: MyBet | null;
-  balance: number | null;
   actionInFlight: boolean;
   connectionStatus: ConnectionStatus;
   setPhase: (phase: Phase) => void;
@@ -29,7 +28,6 @@ interface GameState {
   setCrashPoint: (cp: number | null) => void;
   setPlayers: (players: PublicPlayer[]) => void;
   setMyBet: (bet: MyBet | null) => void;
-  setBalance: (b: number) => void;
   setActionInFlight: (v: boolean) => void;
   setConnectionStatus: (s: ConnectionStatus) => void;
 }
@@ -43,7 +41,6 @@ export const useGameStore = create<GameState>((set) => ({
   crashPoint: null,
   players: [],
   myBet: null,
-  balance: null,
   actionInFlight: false,
   connectionStatus: 'connecting',
   setPhase: (phase) => set({ phase }),
@@ -54,7 +51,6 @@ export const useGameStore = create<GameState>((set) => ({
   setCrashPoint: (crashPoint) => set({ crashPoint }),
   setPlayers: (players) => set({ players }),
   setMyBet: (myBet) => set({ myBet }),
-  setBalance: (balance) => set({ balance }),
   setActionInFlight: (actionInFlight) => set({ actionInFlight }),
   setConnectionStatus: (connectionStatus) => set({ connectionStatus }),
 }));

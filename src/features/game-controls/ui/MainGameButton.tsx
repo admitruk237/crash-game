@@ -4,25 +4,23 @@ import { useGameStore } from '@/entities/game/model/store';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/lib/utils';
 import { useGameActions } from '../model/useGameActions';
-import { Phases } from '@/shared/types/common';
-
 export const MainGameButton = () => {
   const { phase, multiplier, myBet, crashPoint } = useGameStore();
   const { placeBet, cashOut, isActionLoading } = useGameActions();
 
-  if (phase === Phases.CRASHED) {
+  if (phase === 'crashed') {
     return (
       <Button
         variant="action"
         disabled
-        className="bg-[#F04438] text-white! border-none opacity-100! cursor-not-allowed"
+        className="bg-destructive text-white border-none opacity-100 cursor-not-allowed"
       >
         Crashed @ {crashPoint?.toFixed(2)}x
       </Button>
     );
   }
 
-  if (phase === Phases.RUNNING) {
+  if (phase === 'running') {
     if (myBet) {
       const currentWin = (myBet.amount * multiplier).toFixed(2);
       return (
@@ -41,7 +39,7 @@ export const MainGameButton = () => {
       <Button
         variant="action"
         disabled
-        className="bg-[#1A1F2E] text-white! border-none opacity-100! cursor-not-allowed"
+        className="bg-border text-white border-none opacity-100 cursor-not-allowed"
       >
         Wait for next round
       </Button>
@@ -56,8 +54,8 @@ export const MainGameButton = () => {
       className={cn(
         'border-none transition-all',
         Boolean(myBet)
-          ? 'bg-[#1A1F2E] text-white! opacity-100! cursor-not-allowed'
-          : 'bg-[#FBBF24] text-black! hover:bg-[#FBBF24]/90 shadow-[0_0_20px_rgba(251,191,36,0.2)]'
+          ? 'bg-border text-white opacity-100 cursor-not-allowed'
+          : 'bg-accent text-black hover:bg-accent/90 shadow-[0_0_20px_rgba(251,191,36,0.2)]'
       )}
     >
       {Boolean(myBet) ? 'Bet placed' : 'Place bet'}

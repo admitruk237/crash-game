@@ -5,24 +5,30 @@ import { GameFooter } from './GameFooter';
 import { ControlPanel } from './ControlPanel';
 import { Players } from '@/entities/players/ui/Players';
 import { HistoryList } from '@/entities/history/ui/HistoryList';
+import { GameStage } from '@/widgets/game-stage/ui/GameStage';
+import { useBalance } from '@/entities/game/api/useBalance';
+import { useRecentRounds } from '@/entities/game/api/useRecentRounds';
+import { useGameStore } from '@/entities/game/model/store';
 
 export const GamePage = () => {
   useGameSocket();
 
+  const { data: balanceData } = useBalance();
+  const { data: recentData } = useRecentRounds(20);
+  const players = useGameStore((s) => s.players);
+  const rounds = recentData?.rounds ?? [];
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <main className="flex-1 flex items-start gap-4 p-4 overflow-hidden">
-        <ControlPanel />
+        <ControlPanel balance={balanceData?.balance ?? null} />
 
         <div className="flex-1 min-w-0 flex flex-col gap-4 self-stretch">
-          <HistoryList />
-          <div className="flex-1 min-h-[311px] bg-card rounded-[14px] border border-border/50 flex flex-col items-center justify-center relative overflow-hidden">
-            <h1 className="text-4xl font-bold tracking-tight text-white">Game Area</h1>
-            <p className="mt-4 text-zinc-400">Chart visualization goes here.</p>
-          </div>
+          <HistoryList rounds={rounds} />
+          <GameStage />
         </div>
 
-        <Players />
+        <Players players={players} />
       </main>
 
       <GameFooter />
