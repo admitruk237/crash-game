@@ -29,7 +29,7 @@ export const GamePage = () => {
           <div className="w-full md:flex-1 lg:w-[260px] lg:flex-none order-1">
             <ControlPanel balance={balanceData?.balance ?? null} />
           </div>
-          <div className="w-full md:flex-1 lg:w-[280px] lg:flex-none order-2 lg:order-3">
+          <div className="w-full md:flex-1 lg:w-[280px] lg:flex-none order-2 lg:order-3 hidden md:block">
             <Players players={players} />
           </div>
         </div>

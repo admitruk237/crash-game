@@ -3,26 +3,50 @@
 import { useEffect, useRef } from 'react';
 import { useCrashCurve } from '../model/useCrashCurve';
 import { drawCurve } from '../lib/drawCurve';
+import { TruckIcon, type TruckIconHandle } from './TruckIcon';
 
 export const CrashCurve = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const truckWrapRef = useRef<HTMLDivElement>(null);
+  const truckIconRef = useRef<TruckIconHandle>(null);
   const rafRef = useRef<number>(0);
   const { pointsRef, phaseRef } = useCrashCurve();
+
+  // запускаємо анімацію одразу і тримаємо постійно
+  useEffect(() => {
+    truckIconRef.current?.startAnimation();
+  }, []);
 
   useEffect(() => {
     const loop = () => {
       const canvas = canvasRef.current;
-      if (!canvas) return;
+      if (canvas) {
+        if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
+          canvas.width = canvas.clientWidth;
+          canvas.height = canvas.clientHeight;
+        }
 
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          const last = drawCurve(
+            ctx,
+            canvas.width,
+            canvas.height,
+            pointsRef.current,
+            phaseRef.current
+          );
+          const truck = truckWrapRef.current;
 
-      if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
-        canvas.width = canvas.clientWidth;
-        canvas.height = canvas.clientHeight;
+          if (truck) {
+            const isRunning = phaseRef.current === 'running';
+            truck.style.display = isRunning && last ? 'block' : 'none';
+            if (last) {
+              truck.style.left = `${last.x}px`;
+              truck.style.top = `${last.y}px`;
+            }
+          }
+        }
       }
-
-      drawCurve(ctx, canvas.width, canvas.height, pointsRef.current, phaseRef.current);
       rafRef.current = requestAnimationFrame(loop);
     };
 
@@ -30,5 +54,16 @@ export const CrashCurve = () => {
     return () => cancelAnimationFrame(rafRef.current);
   }, [pointsRef, phaseRef]);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />;
+  return (
+    <>
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+      <div
+        ref={truckWrapRef}
+        className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        style={{ display: 'none' }}
+      >
+        <TruckIcon ref={truckIconRef} size={24} className="text-success" />
+      </div>
+    </>
+  );
 };
