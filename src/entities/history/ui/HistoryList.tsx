@@ -23,7 +23,7 @@ export const HistoryList = ({ rounds }: Props) => {
         </li>
       ))}
       {rounds.length === 0 && (
-        <div className="text-main opacity-50 text-xs py-1">No rounds yet...</div>
+        <div className="text-main opacity-50 text-xs py-1">No players yet...</div>
       )}
     </ul>
   );
