@@ -14,6 +14,11 @@ interface GameControlsState {
   maxBet: (balance: number) => void;
 }
 
+type PersistedControls = Pick<
+  GameControlsState,
+  'betAmount' | 'autoCashOutMultiplier' | 'isAutoCashOutEnabled'
+>;
+
 export const useGameControlsStore = create<GameControlsState>()(
   persist(
     (set, get) => ({
@@ -37,6 +42,17 @@ export const useGameControlsStore = create<GameControlsState>()(
     }),
     {
       name: 'game-controls-storage',
+      merge: (persistedState, currentState) => {
+        const persisted = (persistedState ?? {}) as Partial<PersistedControls>;
+        const merged: GameControlsState = { ...currentState, ...persisted };
+
+        if (!merged.betAmount?.trim()) merged.betAmount = DEFAULT_BET_AMOUNT;
+        if (!merged.autoCashOutMultiplier?.trim()) {
+          merged.autoCashOutMultiplier = DEFAULT_AUTO_CASH_OUT;
+        }
+
+        return merged;
+      },
     }
   )
 );

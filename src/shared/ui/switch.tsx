@@ -4,7 +4,7 @@ import { Switch as SwitchPrimitive } from '@base-ui/react/switch';
 import { cn } from '@/shared/lib/utils';
 import { soundManager } from '@/shared/lib/sound';
 
-interface Props extends SwitchPrimitive.Root.Props {}
+type Props = SwitchPrimitive.Root.Props;
 
 const Switch = ({ className, onCheckedChange, disabled, ...props }: Props) => {
   const handleCheckedChange: NonNullable<SwitchPrimitive.Root.Props['onCheckedChange']> = (

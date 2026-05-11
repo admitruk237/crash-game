@@ -10,42 +10,50 @@ export interface LastPointCoords {
   y: number;
 }
 
-const COLORS: Record<Phase, string> = {
-  running: '#22c55e',
-  crashed: '#ef4444',
-  waiting: '#22c55e',
-};
+export interface DrawColors {
+  success: string;
+  error: string;
+}
+
+const CANVAS_PADDING = 40;
+const MIN_VIEW_X = 10000;
+const MIN_VIEW_Y = 2;
+const VIEW_MARGIN = 1.1;
 
 export const drawCurve = (
   ctx: CanvasRenderingContext2D,
   w: number,
   h: number,
   points: Point[],
-  phase: Phase
+  phase: Phase,
+  colors: DrawColors
 ): LastPointCoords | null => {
   ctx.clearRect(0, 0, w, h);
   if (points.length < 2) return null;
 
-  const pad = 40;
   const lastPoint = points[points.length - 1];
-  const maxX = Math.max(10000, lastPoint.x * 1.1);
-  const maxY = Math.max(2, lastPoint.y * 1.1);
+  const maxX = Math.max(MIN_VIEW_X, lastPoint.x * VIEW_MARGIN);
+  const maxY = Math.max(MIN_VIEW_Y, lastPoint.y * VIEW_MARGIN);
 
-  const toX = (x: number) => pad + (x / maxX) * (w - pad * 2);
-  const toY = (y: number) => h - pad - ((y - 1) / (maxY - 1)) * (h - pad * 2);
+  const toX = (x: number) => CANVAS_PADDING + (x / maxX) * (w - CANVAS_PADDING * 2);
+  const toY = (y: number) => h - CANVAS_PADDING - ((y - 1) / (maxY - 1)) * (h - CANVAS_PADDING * 2);
 
-  const color = COLORS[phase];
+  const color = phase === 'crashed' ? colors.error : colors.success;
   const grad = ctx.createLinearGradient(0, 0, 0, h);
-  grad.addColorStop(0, `${color}33`);
-  grad.addColorStop(1, `${color}00`);
+
+  const startColor = color.startsWith('#') ? `${color}33` : color;
+  const endColor = color.startsWith('#') ? `${color}00` : 'transparent';
+
+  grad.addColorStop(0, startColor);
+  grad.addColorStop(1, endColor);
 
   ctx.beginPath();
   ctx.moveTo(toX(points[0].x), toY(points[0].y));
   for (let i = 1; i < points.length; i++) {
     ctx.lineTo(toX(points[i].x), toY(points[i].y));
   }
-  ctx.lineTo(toX(lastPoint.x), h - pad);
-  ctx.lineTo(toX(points[0].x), h - pad);
+  ctx.lineTo(toX(lastPoint.x), h - CANVAS_PADDING);
+  ctx.lineTo(toX(points[0].x), h - CANVAS_PADDING);
   ctx.closePath();
   ctx.fillStyle = grad;
   ctx.fill();

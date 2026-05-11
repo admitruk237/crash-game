@@ -1,11 +1,16 @@
 'use client';
 
-import { useGameStore } from '@/entities/game/model/store';
 import { Input, SectionTitle, Switch } from '@/shared/ui';
 import { useGameControlsStore } from '../model/store';
+import { useGameValidation, type GameValidation } from '../model/useGameValidation';
 import { AnimatePresence, motion } from 'framer-motion';
+import { MIN_AUTO_CASH_OUT, MAX_AUTO_CASH_OUT, DEFAULT_AUTO_CASH_OUT } from '@/shared/config/game';
 
-export const AutoCashOutControl = () => {
+interface Props {
+  validation: GameValidation;
+}
+
+export const AutoCashOutControl = ({ validation }: Props) => {
   const {
     isAutoCashOutEnabled,
     setAutoCashOutEnabled,
@@ -13,11 +18,13 @@ export const AutoCashOutControl = () => {
     setAutoCashOutMultiplier,
   } = useGameControlsStore();
 
-  const { phase, myBet } = useGameStore();
-  const parsedMultiplier = parseFloat(autoCashOutMultiplier);
-  const isTooLowMult = autoCashOutMultiplier !== '' && parsedMultiplier < 1.1;
-  const isTooHighMult = parsedMultiplier > 10000;
-  const isLocked = phase === 'running' && Boolean(myBet);
+  const { autoCashOut, isLocked } = validation;
+
+  const handleBlur = () => {
+    if (autoCashOut.isEmpty) {
+      setAutoCashOutMultiplier(DEFAULT_AUTO_CASH_OUT);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-0">
@@ -45,18 +52,28 @@ export const AutoCashOutControl = () => {
                 step="0.1"
                 value={autoCashOutMultiplier}
                 onChange={(e) => setAutoCashOutMultiplier(e.target.value)}
+                onBlur={handleBlur}
                 suffix="x"
                 disabled={isLocked}
-                className={isTooLowMult || isTooHighMult ? 'border-destructive' : ''}
+                className={
+                  autoCashOut.tooLow || autoCashOut.tooHigh || autoCashOut.isEmpty
+                    ? 'border-destructive'
+                    : ''
+                }
               />
-              {isTooLowMult && (
+              {autoCashOut.isEmpty && (
                 <span className="absolute bottom-0.5 left-0 text-[10px] text-destructive">
-                  Min multiplier 1.10x
+                  Field cannot be empty
                 </span>
               )}
-              {isTooHighMult && (
+              {autoCashOut.tooLow && !autoCashOut.isEmpty && (
                 <span className="absolute bottom-0.5 left-0 text-[10px] text-destructive">
-                  Max multiplier 10000x
+                  Min multiplier {MIN_AUTO_CASH_OUT.toFixed(2)}x
+                </span>
+              )}
+              {autoCashOut.tooHigh && !autoCashOut.isEmpty && (
+                <span className="absolute bottom-0.5 left-0 text-[10px] text-destructive">
+                  Max multiplier {MAX_AUTO_CASH_OUT}x
                 </span>
               )}
             </div>

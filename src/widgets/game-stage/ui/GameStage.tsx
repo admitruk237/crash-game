@@ -5,8 +5,10 @@ import { CrashCurve } from './CrashCurve';
 import { MultiplierDisplay } from './MultiplierDisplay';
 import { Badge } from '@/shared/ui/badge';
 
+import { type Phase } from '@/shared/types/common';
+
 const PHASE_STYLES: Record<
-  string,
+  Phase,
   { badge: 'status-running' | 'status-crashed' | 'status-waiting'; text: string; bg: string }
 > = {
   running: { badge: 'status-running', text: 'Running', bg: 'bg-stage-running' },

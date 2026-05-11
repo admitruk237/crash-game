@@ -41,7 +41,6 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-main: var(--text-main);
-  --color-accent: var(--clr-accent);
   --color-description: var(--text-muted);
   --color-btn-disabled: var(--clr-btn-disabled);
   --color-accent-soft: var(--clr-accent-soft);
@@ -68,6 +67,9 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  --shadow-accent-glow: 0 0 20px var(--clr-accent-muted);
+  --shadow-success-glow: 0 0 20px color-mix(in srgb, var(--clr-success), transparent 60%);
 }
 
 :root {
@@ -107,8 +109,8 @@
   --muted: var(--bg-inner);
   --muted-foreground: var(--text-muted);
 
-  --accent: var(--bg-inner);
-  --accent-foreground: var(--text-main);
+  --accent: var(--clr-accent);
+  --accent-foreground: var(--bg-deep);
 
   --destructive: var(--clr-error);
   --destructive-foreground: #ffffff;
@@ -163,22 +165,22 @@
   .bg-stage-waiting {
     background: radial-gradient(
       141.42% 141.42% at 0% 100%,
-      rgba(239, 68, 68, 0.15) 0%,
-      rgba(0, 0, 0, 0) 60%
+      color-mix(in srgb, var(--clr-error), transparent 85%) 0%,
+      transparent 60%
     );
   }
   .bg-stage-running {
     background: radial-gradient(
       141.42% 141.42% at 0% 100%,
-      rgba(34, 197, 94, 0.15) 0%,
-      rgba(0, 0, 0, 0) 60%
+      color-mix(in srgb, var(--clr-success), transparent 85%) 0%,
+      transparent 60%
     );
   }
   .bg-stage-crashed {
     background: radial-gradient(
       141.42% 141.42% at 0% 100%,
-      rgba(239, 68, 68, 0.15) 0%,
-      rgba(0, 0, 0, 0) 60%
+      color-mix(in srgb, var(--clr-error), transparent 85%) 0%,
+      transparent 60%
     );
   }
 }
@@ -212,5 +214,5 @@
 }
 
 .multiplier-glow {
-  filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.4));
+  filter: drop-shadow(var(--shadow-success-glow));
 }

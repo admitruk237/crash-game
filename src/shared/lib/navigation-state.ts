@@ -1,11 +1,19 @@
-let _justLoggedIn = false;
+import { create } from 'zustand';
 
-export const markJustLoggedIn = () => {
-  _justLoggedIn = true;
-};
+interface NavigationState {
+  justLoggedIn: boolean;
+  markJustLoggedIn: () => void;
+  consumeJustLoggedIn: () => boolean;
+}
 
-export const consumeJustLoggedIn = () => {
-  const value = _justLoggedIn;
-  _justLoggedIn = false;
-  return value;
-};
+export const useNavigationStore = create<NavigationState>((set, get) => ({
+  justLoggedIn: false,
+  markJustLoggedIn: () => set({ justLoggedIn: true }),
+  consumeJustLoggedIn: () => {
+    const value = get().justLoggedIn;
+    if (value) {
+      set({ justLoggedIn: false });
+    }
+    return value;
+  },
+}));

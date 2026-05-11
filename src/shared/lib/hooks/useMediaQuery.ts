@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 
 export const useMediaQuery = () => {
   const [isMobile, setIsMobile] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true); // Default to desktop for SSR
   const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
     const checkMediaQuery = () => {
-      setIsMobile(window.innerWidth <= 768);
-      setIsDesktop(window.innerWidth > 1024);
-      setIsTablet(window.innerWidth > 768 && window.innerWidth <= 1024);
+      const width = window.innerWidth;
+      setIsMobile(width <= 768);
+      setIsDesktop(width > 1024);
+      setIsTablet(width > 768 && width <= 1024);
     };
 
     checkMediaQuery();

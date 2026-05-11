@@ -11,7 +11,7 @@ interface FooterActions {
 }
 
 export const useFooterActions = (): FooterActions => {
-  const { phase } = useGameStore();
+  const phase = useGameStore((s) => s.phase);
   const { clear } = useSessionStore();
   const [isMuted, setIsMuted] = useState(false);
 

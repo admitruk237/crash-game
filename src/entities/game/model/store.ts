@@ -30,6 +30,7 @@ interface GameState {
   setMyBet: (bet: MyBet | null) => void;
   setActionInFlight: (v: boolean) => void;
   setConnectionStatus: (s: ConnectionStatus) => void;
+  reset: () => void;
 }
 
 export const useGameStore = create<GameState>((set) => ({
@@ -53,4 +54,16 @@ export const useGameStore = create<GameState>((set) => ({
   setMyBet: (myBet) => set({ myBet }),
   setActionInFlight: (actionInFlight) => set({ actionInFlight }),
   setConnectionStatus: (connectionStatus) => set({ connectionStatus }),
+  reset: () =>
+    set({
+      phase: 'waiting',
+      roundId: null,
+      startedAt: null,
+      endsAt: null,
+      multiplier: 1,
+      crashPoint: null,
+      players: [],
+      myBet: null,
+      actionInFlight: false,
+    }),
 }));

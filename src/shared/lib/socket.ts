@@ -1,13 +1,17 @@
 import { io, type Socket } from 'socket.io-client';
 import { WS_URL } from '../config/env';
-import { useSessionStore } from '@/entities/session/model/store';
 
 let socket: Socket | null = null;
+let getToken: () => string | null = () => null;
+
+export const setSocketConfig = (tokenGetter: () => string | null) => {
+  getToken = tokenGetter;
+};
 
 export const getSocket = (): Socket => {
   if (socket) return socket;
 
-  const apiKey = useSessionStore.getState().apiKey;
+  const apiKey = getToken();
   if (!apiKey) throw new Error('Cannot connect WS without API Key');
 
   socket = io(WS_URL, {

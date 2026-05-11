@@ -11,7 +11,7 @@ export const MultiplierDisplay = () => {
         <span className="text-6xl font-normal tracking-[-3px] text-accent font-menlo">
           {countdown}s
         </span>
-        <span className="text-base font-normal text-zinc-400">Next round starting...</span>
+        <span className="text-base font-normal text-muted-foreground">Next round starting...</span>
       </div>
     );
   }

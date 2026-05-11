@@ -3,6 +3,10 @@ import { useGameStore } from '@/entities/game/model/store';
 import { useCountdown } from '@/shared/lib/hooks/useCountdown';
 import { soundManager } from '@/shared/lib/sound';
 
+const SMOOTHING_FACTOR = 0.3;
+const ANIMATION_THRESHOLD = 0.001;
+const MULTIPLIER_PRECISION = 100;
+
 export const useMultiplierAnimate = () => {
   const phase = useGameStore((s) => s.phase);
   const serverMultiplier = useGameStore((s) => s.multiplier);
@@ -13,23 +17,17 @@ export const useMultiplierAnimate = () => {
   const displayedRef = useRef(serverMultiplier);
   const [displayed, setDisplayed] = useState(serverMultiplier);
 
-  const [prevPhase, setPrevPhase] = useState(phase);
-  const [prevCountdown, setPrevCountdown] = useState(countdown);
-
   const lastSoundPhase = useRef<string | null>(null);
   const lastSoundCountdown = useRef(countdown);
 
   const rafRef = useRef<number>(0);
+  const prevPhaseRef = useRef(phase);
 
-  if (phase !== prevPhase) {
-    setPrevPhase(phase);
+  if (phase !== prevPhaseRef.current) {
+    prevPhaseRef.current = phase;
     if (phase !== 'running') {
       setDisplayed(serverMultiplier);
     }
-  }
-
-  if (countdown !== prevCountdown) {
-    setPrevCountdown(countdown);
   }
 
   useEffect(() => {
@@ -76,9 +74,10 @@ export const useMultiplierAnimate = () => {
 
     const animate = () => {
       const diff = serverMultiplier - displayedRef.current;
-      if (Math.abs(diff) > 0.001) {
-        displayedRef.current += diff * 0.3;
-        const floored = Math.floor(displayedRef.current * 100) / 100;
+      if (Math.abs(diff) > ANIMATION_THRESHOLD) {
+        displayedRef.current += diff * SMOOTHING_FACTOR;
+        const floored =
+          Math.floor(displayedRef.current * MULTIPLIER_PRECISION) / MULTIPLIER_PRECISION;
         setDisplayed(floored);
       }
       rafRef.current = requestAnimationFrame(animate);

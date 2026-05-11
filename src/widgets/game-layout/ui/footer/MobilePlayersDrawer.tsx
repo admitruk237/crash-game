@@ -2,13 +2,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Players } from '@/entities/players/ui/Players';
 import { type PublicPlayer } from '@/shared/types/ws';
 
-interface MobilePlayersDrawerProps {
+interface Props {
   isOpen: boolean;
   players: PublicPlayer[];
   onClose: () => void;
 }
 
-export const MobilePlayersDrawer = ({ isOpen, players, onClose }: MobilePlayersDrawerProps) => (
+export const MobilePlayersDrawer = ({ isOpen, players, onClose }: Props) => (
   <AnimatePresence>
     {isOpen && (
       <>

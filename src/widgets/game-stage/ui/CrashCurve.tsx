@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useCrashCurve } from '../model/useCrashCurve';
-import { drawCurve } from '../lib/drawCurve';
+import { drawCurve, type DrawColors } from '../lib/drawCurve';
 import { TruckIcon, type TruckIconHandle } from './TruckIcon';
 
 export const CrashCurve = () => {
@@ -12,7 +12,20 @@ export const CrashCurve = () => {
   const rafRef = useRef<number>(0);
   const { pointsRef, phaseRef } = useCrashCurve();
 
-  // запускаємо анімацію одразу і тримаємо постійно
+  const colorsRef = useRef<DrawColors>({
+    success: '#22c55e',
+    error: '#ef4444',
+  });
+
+  useEffect(() => {
+    const rootStyle = getComputedStyle(document.documentElement);
+    const success = rootStyle.getPropertyValue('--clr-success').trim();
+    const error = rootStyle.getPropertyValue('--clr-error').trim();
+
+    if (success) colorsRef.current.success = success;
+    if (error) colorsRef.current.error = error;
+  }, []);
+
   useEffect(() => {
     truckIconRef.current?.startAnimation();
   }, []);
@@ -33,7 +46,8 @@ export const CrashCurve = () => {
             canvas.width,
             canvas.height,
             pointsRef.current,
-            phaseRef.current
+            phaseRef.current,
+            colorsRef.current
           );
           const truck = truckWrapRef.current;
 

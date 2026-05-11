@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useGameStore } from '@/entities/game/model/store';
+import { useFooterView } from '@/entities/game/model/selectors';
 import { useSessionStore } from '@/entities/session/model/store';
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery';
 import { useFooterActions } from '../model/useFooterActions';
@@ -11,7 +11,7 @@ import { UserActions } from './footer/UserActions';
 import { MobilePlayersDrawer } from './footer/MobilePlayersDrawer';
 
 export const GameFooter = () => {
-  const { connectionStatus, roundId, players } = useGameStore();
+  const { connectionStatus, roundId, players } = useFooterView();
   const { apiKey } = useSessionStore();
   const { isMobile } = useMediaQuery();
   const [isPlayersOpen, setIsPlayersOpen] = useState(false);

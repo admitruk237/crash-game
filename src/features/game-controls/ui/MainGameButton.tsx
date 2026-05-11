@@ -1,14 +1,21 @@
 'use client';
 
-import { useGameStore } from '@/entities/game/model/store';
+import { useMainButtonView } from '@/entities/game/model/selectors';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/lib/utils';
 import { soundManager } from '@/shared/lib/sound';
 import { useGameActions } from '../model/useGameActions';
+import { type GameValidation } from '../model/useGameValidation';
 
-export const MainGameButton = () => {
-  const { phase, multiplier, myBet, crashPoint } = useGameStore();
+interface Props {
+  validation: GameValidation;
+}
+
+export const MainGameButton = ({ validation }: Props) => {
+  const { phase, multiplier, myBet, crashPoint } = useMainButtonView();
   const { placeBet, cashOut, isActionLoading } = useGameActions();
+
+  const isButtonDisabled = isActionLoading || Boolean(myBet) || !validation.canPlaceBet;
 
   const handlePlaceBet = () => {
     soundManager.play('bet');
@@ -61,12 +68,12 @@ export const MainGameButton = () => {
     <Button
       variant="action"
       onClick={handlePlaceBet}
-      disabled={isActionLoading || Boolean(myBet)}
+      disabled={isButtonDisabled}
       className={cn(
         'border-none transition-all',
-        Boolean(myBet)
+        isButtonDisabled
           ? 'bg-border text-white opacity-100 cursor-not-allowed'
-          : 'bg-accent text-black hover:bg-accent/90 shadow-[0_0_20px_rgba(251,191,36,0.2)]'
+          : 'bg-accent text-black hover:bg-accent/90 shadow-accent-glow'
       )}
     >
       {Boolean(myBet) ? 'Bet placed' : 'Place bet'}

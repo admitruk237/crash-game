@@ -48,7 +48,7 @@ const buttonVariants = cva(
   }
 );
 
-interface Props extends ButtonPrimitive.Props, VariantProps<typeof buttonVariants> {}
+type Props = ButtonPrimitive.Props & VariantProps<typeof buttonVariants>;
 
 const Button = ({
   className,

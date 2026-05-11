@@ -2,10 +2,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Volume2 } from 'lucide-react';
-import { consumeJustLoggedIn } from '@/shared/lib/navigation-state';
+import { useNavigationStore } from '@/shared/lib/navigation-state';
 
 export const SoundModal = () => {
   const [visible, setVisible] = useState(false);
+  const consumeJustLoggedIn = useNavigationStore((s) => s.consumeJustLoggedIn);
 
   const consumed = useRef(false);
 
@@ -16,7 +17,7 @@ export const SoundModal = () => {
     if (consumeJustLoggedIn()) return;
 
     setVisible(true);
-  }, []);
+  }, [consumeJustLoggedIn]);
 
   const handleDismiss = () => setVisible(false);
 

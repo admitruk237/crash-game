@@ -1,12 +1,12 @@
 import { cn } from '@/shared/lib/utils';
 
-interface StatusInfoProps {
+interface Props {
   isConnected: boolean;
   roundId: string | null;
   isMobile: boolean;
 }
 
-export const StatusInfo = ({ isConnected, roundId, isMobile }: StatusInfoProps) => (
+export const StatusInfo = ({ isConnected, roundId, isMobile }: Props) => (
   <div className="flex items-center">
     <div className="flex items-center">
       <span

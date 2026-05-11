@@ -7,7 +7,7 @@ import { Players } from '@/entities/players/ui/Players';
 import { HistoryList } from '@/entities/history/ui/HistoryList';
 import { GameStage } from '@/widgets/game-stage/ui/GameStage';
 import { useBalance } from '@/entities/game/api/useBalance';
-import { useRecentRounds } from '@/entities/game/api/useRecentRounds';
+import { useRecentRounds } from '@/entities/history/api/useRecentRounds';
 import { useGameStore } from '@/entities/game/model/store';
 import { SoundModal } from '@/shared/ui/sound-modal';
 

@@ -1,14 +1,14 @@
 import { LogOut, User, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '@/shared/ui/button';
 
-interface UserActionsProps {
+interface Props {
   apiKey: string | null;
   isMuted: boolean;
   onLogout: () => void;
   onToggleMute: () => void;
 }
 
-export const UserActions = ({ apiKey, isMuted, onLogout, onToggleMute }: UserActionsProps) => (
+export const UserActions = ({ apiKey, isMuted, onLogout, onToggleMute }: Props) => (
   <div className="flex items-center md:gap-4 gap-1">
     <Button
       variant="secondaryGame"

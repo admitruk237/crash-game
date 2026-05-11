@@ -3,7 +3,7 @@
 import { Button, Card, SectionTitle } from '@/shared/ui';
 import { Users, X } from 'lucide-react';
 import { PlayerItem } from './PlayerItem';
-import { type PlayerStatus, PlayerStatuses } from '../model/types';
+import { mapBetStatusToPlayerStatus } from '../model/mapper';
 import { type PublicPlayer } from '@/shared/types/ws';
 
 import { cn } from '@/shared/lib/utils';
@@ -41,10 +41,7 @@ export const Players = ({ players, onClose, isDrawer }: Props) => {
 
       <div className="flex flex-col gap-2 mt-4">
         {players.map((player) => {
-          let uiStatus: PlayerStatus = PlayerStatuses.WAITING;
-          if (player.status === 'placed') uiStatus = PlayerStatuses.BET;
-          else if (player.status === 'cashed_out') uiStatus = PlayerStatuses.WON;
-          else if (player.status === 'lost') uiStatus = PlayerStatuses.LOST;
+          const uiStatus = mapBetStatusToPlayerStatus(player.status);
 
           return (
             <PlayerItem

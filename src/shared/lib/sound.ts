@@ -1,15 +1,6 @@
 import { Howl } from 'howler';
 
-const SOUNDS = {
-  beep: '/sounds/beep.mp3',
-  siren: '/sounds/siren.mp3',
-  diesel: '/sounds/diesel.mp3',
-  crash: '/sounds/crash.mp3',
-  click: '/sounds/click.mp3',
-  bet: '/sounds/bet.mp3',
-  cashout: '/sounds/cashout.mp3',
-  switch: '/sounds/switch.mp3',
-};
+import { SOUNDS, type SoundName } from '../config/sounds';
 
 class SoundManager {
   private sounds: Map<string, Howl> = new Map();
@@ -20,7 +11,7 @@ class SoundManager {
       this.sounds.set(
         key,
         new Howl({
-          src: [src],
+          src: [src as string],
           volume: 0.5,
           loop: key === 'diesel',
           onloaderror: (_id, error) =>
@@ -32,7 +23,7 @@ class SoundManager {
     });
   }
 
-  play(name: keyof typeof SOUNDS) {
+  play(name: SoundName) {
     if (!this.enabled) return;
     const sound = this.sounds.get(name);
     if (sound) {
@@ -40,7 +31,7 @@ class SoundManager {
     }
   }
 
-  stop(name: keyof typeof SOUNDS) {
+  stop(name: SoundName) {
     const sound = this.sounds.get(name);
     if (sound) {
       sound.stop();

@@ -7,22 +7,26 @@ import { MainGameButton } from '@/features/game-controls/ui/MainGameButton';
 import CoinIcon from '@/shared/assets/icons/coin.svg';
 import { Card } from '@/shared/ui';
 
+import { useGameValidation } from '@/features/game-controls/model/useGameValidation';
+
 interface Props {
   balance: number | null;
   isLoading?: boolean;
 }
 
 export const ControlPanel = ({ balance, isLoading }: Props) => {
+  const validation = useGameValidation();
+
   return (
     <Card
       variant="game"
       className="lg:w-[260px] w-full p-[16px] min-h-[311px] flex flex-col shrink-0 transition-all duration-300 ease-in-out"
     >
       <div className="flex flex-col gap-[16px]">
-        <BetAmountControl />
-        <AutoCashOutControl />
+        <BetAmountControl validation={validation} />
+        <AutoCashOutControl validation={validation} />
         <div className="pt-4 border-t border-border/50">
-          <MainGameButton />
+          <MainGameButton validation={validation} />
         </div>
       </div>
       <div className="flex-1" />

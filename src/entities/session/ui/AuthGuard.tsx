@@ -1,7 +1,6 @@
 'use client';
 
 import { type ReactNode, useEffect } from 'react';
-
 import { useRouter } from 'next/navigation';
 import { useSessionStore } from '../model/store';
 
@@ -15,9 +14,9 @@ export const AuthGuard = ({ children }: Props) => {
 
   useEffect(() => {
     if (_hasHydrated && !apiKey) {
-      router.push('/login');
+      router.replace('/login');
     }
-  }, [apiKey, _hasHydrated, router]);
+  }, [_hasHydrated, apiKey, router]);
 
   if (!_hasHydrated || !apiKey) {
     return null;

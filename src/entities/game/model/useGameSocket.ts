@@ -5,8 +5,6 @@ import { getSocket } from '@/shared/lib/socket';
 import { useGameStore } from './store';
 import { soundManager } from '@/shared/lib/sound';
 import type {
-  BetCashedOutEvent,
-  BetLostEvent,
   BetPlacedEvent,
   BetRejectedEvent,
   RoundCrashEvent,
@@ -76,18 +74,18 @@ export const useGameSocket = () => {
       if (game.actionInFlight) game.setActionInFlight(false);
     };
 
-    const onCashedOut = (_e: BetCashedOutEvent) => {
-      soundManager.play('cashout');
+    const clearBetState = () => {
       const game = useGameStore.getState();
       game.setMyBet(null);
       if (game.actionInFlight) game.setActionInFlight(false);
     };
 
-    const onLost = (_e: BetLostEvent) => {
-      const game = useGameStore.getState();
-      game.setMyBet(null);
-      if (game.actionInFlight) game.setActionInFlight(false);
+    const onCashedOut = () => {
+      soundManager.play('cashout');
+      clearBetState();
     };
+
+    const onLost = clearBetState;
 
     const onRejected = (e: BetRejectedEvent) => {
       console.error('bet:rejected', e.message);

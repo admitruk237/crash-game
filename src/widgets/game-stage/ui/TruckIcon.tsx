@@ -52,9 +52,9 @@ const SPEED_LINE_VARIANTS: Variants = {
 };
 
 const SPEED_LINES = [
-  { y: 8, width: 5, x: 0 },
-  { y: 11, width: 7, x: -1 },
-  { y: 14, width: 4, x: 0 },
+  { id: 'l1', y: 8, width: 5, x: 0 },
+  { id: 'l2', y: 11, width: 7, x: -1 },
+  { id: 'l3', y: 14, width: 4, x: 0 },
 ];
 
 export const TruckIcon = forwardRef<TruckIconHandle, Props>(
@@ -101,7 +101,7 @@ export const TruckIcon = forwardRef<TruckIconHandle, Props>(
               animate={controls}
               custom={i}
               initial="normal"
-              key={`speed-${i}`}
+              key={line.id}
               strokeLinecap="round"
               strokeWidth="2"
               variants={SPEED_LINE_VARIANTS}
