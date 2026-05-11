@@ -41,11 +41,8 @@ export const drawCurve = (
   const color = phase === 'crashed' ? colors.error : colors.success;
   const grad = ctx.createLinearGradient(0, 0, 0, h);
 
-  const startColor = color.startsWith('#') ? `${color}33` : color;
-  const endColor = color.startsWith('#') ? `${color}00` : 'transparent';
-
-  grad.addColorStop(0, startColor);
-  grad.addColorStop(1, endColor);
+  grad.addColorStop(0, `color-mix(in srgb, ${color} 20%, transparent)`);
+  grad.addColorStop(1, `color-mix(in srgb, ${color} 0%, transparent)`);
 
   ctx.beginPath();
   ctx.moveTo(toX(points[0].x), toY(points[0].y));
