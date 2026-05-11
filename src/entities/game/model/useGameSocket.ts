@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { getSocket } from '@/shared/lib/socket';
 import { useGameStore } from './store';
+import { soundManager } from '@/shared/lib/sound';
 import type {
   BetCashedOutEvent,
   BetLostEvent,
@@ -76,6 +77,7 @@ export const useGameSocket = () => {
     };
 
     const onCashedOut = (_e: BetCashedOutEvent) => {
+      soundManager.play('cashout');
       const game = useGameStore.getState();
       game.setMyBet(null);
       if (game.actionInFlight) game.setActionInFlight(false);

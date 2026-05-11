@@ -9,6 +9,7 @@ import { GameStage } from '@/widgets/game-stage/ui/GameStage';
 import { useBalance } from '@/entities/game/api/useBalance';
 import { useRecentRounds } from '@/entities/game/api/useRecentRounds';
 import { useGameStore } from '@/entities/game/model/store';
+import { SoundModal } from '@/shared/ui/sound-modal';
 
 export const GamePage = () => {
   useGameSocket();
@@ -20,6 +21,7 @@ export const GamePage = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background overflow-x-hidden">
+      <SoundModal />
       <main className="flex-1 flex flex-col lg:flex-row items-start gap-4 p-4">
         <div className="w-full lg:flex-1 min-w-0 flex flex-col gap-4 self-stretch order-1 lg:order-2">
           <HistoryList rounds={rounds} />

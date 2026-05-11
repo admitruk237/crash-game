@@ -3,10 +3,21 @@
 import { useGameStore } from '@/entities/game/model/store';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/lib/utils';
+import { soundManager } from '@/shared/lib/sound';
 import { useGameActions } from '../model/useGameActions';
+
 export const MainGameButton = () => {
   const { phase, multiplier, myBet, crashPoint } = useGameStore();
   const { placeBet, cashOut, isActionLoading } = useGameActions();
+
+  const handlePlaceBet = () => {
+    soundManager.play('bet');
+    placeBet();
+  };
+
+  const handleCashOut = () => {
+    cashOut();
+  };
 
   if (phase === 'crashed') {
     return (
@@ -26,7 +37,7 @@ export const MainGameButton = () => {
       return (
         <Button
           variant="action"
-          onClick={cashOut}
+          onClick={handleCashOut}
           disabled={isActionLoading}
           className="bg-success text-black border-none hover:bg-success/90"
         >
@@ -49,7 +60,7 @@ export const MainGameButton = () => {
   return (
     <Button
       variant="action"
-      onClick={placeBet}
+      onClick={handlePlaceBet}
       disabled={isActionLoading || Boolean(myBet)}
       className={cn(
         'border-none transition-all',

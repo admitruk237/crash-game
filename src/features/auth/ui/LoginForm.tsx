@@ -1,34 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Card, CardContent } from '@/shared/ui/card';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
 import { SectionTitle } from '@/shared/ui/section-title';
 import { cn } from '@/shared/lib/utils';
-import { useSessionStore } from '@/entities/session/model/store';
-import { disconnectSocket, getSocket } from '@/shared/lib/socket';
+import { useAuthForm } from '../model/useAuthForm';
 
 export const LoginForm = () => {
-  const [username, setUsername] = useState('');
-  const isReady = username.length >= 3;
-  const router = useRouter();
-  const { setKey, apiKey } = useSessionStore();
-
-  useEffect(() => {
-    if (apiKey) {
-      router.replace('/');
-    }
-  }, [apiKey, router]);
-
-  const handleEnter = () => {
-    if (!isReady) return;
-    disconnectSocket();
-    setKey(username.trim(), true);
-    getSocket();
-    router.push('/');
-  };
+  const { username, isReady, setUsername, handleEnter } = useAuthForm();
 
   return (
     <Card variant="game" className="p-[25px]">

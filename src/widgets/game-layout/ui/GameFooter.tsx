@@ -3,9 +3,8 @@
 import { useState } from 'react';
 import { useGameStore } from '@/entities/game/model/store';
 import { useSessionStore } from '@/entities/session/model/store';
-import { disconnectSocket } from '@/shared/lib/socket';
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery';
-
+import { useFooterActions } from '../model/useFooterActions';
 import { StatusInfo } from './footer/StatusInfo';
 import { PlayersInfo } from './footer/PlayersInfo';
 import { UserActions } from './footer/UserActions';
@@ -13,15 +12,10 @@ import { MobilePlayersDrawer } from './footer/MobilePlayersDrawer';
 
 export const GameFooter = () => {
   const { connectionStatus, roundId, players } = useGameStore();
-  const { apiKey, clear } = useSessionStore();
+  const { apiKey } = useSessionStore();
   const { isMobile } = useMediaQuery();
   const [isPlayersOpen, setIsPlayersOpen] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-
-  const handleLogout = () => {
-    disconnectSocket();
-    clear();
-  };
+  const { isMuted, handleLogout, handleToggleMute } = useFooterActions();
 
   return (
     <footer className="w-full h-10 flex items-center justify-between px-4 bg-background border-t border-border/50">
@@ -42,7 +36,7 @@ export const GameFooter = () => {
         apiKey={apiKey}
         isMuted={isMuted}
         onLogout={handleLogout}
-        onToggleMute={() => setIsMuted(!isMuted)}
+        onToggleMute={handleToggleMute}
       />
 
       <MobilePlayersDrawer
