@@ -15,7 +15,12 @@ export const useRecentRounds = (limit = 20) => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const s = getSocket();
+    let s: ReturnType<typeof getSocket> | null = null;
+    try {
+      s = getSocket();
+    } catch {
+      return;
+    }
 
     const onCrash = (e: RoundCrashEvent) => {
       queryClient.setQueryData<RecentRoundsResponse>([...queryKey.roundsRecent, limit], (old) => ({
@@ -31,16 +36,12 @@ export const useRecentRounds = (limit = 20) => {
       }));
     };
 
-    const onReconnect = () => {
-      queryClient.invalidateQueries({ queryKey: [...queryKey.roundsRecent, limit] });
-    };
-
     s.on('round:crash', onCrash);
-    s.on('connect', onReconnect);
 
     return () => {
-      s.off('round:crash', onCrash);
-      s.off('connect', onReconnect);
+      if (s) {
+        s.off('round:crash', onCrash);
+      }
     };
   }, [queryClient, limit]);
 

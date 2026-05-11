@@ -9,9 +9,10 @@ import { Card } from '@/shared/ui';
 
 interface Props {
   balance: number | null;
+  isLoading?: boolean;
 }
 
-export const ControlPanel = ({ balance }: Props) => {
+export const ControlPanel = ({ balance, isLoading }: Props) => {
   return (
     <Card
       variant="game"
@@ -33,9 +34,13 @@ export const ControlPanel = ({ balance }: Props) => {
               Balance
             </span>
           </div>
-          <span className="font-mono font-normal text-[16px] leading-[24px] text-clr-accent">
-            {balance !== null ? balance.toFixed(2) : '0.00'}
-          </span>
+          {isLoading ? (
+            <div className="w-[80px] h-[24px] bg-muted rounded animate-pulse" />
+          ) : (
+            <span className="font-mono font-normal text-[16px] leading-[24px] text-clr-accent">
+              {balance !== null ? balance.toFixed(2) : '0.00'}
+            </span>
+          )}
         </div>
       </div>
     </Card>

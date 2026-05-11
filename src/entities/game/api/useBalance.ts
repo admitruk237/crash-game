@@ -10,26 +10,27 @@ export const useBalance = () => {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    const s = getSocket();
+    let s: ReturnType<typeof getSocket> | null = null;
+    try {
+      s = getSocket();
+    } catch {
+      return;
+    }
 
     const setBalance = (payload: { balance: number }) => {
       queryClient.setQueryData<Balance>(queryKey.balance, { balance: payload.balance });
     };
 
-    const onReconnect = () => {
-      queryClient.invalidateQueries({ queryKey: queryKey.balance });
-    };
-
     s.on('bet:placed', setBalance);
     s.on('bet:cashedOut', setBalance);
     s.on('bet:lost', setBalance);
-    s.on('connect', onReconnect);
 
     return () => {
-      s.off('bet:placed', setBalance);
-      s.off('bet:cashedOut', setBalance);
-      s.off('bet:lost', setBalance);
-      s.off('connect', onReconnect);
+      if (s) {
+        s.off('bet:placed', setBalance);
+        s.off('bet:cashedOut', setBalance);
+        s.off('bet:lost', setBalance);
+      }
     };
   }, [queryClient]);
 
