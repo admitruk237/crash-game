@@ -18,7 +18,8 @@ export const useAuthForm = (): AuthFormState => {
   const isReady = username.length >= 3;
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { setKey, apiKey } = useSessionStore();
+  const setKey = useSessionStore((s) => s.setKey);
+  const apiKey = useSessionStore((s) => s.apiKey);
   const markJustLoggedIn = useNavigationStore((s) => s.markJustLoggedIn);
 
   useEffect(() => {

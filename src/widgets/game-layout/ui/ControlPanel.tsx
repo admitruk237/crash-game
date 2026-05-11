@@ -8,14 +8,12 @@ import CoinIcon from '@/shared/assets/icons/coin.svg';
 import { Card } from '@/shared/ui';
 
 import { useGameValidation } from '@/features/game-controls/model/useGameValidation';
+import { useBalance } from '@/entities/game/api/useBalance';
 
-interface Props {
-  balance: number | null;
-  isLoading?: boolean;
-}
-
-export const ControlPanel = ({ balance, isLoading }: Props) => {
+export const ControlPanel = () => {
   const validation = useGameValidation();
+  const { isLoading } = useBalance();
+  const balance = validation.balance ?? null;
 
   return (
     <Card

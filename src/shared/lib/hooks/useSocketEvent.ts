@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
+
 import { getSocket } from '../socket';
 
 export const useSocketEvent = <T>(events: string | string[], callback: (data: T) => void) => {
   const cbRef = useRef(callback);
+  cbRef.current = callback;
 
-  useEffect(() => {
-    cbRef.current = callback;
-  }, [callback]);
   const eventsKey = Array.isArray(events) ? events.join(',') : events;
 
   useEffect(() => {
@@ -18,7 +17,7 @@ export const useSocketEvent = <T>(events: string | string[], callback: (data: T)
     }
 
     const handler = (data: T) => cbRef.current(data);
-    const eventList = Array.isArray(events) ? events : [events];
+    const eventList = eventsKey.split(',');
 
     eventList.forEach((e) => socket?.on(e, handler));
 

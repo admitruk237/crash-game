@@ -11,7 +11,7 @@ class SoundManager {
       this.sounds.set(
         key,
         new Howl({
-          src: [src as string],
+          src: [src],
           volume: 0.5,
           loop: key === 'diesel',
           onloaderror: (_id, error) =>

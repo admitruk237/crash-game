@@ -6,7 +6,6 @@ import { ControlPanel } from './ControlPanel';
 import { Players } from '@/entities/players/ui/Players';
 import { HistoryList } from '@/entities/history/ui/HistoryList';
 import { GameStage } from '@/widgets/game-stage/ui/GameStage';
-import { useBalance } from '@/entities/game/api/useBalance';
 import { useRecentRounds } from '@/entities/history/api/useRecentRounds';
 import { useGameStore } from '@/entities/game/model/store';
 import { SoundModal } from '@/shared/ui/sound-modal';
@@ -14,7 +13,6 @@ import { SoundModal } from '@/shared/ui/sound-modal';
 export const GamePage = () => {
   useGameSocket();
 
-  const { data: balanceData, isLoading: isBalanceLoading } = useBalance();
   const { data: recentData, isLoading: isHistoryLoading } = useRecentRounds(20);
   const players = useGameStore((s) => s.players);
   const rounds = recentData?.rounds ?? [];
@@ -29,10 +27,7 @@ export const GamePage = () => {
         </div>
         <div className="w-full lg:w-auto flex flex-col md:flex-row lg:contents gap-4 order-2 lg:order-1">
           <div className="w-full md:flex-1 lg:w-[260px] lg:flex-none order-1">
-            <ControlPanel
-              balance={balanceData?.balance ?? null}
-              isLoading={isBalanceLoading}
-            />
+            <ControlPanel />
           </div>
           <div className="w-full md:flex-1 lg:w-[280px] lg:flex-none order-2 lg:order-3 hidden md:block">
             <Players players={players} />

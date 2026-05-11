@@ -1,4 +1,5 @@
-import { useIsBettingLocked, useMyBet } from '@/entities/game/model/selectors';
+import { useShallow } from 'zustand/react/shallow';
+import { useIsBettingLocked } from '@/entities/game/model/selectors';
 import { useBalance } from '@/entities/game/api/useBalance';
 import { useGameControlsStore } from './store';
 import {
@@ -11,7 +12,13 @@ import {
 export type GameValidation = ReturnType<typeof useGameValidation>;
 
 export const useGameValidation = () => {
-  const { betAmount, autoCashOutMultiplier, isAutoCashOutEnabled } = useGameControlsStore();
+  const { betAmount, autoCashOutMultiplier, isAutoCashOutEnabled } = useGameControlsStore(
+    useShallow((s) => ({
+      betAmount: s.betAmount,
+      autoCashOutMultiplier: s.autoCashOutMultiplier,
+      isAutoCashOutEnabled: s.isAutoCashOutEnabled,
+    }))
+  );
   const isLocked = useIsBettingLocked();
   const { data: balanceData } = useBalance();
   const balance = balanceData?.balance;

@@ -12,7 +12,7 @@ interface FooterActions {
 
 export const useFooterActions = (): FooterActions => {
   const phase = useGameStore((s) => s.phase);
-  const { clear } = useSessionStore();
+  const clear = useSessionStore((s) => s.clear);
   const [isMuted, setIsMuted] = useState(false);
 
   const handleLogout = () => {

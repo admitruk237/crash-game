@@ -3,7 +3,7 @@
 import { Button, Input, SectionTitle } from '@/shared/ui';
 import { useGameControlsStore } from '../model/store';
 import { type GameValidation } from '../model/useGameValidation';
-import { DEFAULT_BET_AMOUNT, MAX_BET_AMOUNT } from '@/shared/config/game';
+import { DEFAULT_BET_AMOUNT, MAX_BET_AMOUNT, MIN_BET_AMOUNT } from '@/shared/config/game';
 
 interface Props {
   validation: GameValidation;
@@ -47,7 +47,7 @@ export const BetAmountControl = ({ validation }: Props) => {
         )}
         {bet.tooLow && !bet.isEmpty && (
           <span className="absolute -bottom-4 left-0 text-[10px] text-destructive">
-            Min bet is 0.1 USD
+            Min bet is {MIN_BET_AMOUNT} USD
           </span>
         )}
         {bet.exceedsMax && !bet.isEmpty && (
