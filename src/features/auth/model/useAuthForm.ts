@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSessionStore } from '@/entities/session';
 import { useGameStore } from '@/entities/game';
-import { disconnectSocket, getSocket, useNavigationStore } from '@/shared/lib';
+import { disconnectSocket, useNavigationStore } from '@/shared/lib';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface AuthFormState {
@@ -37,8 +37,6 @@ export const useAuthForm = (): AuthFormState => {
     disconnectSocket();
 
     setKey(username.trim(), true);
-
-    getSocket();
 
     markJustLoggedIn();
     router.push('/');

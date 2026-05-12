@@ -57,6 +57,7 @@ export const useGameSocket = (handlers?: GameSocketHandlers) => {
     const onStart = (e: RoundStartEvent) => {
       const game = useGameStore.getState();
       game.setPhase('running');
+      game.setRoundId(e.roundId);
       game.setStartedAt(new Date(e.startedAt));
       game.setEndsAt(null);
       game.setPlayers(e.players);
@@ -128,6 +129,10 @@ export const useGameSocket = (handlers?: GameSocketHandlers) => {
     s.on('bet:rejected', onRejected);
     s.on('connect', onConnect);
     s.on('disconnect', onDisconnect);
+
+    if (s.connected) {
+      s.emit('round:getState');
+    }
 
     return () => {
       s.off('round:state', onState);
