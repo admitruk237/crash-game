@@ -1,5 +1,4 @@
-import { useCallback, useRef } from 'react';
-import type { MouseEvent } from 'react';
+import { type MouseEvent, useCallback, useRef } from 'react';
 
 export const useDragScroll = () => {
   const scrollRef = useRef<HTMLUListElement>(null);
@@ -7,7 +6,7 @@ export const useDragScroll = () => {
   const startX = useRef(0);
   const scrollLeft = useRef(0);
 
-  const onMouseDown = useCallback((e: MouseEvent) => {
+  const onMouseDown = useCallback((e: MouseEvent<HTMLUListElement>) => {
     if (!scrollRef.current) return;
     isDown.current = true;
     startX.current = e.pageX - scrollRef.current.offsetLeft;
@@ -22,7 +21,7 @@ export const useDragScroll = () => {
     isDown.current = false;
   }, []);
 
-  const onMouseMove = useCallback((e: MouseEvent) => {
+  const onMouseMove = useCallback((e: MouseEvent<HTMLUListElement>) => {
     if (!isDown.current || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;

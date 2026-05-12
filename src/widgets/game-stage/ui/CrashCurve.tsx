@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useCrashCurve } from '../model/useCrashCurve';
-import { drawCurve, type DrawColors } from '../lib/drawCurve';
+import { type DrawColors, drawCurve } from '../lib/drawCurve';
 import { TruckIcon, type TruckIconHandle } from './TruckIcon';
 
 export const CrashCurve = () => {

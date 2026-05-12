@@ -2,9 +2,9 @@
 
 import { Input, SectionTitle, Switch } from '@/shared/ui';
 import { useGameControlsStore } from '../model/store';
-import { useGameValidation, type GameValidation } from '../model/useGameValidation';
+import { type GameValidation } from '../model/useGameValidation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { MIN_AUTO_CASH_OUT, MAX_AUTO_CASH_OUT, DEFAULT_AUTO_CASH_OUT } from '@/shared/config';
+import { DEFAULT_AUTO_CASH_OUT, MAX_AUTO_CASH_OUT, MIN_AUTO_CASH_OUT } from '@/shared/config';
 
 interface Props {
   validation: GameValidation;

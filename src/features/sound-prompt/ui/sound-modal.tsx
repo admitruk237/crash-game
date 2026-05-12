@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Volume2 } from 'lucide-react';
 import { useNavigationStore } from '@/shared/lib';
 
@@ -16,6 +16,7 @@ export const SoundModal = () => {
 
     if (consumeJustLoggedIn()) return;
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setVisible(true);
   }, [consumeJustLoggedIn]);
 

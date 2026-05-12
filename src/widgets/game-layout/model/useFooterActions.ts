@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useGameStore } from '@/entities/game';
 import { useSessionStore } from '@/entities/session';
 import { disconnectSocket, soundManager } from '@/shared/lib';
 
@@ -10,7 +9,6 @@ interface FooterActions {
 }
 
 export const useFooterActions = (): FooterActions => {
-  const phase = useGameStore((s) => s.phase);
   const clear = useSessionStore((s) => s.clear);
   const [isMuted, setIsMuted] = useState(false);
 
@@ -27,8 +25,6 @@ export const useFooterActions = (): FooterActions => {
     soundManager.toggle(!nextMuted);
     if (nextMuted) {
       soundManager.stopAll();
-    } else {
-      soundManager.resumeForPhase(phase);
     }
   };
 

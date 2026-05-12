@@ -1,9 +1,7 @@
 'use client';
 
-import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
-import type { HTMLAttributes } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import type { Variants } from 'framer-motion';
+import { forwardRef, type HTMLAttributes, useCallback, useImperativeHandle, useRef } from 'react';
+import { motion, useAnimation, type Variants } from 'framer-motion';
 
 export interface TruckIconHandle {
   startAnimation: () => void;

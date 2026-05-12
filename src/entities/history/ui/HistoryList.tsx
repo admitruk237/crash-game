@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useDragScroll } from '@/shared/lib';
 import { HistoryItem } from './HistoryItem';
 import { type RecentRound } from '@/shared/types';

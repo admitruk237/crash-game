@@ -1,3 +1,5 @@
+'use client';
+
 export * from './apiClient';
 export * from './socket';
 export * from './sound';

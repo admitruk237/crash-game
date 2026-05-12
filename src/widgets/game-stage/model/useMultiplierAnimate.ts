@@ -58,6 +58,7 @@ export const useMultiplierAnimate = () => {
 
     if (phase !== 'running') {
       displayedRef.current = serverMultiplier;
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDisplayed(serverMultiplier);
       setDisplayedMultiplier(serverMultiplier);
       return;
