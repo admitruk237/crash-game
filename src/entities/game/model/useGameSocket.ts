@@ -3,7 +3,11 @@
 import { useEffect, useRef } from 'react';
 import { getSocket } from '@/shared/lib/socket';
 import { useGameStore } from './store';
-import { soundManager } from '@/shared/lib/sound';
+
+export interface GameSocketHandlers {
+  onTick?: (count: number) => void;
+  onCashedOut?: () => void;
+}
 import type {
   BetPlacedEvent,
   BetRejectedEvent,
@@ -14,7 +18,7 @@ import type {
   RoundWaitingEvent,
 } from '@/shared/types/ws';
 
-export const useGameSocket = () => {
+export const useGameSocket = (handlers?: GameSocketHandlers) => {
   const tickCounterRef = useRef(0);
 
   useEffect(() => {
@@ -60,9 +64,7 @@ export const useGameSocket = () => {
       useGameStore.getState().setMultiplier(e.multiplier);
 
       tickCounterRef.current += 1;
-      if (tickCounterRef.current % 3 === 0) {
-        soundManager.play('coef');
-      }
+      handlers?.onTick?.(tickCounterRef.current);
     };
 
     const onCrash = (e: RoundCrashEvent) => {
@@ -91,7 +93,7 @@ export const useGameSocket = () => {
     };
 
     const onCashedOut = () => {
-      soundManager.play('cashout');
+      handlers?.onCashedOut?.();
       clearBetState();
     };
 

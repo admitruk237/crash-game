@@ -2,7 +2,7 @@
 
 import { type ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSessionStore } from '../model/store';
+import { useSessionStore } from '@/entities/session/model/store';
 
 interface Props {
   children: ReactNode;

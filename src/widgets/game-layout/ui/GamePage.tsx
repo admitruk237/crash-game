@@ -8,10 +8,13 @@ import { HistoryList } from '@/entities/history/ui/HistoryList';
 import { GameStage } from '@/widgets/game-stage/ui/GameStage';
 import { useRecentRounds } from '@/entities/history/api/useRecentRounds';
 import { useGameStore } from '@/entities/game/model/store';
-import { SoundModal } from '@/shared/ui/sound-modal';
+
+import { useGameActions } from '@/features/game-controls/model/useGameActions';
+import { SoundModal } from '@/features/sound-prompt/ui/sound-modal';
 
 export const GamePage = () => {
-  useGameSocket();
+  const { soundHandlers } = useGameActions();
+  useGameSocket(soundHandlers);
 
   const { data: recentData, isLoading: isHistoryLoading } = useRecentRounds(20);
   const players = useGameStore((s) => s.players);

@@ -2,6 +2,7 @@
 
 import { useGameStore } from '@/entities/game/model/store';
 import { getSocket } from '@/shared/lib/socket';
+import { soundManager } from '@/shared/lib/sound';
 import { useGameControlsStore } from './store';
 
 export const useGameActions = () => {
@@ -26,9 +27,21 @@ export const useGameActions = () => {
     getSocket().emit('bet:cashout', {});
   };
 
+  const soundHandlers = {
+    onTick: (count: number) => {
+      if (count % 3 === 0) {
+        soundManager.play('coef');
+      }
+    },
+    onCashedOut: () => {
+      soundManager.play('cashout');
+    },
+  };
+
   return {
     placeBet,
     cashOut,
     isActionLoading: actionInFlight,
+    soundHandlers,
   };
 };
