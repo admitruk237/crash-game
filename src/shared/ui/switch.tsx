@@ -1,17 +1,21 @@
 'use client';
 
 import { Switch as SwitchPrimitive } from '@base-ui/react/switch';
-import { cn } from '@/shared/lib/utils';
-import { soundManager } from '@/shared/lib/sound';
+import { cn, soundManager } from '@/shared/lib';
+import { type SoundName } from '@/shared/config';
 
-type Props = SwitchPrimitive.Root.Props;
+type Props = SwitchPrimitive.Root.Props & {
+  sound?: SoundName | false;
+};
 
-const Switch = ({ className, onCheckedChange, disabled, ...props }: Props) => {
+const Switch = ({ className, onCheckedChange, disabled, sound, ...props }: Props) => {
   const handleCheckedChange: NonNullable<SwitchPrimitive.Root.Props['onCheckedChange']> = (
     checked,
     eventDetails
   ) => {
-    soundManager.play('switch');
+    if (sound !== false) {
+      soundManager.play(sound || 'switch');
+    }
     onCheckedChange?.(checked, eventDetails);
   };
 
