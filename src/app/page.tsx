@@ -1,10 +1,11 @@
-import { AuthGuard } from '@/features/auth/ui/AuthGuard';
-import { GamePage } from '@/widgets/game-layout/ui/GamePage';
+import { AuthGuard } from '@/features/auth';
+import { GamePage } from '@/widgets/game-layout';
+import { GameStage } from '@/widgets/game-stage';
 
 export default function Home() {
   return (
     <AuthGuard>
-      <GamePage />
+      <GamePage stage={<GameStage />} />
     </AuthGuard>
   );
 }

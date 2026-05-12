@@ -1,7 +1,7 @@
 'use client';
 
-import { useRecentRounds } from '@/entities/history/api/useRecentRounds';
-import { useGameStore } from '@/entities/game/model/store';
+import { useRecentRounds } from '@/entities/history';
+import { useGameStore } from '@/entities/game';
 
 export const useGamePageData = () => {
   const { data: recentData, isLoading: isHistoryLoading } = useRecentRounds(20);
