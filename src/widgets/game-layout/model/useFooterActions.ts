@@ -17,6 +17,7 @@ export const useFooterActions = (): FooterActions => {
 
   const handleLogout = () => {
     soundManager.stopAll();
+    soundManager.toggle(true);
     disconnectSocket();
     clear();
   };
