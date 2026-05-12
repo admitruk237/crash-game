@@ -1,6 +1,4 @@
-'use client';
-
-export * from './ui/AutoCashOutControl';
+﻿export * from './ui/AutoCashOutControl';
 export * from './ui/BetAmountControl';
 export * from './ui/MainGameButton';
 export * from './model/useGameActions';

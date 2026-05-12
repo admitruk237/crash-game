@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { useEffect, useLayoutEffect, useRef } from 'react';
 
 import { getSocket } from '../socket';

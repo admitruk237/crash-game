@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { Howl } from 'howler';
 
 import { type SoundName, SOUNDS } from '../config/sounds';

@@ -82,21 +82,24 @@ export const useGameSocket = (handlers?: GameSocketHandlers) => {
       game.setPlayers(e.players);
     };
 
-    const onBetPlaced = (e: BetPlacedEvent) => {
+    const clearInFlight = () => {
       const game = useGameStore.getState();
-      game.setMyBet({
+      if (game.actionInFlight) game.setActionInFlight(false);
+    };
+
+    const onBetPlaced = (e: BetPlacedEvent) => {
+      useGameStore.getState().setMyBet({
         betId: e.betId,
         amount: e.amount,
         autoCashOutAt: e.autoCashOutAt,
         status: 'placed',
       });
-      if (game.actionInFlight) game.setActionInFlight(false);
+      clearInFlight();
     };
 
     const clearBetState = () => {
-      const game = useGameStore.getState();
-      game.setMyBet(null);
-      if (game.actionInFlight) game.setActionInFlight(false);
+      useGameStore.getState().setMyBet(null);
+      clearInFlight();
     };
 
     const onCashedOut = () => {
@@ -107,9 +110,8 @@ export const useGameSocket = (handlers?: GameSocketHandlers) => {
     const onLost = clearBetState;
 
     const onRejected = (e: BetRejectedEvent) => {
-      console.error('bet:rejected', e.message);
-      const game = useGameStore.getState();
-      if (game.actionInFlight) game.setActionInFlight(false);
+      console.error('bet:rejected', e.reason, e.message);
+      clearInFlight();
     };
 
     const onConnect = () => {

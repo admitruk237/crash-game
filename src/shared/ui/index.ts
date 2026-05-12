@@ -1,6 +1,4 @@
-'use client';
-
-export * from './button';
+﻿export * from './button';
 export * from './input';
 export * from './card';
 export * from './label';

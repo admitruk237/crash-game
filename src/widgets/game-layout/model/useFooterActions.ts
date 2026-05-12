@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { useState } from 'react';
 import { useSessionStore } from '@/entities/session';
 import { disconnectSocket, soundManager } from '@/shared/lib';

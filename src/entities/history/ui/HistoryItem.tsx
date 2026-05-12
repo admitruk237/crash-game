@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { Badge } from '@/shared/ui';
 import type { RoundTier } from '@/shared/types';
 

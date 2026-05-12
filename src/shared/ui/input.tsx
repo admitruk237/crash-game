@@ -1,13 +1,15 @@
+﻿'use client';
+
 import * as React from 'react';
 import { Input as InputPrimitive } from '@base-ui/react/input';
 
 import { cn } from '@/shared/lib';
 
-interface InputProps extends React.ComponentProps<'input'> {
+interface Props extends React.ComponentProps<'input'> {
   suffix?: React.ReactNode;
 }
 
-function Input({ className, type, suffix, ...props }: InputProps) {
+function Input({ className, type, suffix, ...props }: Props) {
   return (
     <div className="relative w-full">
       <InputPrimitive

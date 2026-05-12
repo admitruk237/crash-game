@@ -1,3 +1,1 @@
-'use client';
-
-export * from './ui/GamePage';
+﻿export * from './ui/GamePage';

@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { AnimatePresence, motion } from 'framer-motion';
 import { useDragScroll } from '@/shared/lib';
 import { HistoryItem } from './HistoryItem';

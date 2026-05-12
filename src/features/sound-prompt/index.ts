@@ -1,3 +1,1 @@
-'use client';
-
-export * from './ui/sound-modal';
+﻿export * from './ui/sound-modal';

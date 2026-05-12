@@ -1,11 +1,13 @@
+﻿'use client';
+
 import * as React from 'react';
 import { cn } from '@/shared/lib';
 
-interface SectionTitleProps extends React.HTMLAttributes<HTMLDivElement> {
+interface Props extends React.HTMLAttributes<HTMLDivElement> {
   icon?: React.ReactNode;
 }
 
-function SectionTitle({ className, icon, children, ...props }: SectionTitleProps) {
+function SectionTitle({ className, icon, children, ...props }: Props) {
   return (
     <div
       data-slot="section-title"

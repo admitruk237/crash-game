@@ -12,7 +12,7 @@ import { MobilePlayersDrawer } from './footer/MobilePlayersDrawer';
 
 export const GameFooter = () => {
   const { connectionStatus, roundId, players } = useFooterView();
-  const { apiKey } = useSessionStore();
+  const apiKey = useSessionStore((s) => s.apiKey);
   const { isMobile } = useMediaQuery();
   const [isPlayersOpen, setIsPlayersOpen] = useState(false);
   const { isMuted, handleLogout, handleToggleMute } = useFooterActions();

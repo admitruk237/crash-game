@@ -12,18 +12,12 @@ export const CrashCurve = () => {
   const rafRef = useRef<number>(0);
   const { pointsRef, phaseRef } = useCrashCurve();
 
-  const colorsRef = useRef<DrawColors>({
-    success: '#22c55e',
-    error: '#ef4444',
-  });
+  const colorsRef = useRef<DrawColors>({ success: '', error: '' });
 
   useEffect(() => {
     const rootStyle = getComputedStyle(document.documentElement);
-    const success = rootStyle.getPropertyValue('--clr-success').trim();
-    const error = rootStyle.getPropertyValue('--clr-error').trim();
-
-    if (success) colorsRef.current.success = success;
-    if (error) colorsRef.current.error = error;
+    colorsRef.current.success = rootStyle.getPropertyValue('--clr-success').trim();
+    colorsRef.current.error = rootStyle.getPropertyValue('--clr-error').trim();
   }, []);
 
   useEffect(() => {
@@ -70,11 +64,15 @@ export const CrashCurve = () => {
 
   return (
     <>
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+      <canvas
+        ref={canvasRef}
+        role="img"
+        aria-label="Crash curve graph"
+        className="absolute inset-0 w-full h-full"
+      />
       <div
         ref={truckWrapRef}
-        className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-        style={{ display: 'none' }}
+        className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden"
       >
         <TruckIcon ref={truckIconRef} size={24} className="text-success" />
       </div>

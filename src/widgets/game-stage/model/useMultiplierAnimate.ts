@@ -1,6 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+﻿'use client';
+
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useGameStore } from '@/entities/game';
 import { soundManager, useCountdown } from '@/shared/lib';
+import { BEEP_COUNTDOWN_MAX, BEEP_COUNTDOWN_MIN } from '@/shared/config';
 
 const SMOOTHING_FACTOR = 0.3;
 const ANIMATION_THRESHOLD = 0.001;
@@ -12,6 +15,11 @@ export const useMultiplierAnimate = () => {
   const crashPoint = useGameStore((s) => s.crashPoint);
   const endsAt = useGameStore((s) => s.endsAt);
   const countdown = useCountdown(endsAt);
+
+  const serverMultiplierRef = useRef(serverMultiplier);
+  useLayoutEffect(() => {
+    serverMultiplierRef.current = serverMultiplier;
+  });
 
   const displayedRef = useRef(serverMultiplier);
   const [displayed, setDisplayed] = useState(serverMultiplier);
@@ -46,7 +54,7 @@ export const useMultiplierAnimate = () => {
 
     lastSoundCountdown.current = countdown;
 
-    if (countdown >= 2 && countdown <= 10) {
+    if (countdown >= BEEP_COUNTDOWN_MIN && countdown <= BEEP_COUNTDOWN_MAX) {
       soundManager.play('beep');
     } else if (countdown === 1) {
       soundManager.play('siren');
@@ -57,15 +65,14 @@ export const useMultiplierAnimate = () => {
     const setDisplayedMultiplier = useGameStore.getState().setDisplayedMultiplier;
 
     if (phase !== 'running') {
-      displayedRef.current = serverMultiplier;
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setDisplayed(serverMultiplier);
-      setDisplayedMultiplier(serverMultiplier);
+      displayedRef.current = serverMultiplierRef.current;
+      setDisplayed(serverMultiplierRef.current);
+      setDisplayedMultiplier(serverMultiplierRef.current);
       return;
     }
 
     const animate = () => {
-      const diff = serverMultiplier - displayedRef.current;
+      const diff = serverMultiplierRef.current - displayedRef.current;
       if (Math.abs(diff) > ANIMATION_THRESHOLD) {
         displayedRef.current += diff * SMOOTHING_FACTOR;
         const floored =
@@ -77,7 +84,7 @@ export const useMultiplierAnimate = () => {
     };
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [phase, serverMultiplier]);
+  }, [phase]);
 
   return {
     phase,

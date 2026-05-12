@@ -4,10 +4,10 @@ interface ApiRequestInit extends Omit<RequestInit, 'body'> {
   body?: unknown;
 }
 
-type ApiConfig = {
+interface ApiConfig {
   getToken: () => string | null;
   onUnauthorized: () => void;
-};
+}
 
 let config: ApiConfig = {
   getToken: () => null,

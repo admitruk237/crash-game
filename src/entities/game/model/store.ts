@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { create } from 'zustand';
 import type { BetStatus, ConnectionStatus, Phase, PublicPlayer } from '@/shared/types';
 

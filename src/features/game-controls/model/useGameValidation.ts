@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { useShallow } from 'zustand/react/shallow';
 import { useBalance, useIsBettingLocked } from '@/entities/game';
 import { useGameControlsStore } from './store';

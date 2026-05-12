@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { type MouseEvent, useCallback, useRef } from 'react';
 
 export const useDragScroll = () => {

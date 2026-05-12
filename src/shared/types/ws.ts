@@ -77,22 +77,6 @@ export interface BetRejectedEvent {
   message: string;
 }
 
-export interface PlayersBetEvent {
-  username: string;
-  amount: number;
-}
-
-export interface PlayersCashoutEvent {
-  username: string;
-  multiplier: number;
-  winAmount: number;
-}
-
-export interface PlayersLostEvent {
-  username: string;
-  amount: number;
-}
-
 export interface BetPlacePayload {
   amount: number;
   autoCashOutAt: number | null;

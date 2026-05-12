@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { useEffect, useRef } from 'react';
 import { getSocket } from '@/shared/lib';
 import { useGameStore } from '@/entities/game';

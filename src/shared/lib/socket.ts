@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { io, type Socket } from 'socket.io-client';
 import { WS_URL } from '../config/env';
 

@@ -1,3 +1,5 @@
+﻿'use client';
+
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiClient, useSocketEvent } from '@/shared/lib';
 import { API_ROUTES } from '@/shared/config';
