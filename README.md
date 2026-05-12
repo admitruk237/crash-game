@@ -2,6 +2,8 @@
 
 A real-time multiplayer betting game where players wager on a constantly increasing multiplier that can crash at any moment. Built with modern web technologies for a seamless, high-performance experience.
 
+<<<<<<< HEAD
+
 ## ✨ Features
 
 - **Real-Time Multiplayer Sync**: Fully synchronized game states across all active clients via WebSockets.
@@ -38,24 +40,57 @@ A real-time multiplayer betting game where players wager on a constantly increas
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/your-username/crash-game.git
    cd crash-game
    ```
 
-2. Install dependencies:
+2. # Install dependencies:
+
+## 🏗 Архітектура (FSD)
+
+Проект побудований за принципами **Feature-Sliced Design**. Всі компоненти рознесені по шарах у папці `src`:
+
+- `shared` — UI-квітки (shadcn), утиліти, API.
+- `entities` — Бізнес-сутності (гравець, сесія).
+- `features` — Інтерактивні фічі (ставки, чат).
+- `widgets` — Складні блоки (графік гри, панель керування).
+- `pages` — Композиція сторінок.
+- `app` — Роутинг Next.js.
+
+## ⚛️ Стек технологій
+
+- **Next.js 15+** (App Router)
+- **TypeScript** (Strict Mode)
+- **Tailwind CSS v4** (OKLCH colors)
+- **shadcn/ui** (встановлено в `src/shared/ui`)
+- **Zustand** (менеджмент стану з персистенцією)
+- **ESLint & Prettier** (суворі правила для високої якості коду)
+
+## 🛠 Як почати
+
+1. Клонуйте цей шаблон.
+2. Встановіть залежності:
+
+   > > > > > > > origin/main
+
    ```bash
    npm install
    ```
 
 3. Configure environment variables:
    Create a `.env.local` file in the root directory and specify the backend URLs:
+
    ```env
    NEXT_PUBLIC_API_URL=http://localhost:3001
    NEXT_PUBLIC_WS_URL=ws://localhost:3001
    ```
 
+   <<<<<<< HEAD
+
 4. Run the development server:
+
    ```bash
    npm run dev
    ```
@@ -82,4 +117,19 @@ This project strictly adheres to the **Feature-Sliced Design (FSD)** methodology
 
 ## 📝 License
 
-This project is licensed under the MIT License.
+# This project is licensed under the MIT License.
+
+_Вони автоматично потраплять у `src/shared/ui`._
+
+## 🤖 Правила AI (Claude/Antigravity)
+
+У проекті налаштовані спеціальні файли для ШІ-асистентів:
+
+- `.antigravityrules` — Глобальні правила архітектури та продуктивності.
+- `CLAUDE.md` — Інструкції для Клода щодо стилю коду та перевірок.
+
+---
+
+Зроблено з ❤️ для швидкої та якісної розробки.
+
+> > > > > > > origin/main
