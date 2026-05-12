@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef } from 'react';
-import { getSocket } from '@/shared/lib/socket';
+import { getSocket } from '@/shared/lib';
 import { useGameStore } from './store';
 
 export interface GameSocketHandlers {
@@ -16,7 +16,7 @@ import type {
   RoundStateEvent,
   RoundTickEvent,
   RoundWaitingEvent,
-} from '@/shared/types/ws';
+} from '@/shared/types';
 
 export const useGameSocket = (handlers?: GameSocketHandlers) => {
   const handlersRef = useRef(handlers);

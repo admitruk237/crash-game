@@ -2,7 +2,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useGameStore } from './store';
 
 export const useIsBettingLocked = () =>
-  useGameStore((s) => (s.phase === 'running' || s.phase === 'crashed') && !!s.myBet);
+  useGameStore((s) => (s.phase === 'running' || s.phase === 'crashed') && Boolean(s.myBet));
 
 export const useMainButtonView = () =>
   useGameStore(

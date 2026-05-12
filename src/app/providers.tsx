@@ -2,9 +2,8 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { type ReactNode, useState } from 'react';
-import { useSessionStore } from '@/entities/session/model/store';
-import { setApiConfig } from '@/shared/lib/apiClient';
-import { setSocketConfig } from '@/shared/lib/socket';
+import { useSessionStore } from '@/entities/session';
+import { setApiConfig, setSocketConfig } from '@/shared/lib';
 
 if (typeof window !== 'undefined') {
   setApiConfig({

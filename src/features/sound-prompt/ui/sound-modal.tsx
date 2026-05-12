@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Volume2 } from 'lucide-react';
-import { useNavigationStore } from '@/shared/lib/navigation-state';
+import { useNavigationStore } from '@/shared/lib';
 
 export const SoundModal = () => {
   const [visible, setVisible] = useState(false);

@@ -1,5 +1,5 @@
-import { Badge } from '@/shared/ui/badge';
-import type { RoundTier } from '@/shared/types/common';
+import { Badge } from '@/shared/ui';
+import type { RoundTier } from '@/shared/types';
 
 interface Props {
   crashPoint: number;

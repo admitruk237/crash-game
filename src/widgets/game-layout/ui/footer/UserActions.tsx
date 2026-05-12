@@ -1,5 +1,5 @@
 import { LogOut, User, Volume2, VolumeX } from 'lucide-react';
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui';
 
 interface Props {
   apiKey: string | null;

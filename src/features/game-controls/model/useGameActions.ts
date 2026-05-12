@@ -1,8 +1,7 @@
 'use client';
 
-import { useGameStore } from '@/entities/game/model/store';
-import { getSocket } from '@/shared/lib/socket';
-import { soundManager } from '@/shared/lib/sound';
+import { useGameStore } from '@/entities/game';
+import { getSocket, soundManager } from '@/shared/lib';
 import { useGameControlsStore } from './store';
 
 export const useGameActions = () => {

@@ -3,7 +3,7 @@
 import { Button, Input, SectionTitle } from '@/shared/ui';
 import { useGameControlsStore } from '../model/store';
 import { type GameValidation } from '../model/useGameValidation';
-import { DEFAULT_BET_AMOUNT, MAX_BET_AMOUNT, MIN_BET_AMOUNT } from '@/shared/config/game';
+import { DEFAULT_BET_AMOUNT, MAX_BET_AMOUNT, MIN_BET_AMOUNT } from '@/shared/config';
 
 interface Props {
   validation: GameValidation;

@@ -1,6 +1,6 @@
 import { Howl } from 'howler';
 
-import { SOUNDS, type SoundName } from '../config/sounds';
+import { type SoundName, SOUNDS } from '../config/sounds';
 
 class SoundManager {
   private sounds: Map<string, Howl> = new Map();
@@ -40,10 +40,6 @@ class SoundManager {
 
   stopAll() {
     this.sounds.forEach((sound) => sound.stop());
-  }
-
-  resumeForPhase(_phase: string) {
-    if (!this.enabled) return;
   }
 
   toggle(enabled: boolean) {

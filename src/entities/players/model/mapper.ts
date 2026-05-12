@@ -1,4 +1,4 @@
-import type { BetStatus } from '@/shared/types/common';
+import type { BetStatus } from '@/shared/types';
 import { type PlayerStatus, PlayerStatuses } from './types';
 
 const STATUS_MAP: Record<BetStatus, PlayerStatus> = {

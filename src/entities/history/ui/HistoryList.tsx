@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useDragScroll } from '@/shared/lib/hooks/useDragScroll';
+import { useDragScroll } from '@/shared/lib';
 import { HistoryItem } from './HistoryItem';
-import { type RecentRound } from '@/shared/types/api';
+import { type RecentRound } from '@/shared/types';
 
 interface Props {
   rounds: RecentRound[];

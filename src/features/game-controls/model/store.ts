@@ -1,4 +1,4 @@
-import { DEFAULT_AUTO_CASH_OUT, DEFAULT_BET_AMOUNT } from '@/shared/config/game';
+import { DEFAULT_AUTO_CASH_OUT, DEFAULT_BET_AMOUNT } from '@/shared/config';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 

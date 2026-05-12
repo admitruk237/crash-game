@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useFooterView } from '@/entities/game/model/selectors';
-import { useSessionStore } from '@/entities/session/model/store';
-import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery';
+import { useFooterView } from '@/entities/game';
+import { useSessionStore } from '@/entities/session';
+import { useMediaQuery } from '@/shared/lib';
 import { useFooterActions } from '../model/useFooterActions';
 import { StatusInfo } from './footer/StatusInfo';
 import { PlayersInfo } from './footer/PlayersInfo';

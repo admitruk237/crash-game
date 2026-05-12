@@ -1,10 +1,8 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { apiClient } from '@/shared/lib/apiClient';
-import { API_ROUTES } from '@/shared/config/apiRoutes';
+import { apiClient, useSocketEvent } from '@/shared/lib';
+import { API_ROUTES } from '@/shared/config';
 import { queryKey } from '../model/queryKeys';
-import { useSocketEvent } from '@/shared/lib/hooks/useSocketEvent';
-import type { Balance } from '@/shared/types/api';
-import type { BetCashedOutEvent, BetLostEvent, BetPlacedEvent } from '@/shared/types/ws';
+import type { Balance, BetCashedOutEvent, BetLostEvent, BetPlacedEvent } from '@/shared/types';
 
 type BalanceEvent = Pick<BetPlacedEvent | BetCashedOutEvent | BetLostEvent, 'balance'>;
 

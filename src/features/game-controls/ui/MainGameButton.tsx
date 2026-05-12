@@ -1,9 +1,8 @@
 'use client';
 
-import { useMainButtonView } from '@/entities/game/model/selectors';
+import { useMainButtonView } from '@/entities/game';
 import { Button } from '@/shared/ui';
-import { cn } from '@/shared/lib/utils';
-import { soundManager } from '@/shared/lib/sound';
+import { cn, soundManager } from '@/shared/lib';
 import { useGameActions } from '../model/useGameActions';
 import { type GameValidation } from '../model/useGameValidation';
 

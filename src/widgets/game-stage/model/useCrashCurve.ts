@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { getSocket } from '@/shared/lib/socket';
-import { useGameStore } from '@/entities/game/model/store';
-import type { Phase } from '@/shared/types/common';
-import type { RoundStateEvent, RoundTickEvent } from '@/shared/types/ws';
+import { getSocket } from '@/shared/lib';
+import { useGameStore } from '@/entities/game';
+import type { Phase, RoundStateEvent, RoundTickEvent } from '@/shared/types';
 import { generateHistoryPoints } from '../lib/generatePoints';
 
 interface Point {

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useGameStore } from '@/entities/game/model/store';
-import { useCountdown } from '@/shared/lib/hooks/useCountdown';
-import { soundManager } from '@/shared/lib/sound';
+import { useGameStore } from '@/entities/game';
+import { soundManager, useCountdown } from '@/shared/lib';
 
 const SMOOTHING_FACTOR = 0.3;
 const ANIMATION_THRESHOLD = 0.001;

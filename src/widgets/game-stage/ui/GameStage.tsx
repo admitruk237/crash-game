@@ -1,11 +1,11 @@
 'use client';
 
-import { useGameStore } from '@/entities/game/model/store';
+import { useGameStore } from '@/entities/game';
 import { CrashCurve } from './CrashCurve';
 import { MultiplierDisplay } from './MultiplierDisplay';
-import { Badge } from '@/shared/ui/badge';
+import { Badge } from '@/shared/ui';
 
-import { type Phase } from '@/shared/types/common';
+import { type Phase } from '@/shared/types';
 
 const PHASE_STYLES: Record<
   Phase,

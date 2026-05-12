@@ -1,6 +1,5 @@
 import { create } from 'zustand';
-import type { BetStatus, ConnectionStatus, Phase } from '@/shared/types/common';
-import type { PublicPlayer } from '@/shared/types/ws';
+import type { BetStatus, ConnectionStatus, Phase, PublicPlayer } from '@/shared/types';
 
 interface MyBet {
   betId?: string;

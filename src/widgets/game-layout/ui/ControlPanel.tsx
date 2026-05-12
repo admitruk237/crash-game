@@ -1,14 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { BetAmountControl } from '@/features/game-controls/ui/BetAmountControl';
-import { AutoCashOutControl } from '@/features/game-controls/ui/AutoCashOutControl';
-import { MainGameButton } from '@/features/game-controls/ui/MainGameButton';
+import {
+  AutoCashOutControl,
+  BetAmountControl,
+  MainGameButton,
+  useGameValidation,
+} from '@/features/game-controls';
+import { useBalance } from '@/entities/game';
 import CoinIcon from '@/shared/assets/icons/coin.svg';
 import { Card } from '@/shared/ui';
-
-import { useGameValidation } from '@/features/game-controls/model/useGameValidation';
-import { useBalance } from '@/entities/game/api/useBalance';
 
 export const ControlPanel = () => {
   const validation = useGameValidation();

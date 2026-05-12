@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useGameStore } from '@/entities/game/model/store';
-import { useSessionStore } from '@/entities/session/model/store';
-import { disconnectSocket } from '@/shared/lib/socket';
-import { soundManager } from '@/shared/lib/sound';
+import { useGameStore } from '@/entities/game';
+import { useSessionStore } from '@/entities/session';
+import { disconnectSocket, soundManager } from '@/shared/lib';
 
 interface FooterActions {
   isMuted: boolean;

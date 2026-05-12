@@ -1,13 +1,12 @@
 import { useShallow } from 'zustand/react/shallow';
-import { useIsBettingLocked } from '@/entities/game/model/selectors';
-import { useBalance } from '@/entities/game/api/useBalance';
+import { useBalance, useIsBettingLocked } from '@/entities/game';
 import { useGameControlsStore } from './store';
 import {
-  MIN_BET_AMOUNT,
+  MAX_AUTO_CASH_OUT,
   MAX_BET_AMOUNT,
   MIN_AUTO_CASH_OUT,
-  MAX_AUTO_CASH_OUT,
-} from '@/shared/config/game';
+  MIN_BET_AMOUNT,
+} from '@/shared/config';
 
 export type GameValidation = ReturnType<typeof useGameValidation>;
 

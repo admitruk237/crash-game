@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSessionStore } from '@/entities/session/model/store';
-import { useGameStore } from '@/entities/game/model/store';
-import { disconnectSocket, getSocket } from '@/shared/lib/socket';
-import { useNavigationStore } from '@/shared/lib/navigation-state';
+import { useSessionStore } from '@/entities/session';
+import { useGameStore } from '@/entities/game';
+import { disconnectSocket, getSocket, useNavigationStore } from '@/shared/lib';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface AuthFormState {

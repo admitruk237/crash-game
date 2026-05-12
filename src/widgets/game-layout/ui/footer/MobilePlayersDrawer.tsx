@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { Players } from '@/entities/players/ui/Players';
-import { type PublicPlayer } from '@/shared/types/ws';
+import { Players } from '@/entities/players';
+import { type PublicPlayer } from '@/shared/types';
 
 interface Props {
   isOpen: boolean;

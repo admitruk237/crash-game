@@ -4,9 +4,8 @@ import { Button, Card, SectionTitle } from '@/shared/ui';
 import { Users, X } from 'lucide-react';
 import { PlayerItem } from './PlayerItem';
 import { mapBetStatusToPlayerStatus } from '../model/mapper';
-import { type PublicPlayer } from '@/shared/types/ws';
-
-import { cn } from '@/shared/lib/utils';
+import { type PublicPlayer } from '@/shared/types';
+import { cn } from '@/shared/lib';
 
 interface Props {
   players: PublicPlayer[];

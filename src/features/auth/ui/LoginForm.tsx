@@ -1,10 +1,7 @@
 'use client';
 
-import { Card, CardContent } from '@/shared/ui/card';
-import { Input } from '@/shared/ui/input';
-import { Button } from '@/shared/ui/button';
-import { SectionTitle } from '@/shared/ui/section-title';
-import { cn } from '@/shared/lib/utils';
+import { Button, Card, CardContent, Input, SectionTitle } from '@/shared/ui';
+import { cn } from '@/shared/lib';
 import { useAuthForm } from '../model/useAuthForm';
 
 export const LoginForm = () => {

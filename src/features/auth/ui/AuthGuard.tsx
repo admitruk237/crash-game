@@ -2,7 +2,8 @@
 
 import { type ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSessionStore } from '@/entities/session/model/store';
+import { useShallow } from 'zustand/react/shallow';
+import { useSessionStore } from '@/entities/session';
 
 interface Props {
   children: ReactNode;
@@ -10,7 +11,9 @@ interface Props {
 
 export const AuthGuard = ({ children }: Props) => {
   const router = useRouter();
-  const { apiKey, _hasHydrated } = useSessionStore();
+  const { apiKey, _hasHydrated } = useSessionStore(
+    useShallow((s) => ({ apiKey: s.apiKey, _hasHydrated: s._hasHydrated }))
+  );
 
   useEffect(() => {
     if (_hasHydrated && !apiKey) {

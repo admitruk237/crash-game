@@ -1,4 +1,4 @@
-import type { Phase } from '@/shared/types/common';
+import type { Phase } from '@/shared/types';
 
 interface Point {
   x: number;
