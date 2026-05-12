@@ -1,10 +1,12 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 
 import { getSocket } from '../socket';
 
 export const useSocketEvent = <T>(events: string | string[], callback: (data: T) => void) => {
   const cbRef = useRef(callback);
-  cbRef.current = callback;
+  useLayoutEffect(() => {
+    cbRef.current = callback;
+  });
 
   const eventsKey = Array.isArray(events) ? events.join(',') : events;
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { getSocket } from '@/shared/lib/socket';
 import { useGameStore } from './store';
 
@@ -19,6 +19,11 @@ import type {
 } from '@/shared/types/ws';
 
 export const useGameSocket = (handlers?: GameSocketHandlers) => {
+  const handlersRef = useRef(handlers);
+  useLayoutEffect(() => {
+    handlersRef.current = handlers;
+  });
+
   const tickCounterRef = useRef(0);
 
   useEffect(() => {
@@ -64,10 +69,11 @@ export const useGameSocket = (handlers?: GameSocketHandlers) => {
       useGameStore.getState().setMultiplier(e.multiplier);
 
       tickCounterRef.current += 1;
-      handlers?.onTick?.(tickCounterRef.current);
+      handlersRef.current?.onTick?.(tickCounterRef.current);
     };
 
     const onCrash = (e: RoundCrashEvent) => {
+      if (e.roundId !== useGameStore.getState().roundId) return;
       const game = useGameStore.getState();
       game.setPhase('crashed');
       game.setMultiplier(e.crashPoint);
@@ -93,7 +99,7 @@ export const useGameSocket = (handlers?: GameSocketHandlers) => {
     };
 
     const onCashedOut = () => {
-      handlers?.onCashedOut?.();
+      handlersRef.current?.onCashedOut?.();
       clearBetState();
     };
 
@@ -105,7 +111,10 @@ export const useGameSocket = (handlers?: GameSocketHandlers) => {
       if (game.actionInFlight) game.setActionInFlight(false);
     };
 
-    const onConnect = () => useGameStore.getState().setConnectionStatus('connected');
+    const onConnect = () => {
+      useGameStore.getState().setConnectionStatus('connected');
+      s.emit('round:getState');
+    };
     const onDisconnect = () => useGameStore.getState().setConnectionStatus('disconnected');
 
     s.on('round:state', onState);
