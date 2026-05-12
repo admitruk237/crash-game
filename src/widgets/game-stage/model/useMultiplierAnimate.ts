@@ -21,14 +21,6 @@ export const useMultiplierAnimate = () => {
   const lastSoundCountdown = useRef(countdown);
 
   const rafRef = useRef<number>(0);
-  const prevPhaseRef = useRef(phase);
-
-  if (phase !== prevPhaseRef.current) {
-    prevPhaseRef.current = phase;
-    if (phase !== 'running') {
-      setDisplayed(serverMultiplier);
-    }
-  }
 
   useEffect(() => {
     if (phase === lastSoundPhase.current) return;
@@ -63,12 +55,14 @@ export const useMultiplierAnimate = () => {
   }, [phase, countdown]);
 
   useEffect(() => {
+    const setDisplayedMultiplier = useGameStore.getState().setDisplayedMultiplier;
+
     if (phase !== 'running') {
       displayedRef.current = serverMultiplier;
+      setDisplayed(serverMultiplier);
+      setDisplayedMultiplier(serverMultiplier);
       return;
     }
-
-    displayedRef.current = displayed;
 
     const animate = () => {
       const diff = serverMultiplier - displayedRef.current;
@@ -77,13 +71,13 @@ export const useMultiplierAnimate = () => {
         const floored =
           Math.floor(displayedRef.current * MULTIPLIER_PRECISION) / MULTIPLIER_PRECISION;
         setDisplayed(floored);
+        setDisplayedMultiplier(floored);
       }
       rafRef.current = requestAnimationFrame(animate);
     };
-
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [phase, serverMultiplier, displayed]);
+  }, [phase, serverMultiplier]);
 
   return {
     phase,

@@ -22,6 +22,7 @@ export const useGameSocket = () => {
 
     const onState = (e: RoundStateEvent) => {
       const game = useGameStore.getState();
+      game.setActionInFlight(false);
       game.setPhase(e.phase);
       game.setRoundId(e.roundId);
       game.setMultiplier(e.currentMultiplier);
@@ -41,6 +42,7 @@ export const useGameSocket = () => {
       game.setMyBet(null);
       game.setCrashPoint(null);
       game.setPlayers(e.players);
+      game.setActionInFlight(false);
     };
 
     const onStart = (e: RoundStartEvent) => {

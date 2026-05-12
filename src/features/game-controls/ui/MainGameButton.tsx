@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const MainGameButton = ({ validation }: Props) => {
-  const { phase, multiplier, myBet, crashPoint } = useMainButtonView();
+  const { phase, displayedMultiplier, myBet, crashPoint } = useMainButtonView();
   const { placeBet, cashOut, isActionLoading } = useGameActions();
 
   const isButtonDisabled = isActionLoading || Boolean(myBet) || !validation.canPlaceBet;
@@ -40,7 +40,7 @@ export const MainGameButton = ({ validation }: Props) => {
 
   if (phase === 'running') {
     if (myBet) {
-      const currentWin = (myBet.amount * multiplier).toFixed(2);
+      const currentWin = (myBet.amount * displayedMultiplier).toFixed(2);
       return (
         <Button
           variant="action"

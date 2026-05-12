@@ -15,6 +15,7 @@ interface GameState {
   startedAt: Date | null;
   endsAt: Date | null;
   multiplier: number;
+  displayedMultiplier: number;
   crashPoint: number | null;
   players: PublicPlayer[];
   myBet: MyBet | null;
@@ -25,6 +26,7 @@ interface GameState {
   setStartedAt: (date: Date | null) => void;
   setEndsAt: (date: Date | null) => void;
   setMultiplier: (m: number) => void;
+  setDisplayedMultiplier: (m: number) => void;
   setCrashPoint: (cp: number | null) => void;
   setPlayers: (players: PublicPlayer[]) => void;
   setMyBet: (bet: MyBet | null) => void;
@@ -39,6 +41,7 @@ export const useGameStore = create<GameState>((set) => ({
   startedAt: null,
   endsAt: null,
   multiplier: 1,
+  displayedMultiplier: 1,
   crashPoint: null,
   players: [],
   myBet: null,
@@ -49,6 +52,7 @@ export const useGameStore = create<GameState>((set) => ({
   setStartedAt: (startedAt) => set({ startedAt }),
   setEndsAt: (endsAt) => set({ endsAt }),
   setMultiplier: (multiplier) => set({ multiplier }),
+  setDisplayedMultiplier: (displayedMultiplier) => set({ displayedMultiplier }),
   setCrashPoint: (crashPoint) => set({ crashPoint }),
   setPlayers: (players) => set({ players }),
   setMyBet: (myBet) => set({ myBet }),

@@ -8,7 +8,7 @@ export const useMainButtonView = () =>
   useGameStore(
     useShallow((s) => ({
       phase: s.phase,
-      multiplier: s.multiplier,
+      displayedMultiplier: s.displayedMultiplier,
       myBet: s.myBet,
       crashPoint: s.crashPoint,
     }))

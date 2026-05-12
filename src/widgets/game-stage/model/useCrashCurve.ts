@@ -24,6 +24,7 @@ export const useCrashCurve = () => {
     const s = getSocket();
 
     const onTick = (e: RoundTickEvent) => {
+      if (e.roundId !== useGameStore.getState().roundId) return;
       if (pointsRef.current.length === 0) {
         pointsRef.current.push({ x: 0, y: 1 });
       }
