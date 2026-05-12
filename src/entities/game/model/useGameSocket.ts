@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { getSocket } from '@/shared/lib/socket';
 import { useGameStore } from './store';
 import { soundManager } from '@/shared/lib/sound';
@@ -15,6 +15,8 @@ import type {
 } from '@/shared/types/ws';
 
 export const useGameSocket = () => {
+  const tickCounterRef = useRef(0);
+
   useEffect(() => {
     const s = getSocket();
 
@@ -48,11 +50,17 @@ export const useGameSocket = () => {
       game.setEndsAt(null);
       game.setPlayers(e.players);
       game.setMultiplier(1);
+      tickCounterRef.current = 0;
     };
 
     const onTick = (e: RoundTickEvent) => {
       if (e.roundId !== useGameStore.getState().roundId) return;
       useGameStore.getState().setMultiplier(e.multiplier);
+
+      tickCounterRef.current += 1;
+      if (tickCounterRef.current % 3 === 0) {
+        soundManager.play('coef');
+      }
     };
 
     const onCrash = (e: RoundCrashEvent) => {

@@ -37,9 +37,7 @@ export const useMultiplierAnimate = () => {
     if (phase === 'running') {
       soundManager.stop('beep');
       soundManager.stop('siren');
-      soundManager.play('diesel');
     } else if (phase === 'crashed') {
-      soundManager.stop('diesel');
       soundManager.play('crash');
     } else if (phase === 'waiting') {
       soundManager.stopAll();

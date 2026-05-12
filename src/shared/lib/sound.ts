@@ -42,11 +42,8 @@ class SoundManager {
     this.sounds.forEach((sound) => sound.stop());
   }
 
-  resumeForPhase(phase: string) {
+  resumeForPhase(_phase: string) {
     if (!this.enabled) return;
-    if (phase === 'running') {
-      this.play('diesel');
-    }
   }
 
   toggle(enabled: boolean) {

@@ -7,6 +7,7 @@ export const SOUNDS = {
   bet: '/sounds/bet.mp3',
   cashout: '/sounds/cashout.mp3',
   switch: '/sounds/switch.mp3',
+  coef: '/sounds/coef.mp3',
 } as const;
 
 export type SoundName = keyof typeof SOUNDS;
