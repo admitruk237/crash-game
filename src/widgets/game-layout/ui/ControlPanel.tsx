@@ -5,6 +5,7 @@ import {
   AutoCashOutControl,
   BetAmountControl,
   MainGameButton,
+  useGameActions,
   useGameValidation,
 } from '@/features/game-controls';
 import { useBalance } from '@/entities/game';
@@ -14,20 +15,26 @@ import { Card } from '@/shared/ui';
 export const ControlPanel = () => {
   const validation = useGameValidation();
   const { isLoading } = useBalance();
+  const { placeBet } = useGameActions();
   const balance = validation.balance ?? null;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    placeBet();
+  };
 
   return (
     <Card
       variant="game"
       className="lg:w-[260px] w-full p-[16px] min-h-[311px] flex flex-col shrink-0 transition-all duration-300 ease-in-out"
     >
-      <div className="flex flex-col gap-[16px]">
+      <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-[16px]">
         <BetAmountControl validation={validation} />
         <AutoCashOutControl validation={validation} />
         <div className="pt-4 border-t border-border/50">
           <MainGameButton validation={validation} />
         </div>
-      </div>
+      </form>
       <div className="flex-1" />
       <div className="p-[16px] border-t border-border/50">
         <div className="flex items-center justify-between pt-[4px]">

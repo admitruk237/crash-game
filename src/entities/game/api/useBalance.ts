@@ -18,6 +18,5 @@ export const useBalance = () => {
   return useQuery({
     queryKey: queryKey.balance,
     queryFn: () => apiClient<Balance>(API_ROUTES.balance),
-    staleTime: Infinity,
   });
 };
