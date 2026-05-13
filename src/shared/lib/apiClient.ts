@@ -25,7 +25,7 @@ export const apiClient = async <T>(path: string, init?: ApiRequestInit): Promise
     body: init?.body ? JSON.stringify(init.body) : undefined,
     headers: {
       'Content-Type': 'application/json',
-      'X-API-Key': apiKey ?? '',
+      'X-API-Key': encodeURIComponent(apiKey ?? ''),
       ...init?.headers,
     },
   });

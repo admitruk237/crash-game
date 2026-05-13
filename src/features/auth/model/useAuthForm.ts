@@ -41,7 +41,6 @@ export const useAuthForm = (): AuthFormState => {
     setKey(username.trim(), true);
 
     markJustLoggedIn();
-    router.push('/');
   };
 
   return {
