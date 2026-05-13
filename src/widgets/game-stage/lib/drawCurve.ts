@@ -66,5 +66,15 @@ export const drawCurve = (
   ctx.lineJoin = 'round';
   ctx.stroke();
 
-  return { x: toX(lastPoint.x), y: toY(lastPoint.y) };
+  const cx = toX(lastPoint.x);
+  const cy = toY(lastPoint.y);
+
+  if (phase === 'running') {
+    ctx.beginPath();
+    ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  }
+
+  return { x: cx, y: cy };
 };
