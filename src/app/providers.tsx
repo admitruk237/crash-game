@@ -2,8 +2,9 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { type ReactNode, useState } from 'react';
+import { toast } from 'sonner';
+import { ApiError, setApiConfig, setSocketConfig } from '@/shared/lib';
 import { useSessionStore } from '@/entities/session';
-import { setApiConfig, setSocketConfig } from '@/shared/lib';
 
 if (typeof window !== 'undefined') {
   setApiConfig({
@@ -25,6 +26,12 @@ export const Providers = ({ children }: Props) => {
           queries: {
             refetchOnWindowFocus: false,
             networkMode: 'always',
+          },
+          mutations: {
+            onError: (error: Error) => {
+              if (error instanceof ApiError && error.status === 429) return;
+              toast.error(error.message);
+            },
           },
         },
       })

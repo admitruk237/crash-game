@@ -21,3 +21,13 @@ export interface RecentRound {
   crashedAt: string;
   tier: RoundTier;
 }
+
+export interface ClaimResponse {
+  claimed: boolean;
+  amount: number;
+  balance: number;
+  claimedAt: string;
+  nextClaimAt: string;
+  retryAfterMs: number;
+  error?: string | null;
+}

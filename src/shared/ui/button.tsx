@@ -27,6 +27,8 @@ const buttonVariants = cva(
           'bg-muted text-main border border-border/50 rounded-[8px] font-medium h-[26px] w-[70px] hover:bg-muted/80 text-[12px] leading-[16px] px-0',
         action:
           'w-full h-[48px] rounded-[12px] font-bold text-[16px] transition-all active:scale-95 disabled:opacity-50',
+        claim:
+          'w-full h-[40px] rounded-[10px] flex items-center justify-center text-sm font-medium text-white bg-claim',
       },
       size: {
         default:

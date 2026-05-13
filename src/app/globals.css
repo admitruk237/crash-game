@@ -89,6 +89,25 @@
   --clr-success: #22c55e;
   --clr-error: #ef4444;
 
+  --gradient-claim: linear-gradient(
+    90deg,
+    #c084fc 0%,
+    #b884fc 7.14%,
+    #b185fb 14.29%,
+    #a985fb 21.43%,
+    #a185fa 28.57%,
+    #9985fa 35.71%,
+    #9085fa 42.86%,
+    #8885f9 50%,
+    #7f85f9 57.14%,
+    #7585f8 64.29%,
+    #6c84f8 71.43%,
+    #6184f7 78.57%,
+    #5683f7 85.71%,
+    #4a83f6 92.86%,
+    #3b82f6 100%
+  );
+
   /* --- Semantic Mapping --- */
   --background: var(--bg-deep);
   --foreground: var(--text-main);
@@ -183,6 +202,9 @@
       transparent 60%
     );
   }
+  .bg-claim {
+    background: var(--gradient-claim);
+  }
 }
 
 .player-grad-0 {
@@ -215,4 +237,18 @@
 
 .multiplier-glow {
   filter: drop-shadow(var(--shadow-success-glow));
+}
+
+/* Sonner toasts */
+[data-sonner-toaster] [data-sonner-toast][data-type='success'] {
+  border-color: var(--clr-success);
+  background-color: color-mix(in srgb, var(--bg-card) 92%, var(--clr-success) 8%);
+}
+[data-sonner-toaster] [data-sonner-toast][data-type='error'] {
+  border-color: var(--clr-error);
+  background-color: color-mix(in srgb, var(--bg-card) 92%, var(--clr-error) 8%);
+}
+[data-sonner-toaster] [data-sonner-toast].toast-claim {
+  border-color: #c084fc;
+  background-color: color-mix(in srgb, var(--bg-card) 92%, #c084fc 8%);
 }
