@@ -1,24 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Volume2 } from 'lucide-react';
-import { useNavigationStore } from '@/shared/lib';
+import { useNavigationStore } from '@/features/auth';
+import { Button } from '@/shared/ui';
 
 export const SoundModal = () => {
-  const [visible, setVisible] = useState(false);
   const consumeJustLoggedIn = useNavigationStore((s) => s.consumeJustLoggedIn);
-
-  const consumed = useRef(false);
-
-  useEffect(() => {
-    if (consumed.current) return;
-    consumed.current = true;
-
-    if (consumeJustLoggedIn()) return;
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setVisible(true);
-  }, [consumeJustLoggedIn]);
+  const [visible, setVisible] = useState(() => !consumeJustLoggedIn());
 
   const handleDismiss = () => setVisible(false);
 
@@ -39,13 +28,14 @@ export const SoundModal = () => {
           Please make sure your device volume is turned on.
         </p>
 
-        <button
+        <Button
           id="sound-modal-ok"
+          variant="action"
           onClick={handleDismiss}
-          className="w-full h-[48px] rounded-[12px] bg-accent text-bg-deep font-bold text-[16px] transition-all hover:bg-accent/90 active:scale-95 cursor-pointer"
+          className="bg-accent text-bg-deep"
         >
           Got it
-        </button>
+        </Button>
       </div>
     </div>
   );

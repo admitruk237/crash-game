@@ -28,7 +28,7 @@ export const useClaimMutation = () => {
     },
     onError: (error) => {
       if (error instanceof ApiError && error.status === 429) {
-        const msLeft = error.data.retryAfterMs as number;
+        const msLeft = typeof error.data.retryAfterMs === 'number' ? error.data.retryAfterMs : 0;
         toast.error('Bonus is on cooldown', {
           description: msLeft > 0 ? `Next bonus in ${formatTimeLeft(msLeft)}` : undefined,
           className: 'toast-claim',

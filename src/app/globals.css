@@ -70,6 +70,8 @@
 
   --shadow-accent-glow: 0 0 20px var(--clr-accent-muted);
   --shadow-success-glow: 0 0 20px color-mix(in srgb, var(--clr-success), transparent 60%);
+
+  --font-size-2xs: 0.625rem;
 }
 
 :root {
@@ -181,7 +183,8 @@
 }
 
 @layer utilities {
-  .bg-stage-waiting {
+  .bg-stage-waiting,
+  .bg-stage-crashed {
     background: radial-gradient(
       141.42% 141.42% at 0% 100%,
       color-mix(in srgb, var(--clr-error), transparent 85%) 0%,
@@ -192,13 +195,6 @@
     background: radial-gradient(
       141.42% 141.42% at 0% 100%,
       color-mix(in srgb, var(--clr-success), transparent 85%) 0%,
-      transparent 60%
-    );
-  }
-  .bg-stage-crashed {
-    background: radial-gradient(
-      141.42% 141.42% at 0% 100%,
-      color-mix(in srgb, var(--clr-error), transparent 85%) 0%,
       transparent 60%
     );
   }

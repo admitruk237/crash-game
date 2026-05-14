@@ -4,11 +4,6 @@ import { useEffect, useLayoutEffect, useRef } from 'react';
 import { getSocket } from '@/shared/lib';
 import { useGameStore } from './store';
 
-export interface GameSocketHandlers {
-  onTick?: (count: number) => void;
-  onCashedOut?: (e: BetCashedOutEvent) => void;
-  onLost?: (e: BetLostEvent) => void;
-}
 import type {
   BetCashedOutEvent,
   BetLostEvent,
@@ -20,6 +15,12 @@ import type {
   RoundTickEvent,
   RoundWaitingEvent,
 } from '@/shared/types';
+
+export interface GameSocketHandlers {
+  onTick?: (count: number) => void;
+  onCashedOut?: (e: BetCashedOutEvent) => void;
+  onLost?: (e: BetLostEvent) => void;
+}
 
 export const useGameSocket = (handlers?: GameSocketHandlers) => {
   const handlersRef = useRef(handlers);

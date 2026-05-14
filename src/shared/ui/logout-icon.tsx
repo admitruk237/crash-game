@@ -1,15 +1,9 @@
 'use client';
 
 import { cn } from '@/shared/lib/utils';
-import {
-  domMin,
-  LazyMotion,
-  m,
-  useAnimation,
-  useReducedMotion,
-  type Variants,
-} from 'framer-motion';
-import { forwardRef, type HTMLAttributes, useCallback, useImperativeHandle, useRef } from 'react';
+import { domMin, LazyMotion, m, useReducedMotion, type Variants } from 'framer-motion';
+import { forwardRef, type HTMLAttributes, useImperativeHandle } from 'react';
+import { useAnimatedIcon } from './hooks/useAnimatedIcon';
 
 export interface LogoutIconHandle {
   startAnimation: () => void;
@@ -46,34 +40,17 @@ const LogoutIcon = forwardRef<LogoutIconHandle, Props>(
     },
     ref
   ) => {
-    const controls = useAnimation();
+    const { controls, isControlled, startAnimation, stopAnimation, handleEnter, handleLeave } =
+      useAnimatedIcon();
     const reduced = useReducedMotion();
-    const isControlled = useRef(false);
 
     useImperativeHandle(ref, () => {
       isControlled.current = true;
       return {
-        startAnimation: () => (reduced ? controls.start('normal') : controls.start('animate')),
-        stopAnimation: () => controls.start('normal'),
+        startAnimation: () => (reduced ? stopAnimation() : startAnimation()),
+        stopAnimation,
       };
     });
-
-    const handleEnter = useCallback(
-      (e?: React.MouseEvent<HTMLDivElement>) => {
-        if (!isAnimated || reduced) return;
-        if (!isControlled.current) controls.start('animate');
-        else onMouseEnter?.(e as React.MouseEvent<HTMLDivElement>);
-      },
-      [controls, reduced, isAnimated, onMouseEnter]
-    );
-
-    const handleLeave = useCallback(
-      (e?: React.MouseEvent<HTMLDivElement>) => {
-        if (!isControlled.current) controls.start('normal');
-        else onMouseLeave?.(e as React.MouseEvent<HTMLDivElement>);
-      },
-      [controls, onMouseLeave]
-    );
 
     const iconVariants: Variants = {
       normal: { scale: 1, rotate: 0 },
@@ -105,10 +82,19 @@ const LogoutIcon = forwardRef<LogoutIconHandle, Props>(
       <LazyMotion features={domMin} strict>
         <m.div
           className={cn('inline-flex items-center justify-center', className)}
-          onMouseEnter={handleEnter}
-          onMouseLeave={handleLeave}
+          onMouseEnter={(e) => {
+            if (!isAnimated || reduced) return;
+            handleEnter();
+            onMouseEnter?.(e);
+          }}
+          onMouseLeave={(e) => {
+            handleLeave();
+            onMouseLeave?.(e);
+          }}
           {...props}
-          style={{ color, ...props.style }}
+          style={
+            color ? ({ '--icon-color': color, ...props.style } as React.CSSProperties) : props.style
+          }
         >
           <m.svg
             xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +102,7 @@ const LogoutIcon = forwardRef<LogoutIconHandle, Props>(
             height={size}
             viewBox="0 0 24 24"
             fill="none"
-            stroke="currentColor"
+            stroke="var(--icon-color, currentColor)"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"

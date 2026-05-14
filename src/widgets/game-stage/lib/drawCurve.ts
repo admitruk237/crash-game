@@ -1,4 +1,10 @@
 import type { Phase } from '@/shared/types';
+import {
+  CANVAS_PADDING,
+  CURVE_MIN_VIEW_X,
+  CURVE_MIN_VIEW_Y,
+  CURVE_VIEW_MARGIN,
+} from '@/shared/config';
 
 interface Point {
   x: number;
@@ -15,11 +21,6 @@ export interface DrawColors {
   error: string;
 }
 
-const CANVAS_PADDING = 40;
-const MIN_VIEW_X = 10000;
-const MIN_VIEW_Y = 2;
-const VIEW_MARGIN = 1.1;
-
 export const drawCurve = (
   ctx: CanvasRenderingContext2D,
   w: number,
@@ -32,8 +33,8 @@ export const drawCurve = (
   if (points.length < 2) return null;
 
   const lastPoint = points[points.length - 1];
-  const maxX = Math.max(MIN_VIEW_X, lastPoint.x * VIEW_MARGIN);
-  const maxY = Math.max(MIN_VIEW_Y, lastPoint.y * VIEW_MARGIN);
+  const maxX = Math.max(CURVE_MIN_VIEW_X, lastPoint.x * CURVE_VIEW_MARGIN);
+  const maxY = Math.max(CURVE_MIN_VIEW_Y, lastPoint.y * CURVE_VIEW_MARGIN);
 
   const toX = (x: number) => CANVAS_PADDING + (x / maxX) * (w - CANVAS_PADDING * 2);
   const toY = (y: number) => h - CANVAS_PADDING - ((y - 1) / (maxY - 1)) * (h - CANVAS_PADDING * 2);

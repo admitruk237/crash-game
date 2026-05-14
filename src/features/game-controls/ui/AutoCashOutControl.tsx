@@ -1,10 +1,17 @@
 'use client';
 
 import { Input, SectionTitle, Switch } from '@/shared/ui';
+import { soundManager } from '@/shared/lib';
+import {
+  DEFAULT_AUTO_CASH_OUT,
+  MAX_AUTO_CASH_OUT,
+  MIN_AUTO_CASH_OUT,
+  SOUND_NAMES,
+} from '@/shared/config';
+import { useShallow } from 'zustand/react/shallow';
 import { useGameControlsStore } from '../model/store';
 import { type GameValidation } from '../model/useGameValidation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { DEFAULT_AUTO_CASH_OUT, MAX_AUTO_CASH_OUT, MIN_AUTO_CASH_OUT } from '@/shared/config';
 
 interface Props {
   validation: GameValidation;
@@ -16,7 +23,14 @@ export const AutoCashOutControl = ({ validation }: Props) => {
     setAutoCashOutEnabled,
     autoCashOutMultiplier,
     setAutoCashOutMultiplier,
-  } = useGameControlsStore();
+  } = useGameControlsStore(
+    useShallow((s) => ({
+      isAutoCashOutEnabled: s.isAutoCashOutEnabled,
+      setAutoCashOutEnabled: s.setAutoCashOutEnabled,
+      autoCashOutMultiplier: s.autoCashOutMultiplier,
+      setAutoCashOutMultiplier: s.setAutoCashOutMultiplier,
+    }))
+  );
 
   const { autoCashOut, isLocked } = validation;
 
@@ -26,15 +40,16 @@ export const AutoCashOutControl = ({ validation }: Props) => {
     }
   };
 
+  const handleToggle = (checked: boolean) => {
+    soundManager.play(SOUND_NAMES.SWITCH);
+    setAutoCashOutEnabled(checked);
+  };
+
   return (
     <div className="flex flex-col gap-0">
       <div className="flex items-center justify-between pb-4">
         <SectionTitle>Auto Cash Out</SectionTitle>
-        <Switch
-          checked={isAutoCashOutEnabled}
-          onCheckedChange={setAutoCashOutEnabled}
-          disabled={isLocked}
-        />
+        <Switch checked={isAutoCashOutEnabled} onCheckedChange={handleToggle} disabled={isLocked} />
       </div>
 
       <AnimatePresence initial={false}>
@@ -62,17 +77,17 @@ export const AutoCashOutControl = ({ validation }: Props) => {
                 }
               />
               {autoCashOut.isEmpty && (
-                <span className="absolute bottom-0.5 left-0 text-[10px] text-destructive">
+                <span className="absolute bottom-0.5 left-0 text-2xs text-destructive">
                   Field cannot be empty
                 </span>
               )}
               {autoCashOut.tooLow && !autoCashOut.isEmpty && (
-                <span className="absolute bottom-0.5 left-0 text-[10px] text-destructive">
+                <span className="absolute bottom-0.5 left-0 text-2xs text-destructive">
                   Min multiplier {MIN_AUTO_CASH_OUT.toFixed(2)}x
                 </span>
               )}
               {autoCashOut.tooHigh && !autoCashOut.isEmpty && (
-                <span className="absolute bottom-0.5 left-0 text-[10px] text-destructive">
+                <span className="absolute bottom-0.5 left-0 text-2xs text-destructive">
                   Max multiplier {MAX_AUTO_CASH_OUT}x
                 </span>
               )}

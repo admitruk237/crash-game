@@ -2,7 +2,8 @@
 
 import { useMainButtonView } from '@/entities/game';
 import { Button } from '@/shared/ui';
-import { cn } from '@/shared/lib';
+import { cn, soundManager } from '@/shared/lib';
+import { SOUND_NAMES } from '@/shared/config';
 import { useGameActions } from '../model/useGameActions';
 import { type GameValidation } from '../model/useGameValidation';
 
@@ -15,6 +16,11 @@ export const MainGameButton = ({ validation }: Props) => {
   const { cashOut, isActionLoading } = useGameActions();
 
   const isButtonDisabled = isActionLoading || Boolean(myBet) || !validation.canPlaceBet;
+
+  const handleCashOut = () => {
+    soundManager.play(SOUND_NAMES.CLICK);
+    cashOut();
+  };
 
   if (phase === 'crashed') {
     return (
@@ -35,7 +41,7 @@ export const MainGameButton = ({ validation }: Props) => {
         <Button
           type="button"
           variant="action"
-          onClick={cashOut}
+          onClick={handleCashOut}
           disabled={isActionLoading}
           className="bg-success text-black border-none hover:bg-success/90"
         >
@@ -59,7 +65,7 @@ export const MainGameButton = ({ validation }: Props) => {
     <Button
       type="submit"
       variant="action"
-      sound="bet"
+      onClick={() => soundManager.play(SOUND_NAMES.BET)}
       disabled={isButtonDisabled}
       className={cn(
         'border-none transition-all',

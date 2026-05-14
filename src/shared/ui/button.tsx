@@ -1,9 +1,6 @@
-'use client';
-
 import { Button as ButtonPrimitive } from '@base-ui/react/button';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn, soundManager } from '@/shared/lib';
-import { type SoundName } from '@/shared/config';
+import { cn } from '@/shared/lib';
 
 const buttonVariants = cva(
   "group/button inline-flex shrink-0 items-center justify-center rounded-[10px] border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none cursor-pointer focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -52,35 +49,15 @@ const buttonVariants = cva(
   }
 );
 
-interface Props extends ButtonPrimitive.Props, VariantProps<typeof buttonVariants> {
-  sound?: SoundName | false;
-}
+interface Props extends ButtonPrimitive.Props, VariantProps<typeof buttonVariants> {}
 
-const Button = ({
-  className,
-  variant = 'default',
-  size = 'default',
-  disabled,
-  onClick,
-  sound,
-  ...props
-}: Props) => {
-  const handleClick = (e: Parameters<NonNullable<ButtonPrimitive.Props['onClick']>>[0]) => {
-    if (sound !== false) {
-      soundManager.play(sound || 'click');
-    }
-    onClick?.(e);
-  };
-
-  return (
-    <ButtonPrimitive
-      data-slot="button"
-      disabled={disabled}
-      onClick={disabled ? undefined : handleClick}
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  );
-};
+const Button = ({ className, variant = 'default', size = 'default', onClick, ...props }: Props) => (
+  <ButtonPrimitive
+    data-slot="button"
+    onClick={onClick}
+    className={cn(buttonVariants({ variant, size, className }))}
+    {...props}
+  />
+);
 
 export { Button, buttonVariants };

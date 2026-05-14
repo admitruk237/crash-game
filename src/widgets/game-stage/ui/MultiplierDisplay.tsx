@@ -19,7 +19,7 @@ export const MultiplierDisplay = () => {
   if (phase === 'crashed') {
     return (
       <div className="flex flex-col items-center gap-2">
-        <span className="text-[96px] font-normal leading-none text-destructive tabular-nums">
+        <span className="text-8xl font-normal leading-none text-destructive tabular-nums">
           {(crashPoint ?? 0).toFixed(2)}×
         </span>
         <span className="text-2xl text-destructive uppercase tracking-widest">Crashed</span>
@@ -28,7 +28,7 @@ export const MultiplierDisplay = () => {
   }
 
   return (
-    <span className="text-[96px] font-normal leading-none text-success tabular-nums multiplier-glow">
+    <span className="text-8xl font-normal leading-none text-success tabular-nums multiplier-glow">
       {displayed.toFixed(2)}×
     </span>
   );

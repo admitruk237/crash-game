@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { Howl } from 'howler';
 
@@ -15,7 +15,6 @@ class SoundManager {
         new Howl({
           src: [src],
           volume: 0.5,
-          loop: key === 'diesel',
           onloaderror: (_id, error) =>
             console.error(`[SoundManager] Failed to load "${key}":`, error),
           onplayerror: (_id, error) =>

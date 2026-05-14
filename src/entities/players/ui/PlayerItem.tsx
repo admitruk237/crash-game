@@ -29,20 +29,20 @@ export const PlayerItem = ({ username, betAmount, status, winMultiplier }: Props
         <div
           className={`flex items-center justify-center shrink-0 w-8 h-8 rounded-full ${gradClass}`}
         >
-          <span className="font-sans font-semibold text-[12px] text-text-bright">
+          <span className="font-sans font-semibold text-xs text-text-bright">
             {username[0].toUpperCase()}
           </span>
         </div>
 
         <div className="flex flex-col">
-          <span className="font-sans text-[14px] leading-[20px] text-text-bright">{username}</span>
-          <span className="font-sans text-[12px] leading-[16px] text-main">
+          <span className="font-sans text-sm text-text-bright">{username}</span>
+          <span className="font-sans text-xs text-main">
             {betAmount ? `${betAmount.toFixed(2)} USD` : '-'}
           </span>
         </div>
       </div>
 
-      <div className={`font-mono text-[12px] leading-[16px] ${PLAYER_STATUS_COLORS[status]}`}>
+      <div className={`font-mono text-xs ${PLAYER_STATUS_COLORS[status]}`}>
         {status === PlayerStatuses.WON
           ? `${winMultiplier?.toFixed(2)}x`
           : status.charAt(0).toUpperCase() + status.slice(1)}

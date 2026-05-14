@@ -19,7 +19,7 @@ export const GameFooter = () => {
 
   return (
     <footer className="w-full h-10 flex items-center justify-between px-4 bg-background border-t border-border/50">
-      <div className="flex items-center font-sans font-normal text-main text-[12px] leading-[16px]">
+      <div className="flex items-center font-sans font-normal text-main text-xs">
         <StatusInfo
           isConnected={connectionStatus === 'connected'}
           roundId={roundId}

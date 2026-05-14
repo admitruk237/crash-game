@@ -1,16 +1,26 @@
 'use client';
 
 import { Button, Input, SectionTitle } from '@/shared/ui';
+import { soundManager } from '@/shared/lib';
+import { DEFAULT_BET_AMOUNT, MAX_BET_AMOUNT, MIN_BET_AMOUNT, SOUND_NAMES } from '@/shared/config';
+import { useShallow } from 'zustand/react/shallow';
 import { useGameControlsStore } from '../model/store';
 import { type GameValidation } from '../model/useGameValidation';
-import { DEFAULT_BET_AMOUNT, MAX_BET_AMOUNT, MIN_BET_AMOUNT } from '@/shared/config';
 
 interface Props {
   validation: GameValidation;
 }
 
 export const BetAmountControl = ({ validation }: Props) => {
-  const { betAmount, setBetAmount, halfBet, doubleBet, maxBet } = useGameControlsStore();
+  const { betAmount, setBetAmount, halfBet, doubleBet, maxBet } = useGameControlsStore(
+    useShallow((s) => ({
+      betAmount: s.betAmount,
+      setBetAmount: s.setBetAmount,
+      halfBet: s.halfBet,
+      doubleBet: s.doubleBet,
+      maxBet: s.maxBet,
+    }))
+  );
   const { bet, isLocked, balance } = validation;
 
   const handleMax = () => {
@@ -41,22 +51,22 @@ export const BetAmountControl = ({ validation }: Props) => {
           }
         />
         {bet.isEmpty && (
-          <span className="absolute -bottom-4 left-0 text-[10px] text-destructive">
+          <span className="absolute -bottom-4 left-0 text-2xs text-destructive">
             Field cannot be empty
           </span>
         )}
         {bet.tooLow && !bet.isEmpty && (
-          <span className="absolute -bottom-4 left-0 text-[10px] text-destructive">
+          <span className="absolute -bottom-4 left-0 text-2xs text-destructive">
             Min bet is {MIN_BET_AMOUNT} USD
           </span>
         )}
         {bet.exceedsMax && !bet.isEmpty && (
-          <span className="absolute -bottom-4 left-0 text-[10px] text-destructive">
+          <span className="absolute -bottom-4 left-0 text-2xs text-destructive">
             Max bet is {MAX_BET_AMOUNT} USD
           </span>
         )}
         {bet.tooHigh && !bet.exceedsMax && !bet.isEmpty && (
-          <span className="absolute -bottom-4 left-0 text-[10px] text-destructive">
+          <span className="absolute -bottom-4 left-0 text-2xs text-destructive">
             Insufficient balance
           </span>
         )}
@@ -71,7 +81,10 @@ export const BetAmountControl = ({ validation }: Props) => {
             key={action.label}
             variant="betAction"
             size="none"
-            onClick={action.onClick}
+            onClick={() => {
+              soundManager.play(SOUND_NAMES.CLICK);
+              action.onClick();
+            }}
             disabled={isLocked}
             className="flex-1"
           >

@@ -1,9 +1,9 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useGameStore } from '@/entities/game';
 import { soundManager, useCountdown } from '@/shared/lib';
-import { BEEP_COUNTDOWN_MAX, BEEP_COUNTDOWN_MIN } from '@/shared/config';
+import { BEEP_COUNTDOWN_MAX, BEEP_COUNTDOWN_MIN, SOUND_NAMES } from '@/shared/config';
 
 const SMOOTHING_FACTOR = 0.3;
 const ANIMATION_THRESHOLD = 0.001;
@@ -34,10 +34,10 @@ export const useMultiplierAnimate = () => {
     lastSoundPhase.current = phase;
 
     if (phase === 'running') {
-      soundManager.stop('beep');
-      soundManager.stop('siren');
+      soundManager.stop(SOUND_NAMES.BEEP);
+      soundManager.stop(SOUND_NAMES.SIREN);
     } else if (phase === 'crashed') {
-      soundManager.play('crash');
+      soundManager.play(SOUND_NAMES.CRASH);
     } else if (phase === 'waiting') {
       soundManager.stopAll();
       lastSoundCountdown.current = -1;
@@ -55,9 +55,9 @@ export const useMultiplierAnimate = () => {
     lastSoundCountdown.current = countdown;
 
     if (countdown >= BEEP_COUNTDOWN_MIN && countdown <= BEEP_COUNTDOWN_MAX) {
-      soundManager.play('beep');
+      soundManager.play(SOUND_NAMES.BEEP);
     } else if (countdown === 1) {
-      soundManager.play('siren');
+      soundManager.play(SOUND_NAMES.SIREN);
     }
   }, [phase, countdown]);
 

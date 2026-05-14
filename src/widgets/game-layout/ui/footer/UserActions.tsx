@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { User } from 'lucide-react';
 import {
   Button,
@@ -14,20 +14,12 @@ interface Props {
   apiKey: string | null;
   isMuted: boolean;
   onLogout: () => void;
-  onToggleMute: () => void;
+  onToggleMute: (ref: React.RefObject<VolumeIconHandle | null>) => void;
 }
 
 export const UserActions = ({ apiKey, isMuted, onLogout, onToggleMute }: Props) => {
   const logoutIconRef = useRef<LogoutIconHandle>(null);
   const volumeIconRef = useRef<VolumeIconHandle>(null);
-
-  useEffect(() => {
-    if (isMuted) {
-      volumeIconRef.current?.stopAnimation();
-    } else {
-      volumeIconRef.current?.startAnimation();
-    }
-  }, [isMuted]);
 
   return (
     <div className="flex items-center md:gap-4 gap-1">
@@ -52,7 +44,7 @@ export const UserActions = ({ apiKey, isMuted, onLogout, onToggleMute }: Props) 
       <Button
         variant="ghost"
         size="icon-sm"
-        onClick={onToggleMute}
+        onClick={() => onToggleMute(volumeIconRef)}
         className="text-main hover:text-text-bright transition-colors"
       >
         <VolumeIcon ref={volumeIconRef} size={20} initialActive={!isMuted} />

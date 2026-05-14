@@ -1,27 +1,24 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { Button, LoaderIcon, type LoaderIconHandle } from '@/shared/ui';
+import { Button, LoaderIcon } from '@/shared/ui';
 import { GiftIcon } from 'lucide-react';
 import { useClaimMutation } from '../api/useClaimMutation';
+import { soundManager } from '@/shared/lib';
+import { SOUND_NAMES } from '@/shared/config';
 
 export const ClaimButton = () => {
   const { mutate, isPending, data } = useClaimMutation();
-  const loaderRef = useRef<LoaderIconHandle>(null);
   const amount = data?.amount ?? 100;
 
-  useEffect(() => {
-    if (isPending) {
-      loaderRef.current?.startAnimation();
-    } else {
-      loaderRef.current?.stopAnimation();
-    }
-  }, [isPending]);
+  const handleClaim = () => {
+    soundManager.play(SOUND_NAMES.CLICK);
+    mutate();
+  };
 
   return (
-    <Button variant="claim" size="none" disabled={isPending} onClick={() => mutate()}>
+    <Button variant="claim" size="none" disabled={isPending} onClick={handleClaim}>
       {isPending ? (
-        <LoaderIcon ref={loaderRef} size={14} isAnimated={false} className="mr-1" />
+        <LoaderIcon size={14} isAnimated className="mr-1" />
       ) : (
         <GiftIcon className="size-4 mr-1" />
       )}

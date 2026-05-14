@@ -1,10 +1,11 @@
-﻿'use client';
+'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSessionStore } from '@/entities/session';
 import { useGameStore } from '@/entities/game';
-import { disconnectSocket, useNavigationStore } from '@/shared/lib';
+import { disconnectSocket } from '@/shared/lib';
+import { useNavigationStore } from './navigation-state';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface AuthFormState {
@@ -20,14 +21,7 @@ export const useAuthForm = (): AuthFormState => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const setKey = useSessionStore((s) => s.setKey);
-  const apiKey = useSessionStore((s) => s.apiKey);
   const markJustLoggedIn = useNavigationStore((s) => s.markJustLoggedIn);
-
-  useEffect(() => {
-    if (apiKey) {
-      router.replace('/');
-    }
-  }, [apiKey, router]);
 
   const handleEnter = () => {
     if (!isReady) return;
@@ -41,6 +35,8 @@ export const useAuthForm = (): AuthFormState => {
     setKey(username.trim(), true);
 
     markJustLoggedIn();
+
+    router.replace('/');
   };
 
   return {

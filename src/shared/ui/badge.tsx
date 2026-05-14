@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
@@ -34,13 +34,9 @@ const badgeVariants = cva(
   }
 );
 
-function Badge({
-  className,
-  variant = 'mid',
-  size = 'sm',
-  render,
-  ...props
-}: useRender.ComponentProps<'span'> & VariantProps<typeof badgeVariants>) {
+type Props = useRender.ComponentProps<'span'> & VariantProps<typeof badgeVariants>;
+
+function Badge({ className, variant = 'mid', size = 'sm', render, ...props }: Props) {
   return useRender({
     defaultTagName: 'span',
     props: mergeProps<'span'>(
