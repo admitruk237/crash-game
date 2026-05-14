@@ -6,9 +6,12 @@ import { useGameStore } from './store';
 
 export interface GameSocketHandlers {
   onTick?: (count: number) => void;
-  onCashedOut?: () => void;
+  onCashedOut?: (e: BetCashedOutEvent) => void;
+  onLost?: (e: BetLostEvent) => void;
 }
 import type {
+  BetCashedOutEvent,
+  BetLostEvent,
   BetPlacedEvent,
   BetRejectedEvent,
   RoundCrashEvent,
@@ -102,12 +105,15 @@ export const useGameSocket = (handlers?: GameSocketHandlers) => {
       clearInFlight();
     };
 
-    const onCashedOut = () => {
-      handlersRef.current?.onCashedOut?.();
+    const onCashedOut = (e: BetCashedOutEvent) => {
+      handlersRef.current?.onCashedOut?.(e);
       clearBetState();
     };
 
-    const onLost = clearBetState;
+    const onLost = (e: BetLostEvent) => {
+      handlersRef.current?.onLost?.(e);
+      clearBetState();
+    };
 
     const onRejected = (e: BetRejectedEvent) => {
       console.error('bet:rejected', e.reason, e.message);
