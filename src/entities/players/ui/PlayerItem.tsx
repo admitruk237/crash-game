@@ -22,6 +22,7 @@ const GRADIENT_CLASSES = [
 export const PlayerItem = ({ username, betAmount, status, winMultiplier }: Props) => {
   const gradIndex = username.length % GRADIENT_CLASSES.length;
   const gradClass = GRADIENT_CLASSES[gradIndex];
+  const displayName = username.length > 9 ? `${username.slice(0, 9)}...` : username;
 
   return (
     <Card variant="player" className="w-full flex items-center justify-between p-2">
@@ -35,7 +36,7 @@ export const PlayerItem = ({ username, betAmount, status, winMultiplier }: Props
         </div>
 
         <div className="flex flex-col">
-          <span className="font-sans text-sm text-text-bright">{username}</span>
+          <span className="font-sans text-sm text-text-bright">{displayName}</span>
           <span className="font-sans text-xs text-main">
             {betAmount ? `${betAmount.toFixed(2)} USD` : '-'}
           </span>

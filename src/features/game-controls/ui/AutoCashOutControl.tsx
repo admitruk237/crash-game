@@ -1,7 +1,8 @@
 'use client';
 
+import { type ChangeEvent } from 'react';
 import { Input, SectionTitle, Switch } from '@/shared/ui';
-import { soundManager } from '@/shared/lib';
+import { clampNumericString, sanitizeNumeric, soundManager } from '@/shared/lib';
 import {
   DEFAULT_AUTO_CASH_OUT,
   MAX_AUTO_CASH_OUT,
@@ -32,10 +33,16 @@ export const AutoCashOutControl = ({ validation }: Props) => {
     }))
   );
 
-  const { autoCashOut, isLocked } = validation;
+  const { isLocked } = validation;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const sanitized = sanitizeNumeric(e.target.value);
+    setAutoCashOutMultiplier(clampNumericString(sanitized, MAX_AUTO_CASH_OUT));
+  };
 
   const handleBlur = () => {
-    if (autoCashOut.isEmpty) {
+    const num = parseFloat(autoCashOutMultiplier);
+    if (!Number.isFinite(num) || num <= 0 || num < MIN_AUTO_CASH_OUT) {
       setAutoCashOutMultiplier(DEFAULT_AUTO_CASH_OUT);
     }
   };
@@ -61,36 +68,16 @@ export const AutoCashOutControl = ({ validation }: Props) => {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden w-full"
           >
-            <div className="pb-5 relative">
+            <div className="pb-5">
               <Input
-                type="number"
-                step="0.1"
+                type="text"
+                inputMode="decimal"
                 value={autoCashOutMultiplier}
-                onChange={(e) => setAutoCashOutMultiplier(e.target.value)}
+                onChange={handleChange}
                 onBlur={handleBlur}
                 suffix="x"
                 disabled={isLocked}
-                className={
-                  autoCashOut.tooLow || autoCashOut.tooHigh || autoCashOut.isEmpty
-                    ? 'border-destructive'
-                    : ''
-                }
               />
-              {autoCashOut.isEmpty && (
-                <span className="absolute bottom-0.5 left-0 text-2xs text-destructive">
-                  Field cannot be empty
-                </span>
-              )}
-              {autoCashOut.tooLow && !autoCashOut.isEmpty && (
-                <span className="absolute bottom-0.5 left-0 text-2xs text-destructive">
-                  Min multiplier {MIN_AUTO_CASH_OUT.toFixed(2)}x
-                </span>
-              )}
-              {autoCashOut.tooHigh && !autoCashOut.isEmpty && (
-                <span className="absolute bottom-0.5 left-0 text-2xs text-destructive">
-                  Max multiplier {MAX_AUTO_CASH_OUT}x
-                </span>
-              )}
             </div>
           </motion.div>
         )}

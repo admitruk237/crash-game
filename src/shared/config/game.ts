@@ -5,7 +5,7 @@ export const MIN_BET_AMOUNT = 0.1;
 export const MAX_BET_AMOUNT = 10000;
 
 export const MIN_AUTO_CASH_OUT = 1.1;
-export const MAX_AUTO_CASH_OUT = 10000;
+export const MAX_AUTO_CASH_OUT = 1000;
 
 export const COEF_SOUND_INTERVAL_TICKS = 3;
 export const BEEP_COUNTDOWN_MIN = 2;

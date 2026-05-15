@@ -10,13 +10,16 @@ import { useQueryClient } from '@tanstack/react-query';
 
 interface AuthFormState {
   username: string;
+  rememberMe: boolean;
   isReady: boolean;
   setUsername: (value: string) => void;
+  setRememberMe: (value: boolean) => void;
   handleEnter: () => void;
 }
 
 export const useAuthForm = (): AuthFormState => {
   const [username, setUsername] = useState<string>('');
+  const [rememberMe, setRememberMe] = useState<boolean>(true);
   const isReady = username.length >= 3;
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -32,7 +35,7 @@ export const useAuthForm = (): AuthFormState => {
 
     disconnectSocket();
 
-    setKey(username.trim(), true);
+    setKey(username.trim(), rememberMe);
 
     markJustLoggedIn();
 
@@ -41,8 +44,10 @@ export const useAuthForm = (): AuthFormState => {
 
   return {
     username,
+    rememberMe,
     isReady,
     setUsername,
+    setRememberMe,
     handleEnter,
   };
 };

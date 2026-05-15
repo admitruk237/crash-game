@@ -1,7 +1,7 @@
-﻿'use client';
+'use client';
 
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist, type StateStorage } from 'zustand/middleware';
 
 interface SessionState {
   apiKey: string | null;
@@ -11,6 +11,37 @@ interface SessionState {
   setHasHydrated: (state: boolean) => void;
   clear: () => void;
 }
+
+const STORAGE_NAME = 'session-store';
+
+const hybridStorage: StateStorage = {
+  getItem: (name) => {
+    if (typeof window === 'undefined') return null;
+    return window.localStorage.getItem(name) ?? window.sessionStorage.getItem(name);
+  },
+  setItem: (name, value) => {
+    if (typeof window === 'undefined') return;
+    let remember = false;
+    try {
+      const parsed = JSON.parse(value) as { state?: { rememberMe?: boolean } };
+      remember = parsed?.state?.rememberMe ?? false;
+    } catch {
+      remember = false;
+    }
+    if (remember) {
+      window.localStorage.setItem(name, value);
+      window.sessionStorage.removeItem(name);
+    } else {
+      window.sessionStorage.setItem(name, value);
+      window.localStorage.removeItem(name);
+    }
+  },
+  removeItem: (name) => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.removeItem(name);
+    window.sessionStorage.removeItem(name);
+  },
+};
 
 export const useSessionStore = create<SessionState>()(
   persist(
@@ -23,7 +54,8 @@ export const useSessionStore = create<SessionState>()(
       clear: () => set({ apiKey: null, rememberMe: false }),
     }),
     {
-      name: 'session-store',
+      name: STORAGE_NAME,
+      storage: createJSONStorage(() => hybridStorage),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
       },

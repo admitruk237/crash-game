@@ -3,16 +3,15 @@
 import { useShallow } from 'zustand/react/shallow';
 import { useBalance, useIsBettingLocked } from '@/entities/game';
 import { useGameControlsStore } from './store';
-import {
-  MAX_AUTO_CASH_OUT,
-  MAX_BET_AMOUNT,
-  MIN_AUTO_CASH_OUT,
-  MIN_BET_AMOUNT,
-} from '@/shared/config';
+import { MIN_AUTO_CASH_OUT } from '@/shared/config';
 
-export type GameValidation = ReturnType<typeof useGameValidation>;
+export interface GameValidation {
+  isLocked: boolean;
+  balance: number | undefined;
+  canPlaceBet: boolean;
+}
 
-export const useGameValidation = () => {
+export const useGameValidation = (): GameValidation => {
   const { betAmount, autoCashOutMultiplier, isAutoCashOutEnabled } = useGameControlsStore(
     useShallow((s) => ({
       betAmount: s.betAmount,
@@ -25,39 +24,13 @@ export const useGameValidation = () => {
   const balance = balanceData?.balance;
 
   const amount = parseFloat(betAmount);
-  const isBetEmpty = betAmount.trim() === '';
-  const isBetTooLow = !isBetEmpty && amount < MIN_BET_AMOUNT;
-  const isBetTooHigh = !isBetEmpty && balance !== undefined && amount > balance;
-  const isBetExceedsMax = !isBetEmpty && amount > MAX_BET_AMOUNT;
-
-  const isBetValid = !isBetEmpty && !isBetTooLow && !isBetTooHigh && !isBetExceedsMax;
-
   const mult = parseFloat(autoCashOutMultiplier);
-  const isMultEmpty = autoCashOutMultiplier.trim() === '';
-  const isMultTooLow = !isMultEmpty && mult < MIN_AUTO_CASH_OUT;
-  const isMultTooHigh = !isMultEmpty && mult > MAX_AUTO_CASH_OUT;
 
+  const isBetValid = Number.isFinite(amount) && amount > 0;
   const isAutoCashOutValid =
-    !isAutoCashOutEnabled || (!isMultEmpty && !isMultTooLow && !isMultTooHigh);
+    !isAutoCashOutEnabled || (Number.isFinite(mult) && mult >= MIN_AUTO_CASH_OUT);
 
   return {
-    bet: {
-      amount,
-      isEmpty: isBetEmpty,
-      tooLow: isBetTooLow,
-      tooHigh: isBetTooHigh,
-      exceedsMax: isBetExceedsMax,
-      isValid: isBetValid,
-    },
-
-    autoCashOut: {
-      multiplier: mult,
-      isEmpty: isMultEmpty,
-      tooLow: isMultTooLow,
-      tooHigh: isMultTooHigh,
-      isValid: isAutoCashOutValid,
-    },
-
     isLocked,
     balance,
     canPlaceBet: isBetValid && isAutoCashOutValid,

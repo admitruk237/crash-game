@@ -1,11 +1,11 @@
 'use client';
 
-import { Button, Card, CardContent, Input, SectionTitle } from '@/shared/ui';
+import { Button, Card, CardContent, Checkbox, Input, SectionTitle } from '@/shared/ui';
 import { cn } from '@/shared/lib';
 import { useAuthForm } from '../model/useAuthForm';
 
 export const LoginForm = () => {
-  const { username, isReady, setUsername, handleEnter } = useAuthForm();
+  const { username, rememberMe, isReady, setUsername, setRememberMe, handleEnter } = useAuthForm();
 
   return (
     <Card variant="game" className="p-[25px]">
@@ -29,6 +29,19 @@ export const LoginForm = () => {
               Minimum 3 characters required
             </p>
           </div>
+
+          <label
+            htmlFor="remember-me"
+            className="flex items-center gap-2 cursor-pointer select-none"
+          >
+            <Checkbox
+              id="remember-me"
+              checked={rememberMe}
+              onCheckedChange={(checked) => setRememberMe(checked === true)}
+              className="bg-muted border-border/50 data-checked:bg-accent data-checked:border-accent data-checked:text-black"
+            />
+            <span className="font-sans text-sm text-main">Remember me</span>
+          </label>
 
           <Button
             type="submit"
