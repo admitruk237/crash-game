@@ -8,7 +8,7 @@ import { HistoryList } from '@/entities/history';
 import { useGameActions } from '@/features/game-controls';
 import { SoundModal } from '@/features/sound-prompt';
 import { useGamePageData } from '../model/useGamePageData';
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 interface Props {
   stage: ReactNode;

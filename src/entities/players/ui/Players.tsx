@@ -6,6 +6,7 @@ import { PlayerItem } from './PlayerItem';
 import { mapBetStatusToPlayerStatus } from '../model/mapper';
 import { type PublicPlayer } from '@/shared/types';
 import { cn } from '@/shared/lib';
+import { memo } from 'react';
 
 interface Props {
   players: PublicPlayer[];
@@ -13,7 +14,7 @@ interface Props {
   isDrawer?: boolean;
 }
 
-export const Players = ({ players, onClose, isDrawer }: Props) => {
+const PlayersComponent = ({ players, onClose, isDrawer }: Props) => {
   return (
     <Card
       variant="game"
@@ -61,3 +62,18 @@ export const Players = ({ players, onClose, isDrawer }: Props) => {
     </Card>
   );
 };
+
+export const Players = memo(PlayersComponent, (prev, next) => {
+  if (prev.isDrawer !== next.isDrawer) return false;
+  if (prev.onClose !== next.onClose) return false;
+  if (prev.players.length !== next.players.length) return false;
+  return prev.players.every((p, i) => {
+    const n = next.players[i];
+    return (
+      p.username === n.username &&
+      p.status === n.status &&
+      p.multiplier === n.multiplier &&
+      p.amount === n.amount
+    );
+  });
+});

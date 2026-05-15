@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -36,7 +37,7 @@ const badgeVariants = cva(
 
 type Props = useRender.ComponentProps<'span'> & VariantProps<typeof badgeVariants>;
 
-function Badge({ className, variant = 'mid', size = 'sm', render, ...props }: Props) {
+const BadgeComponent = ({ className, variant = 'mid', size = 'sm', render, ...props }: Props) => {
   return useRender({
     defaultTagName: 'span',
     props: mergeProps<'span'>(
@@ -51,6 +52,8 @@ function Badge({ className, variant = 'mid', size = 'sm', render, ...props }: Pr
       variant,
     },
   });
-}
+};
+
+const Badge = memo(BadgeComponent);
 
 export { Badge, badgeVariants };

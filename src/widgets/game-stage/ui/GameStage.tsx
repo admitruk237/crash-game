@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { useGameStore } from '@/entities/game';
 import { CrashCurve } from './CrashCurve';
 import { MultiplierDisplay } from './MultiplierDisplay';
@@ -16,7 +17,7 @@ const PHASE_STYLES: Record<
   waiting: { badge: 'status-waiting', text: 'Waiting', bg: 'bg-stage-waiting' },
 };
 
-export const GameStage = () => {
+const GameStageComponent = () => {
   const phase = useGameStore((s) => s.phase);
   const style = PHASE_STYLES[phase] ?? PHASE_STYLES.waiting;
 
@@ -36,3 +37,5 @@ export const GameStage = () => {
     </div>
   );
 };
+
+export const GameStage = memo(GameStageComponent);
