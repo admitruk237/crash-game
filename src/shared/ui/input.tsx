@@ -1,12 +1,12 @@
 ﻿'use client';
 
-import * as React from 'react';
+import { type ComponentProps, type ReactNode } from 'react';
 import { Input as InputPrimitive } from '@base-ui/react/input';
 
 import { cn } from '@/shared/lib';
 
-interface Props extends React.ComponentProps<'input'> {
-  suffix?: React.ReactNode;
+interface Props extends ComponentProps<'input'> {
+  suffix?: ReactNode;
 }
 
 function Input({ className, type, suffix, ...props }: Props) {

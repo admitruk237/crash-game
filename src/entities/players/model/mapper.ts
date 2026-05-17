@@ -7,6 +7,5 @@ const STATUS_MAP: Record<BetStatus, PlayerStatus> = {
   lost: PlayerStatuses.LOST,
 };
 
-export const mapBetStatusToPlayerStatus = (status: BetStatus): PlayerStatus => {
-  return STATUS_MAP[status] ?? PlayerStatuses.WAITING;
-};
+export const mapBetStatusToPlayerStatus = (status: BetStatus): PlayerStatus =>
+  STATUS_MAP[status] ?? PlayerStatuses.WAITING;

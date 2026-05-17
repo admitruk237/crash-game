@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { type RefObject, useRef } from 'react';
 import { User } from 'lucide-react';
 import {
   Button,
@@ -14,7 +14,7 @@ interface Props {
   apiKey: string | null;
   isMuted: boolean;
   onLogout: () => void;
-  onToggleMute: (ref: React.RefObject<VolumeIconHandle | null>) => void;
+  onToggleMute: (ref: RefObject<VolumeIconHandle | null>) => void;
 }
 
 export const UserActions = ({ apiKey, isMuted, onLogout, onToggleMute }: Props) => {

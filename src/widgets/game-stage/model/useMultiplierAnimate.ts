@@ -62,7 +62,7 @@ export const useMultiplierAnimate = () => {
   }, [phase, countdown]);
 
   useEffect(() => {
-    const setDisplayedMultiplier = useGameStore.getState().setDisplayedMultiplier;
+    const { setDisplayedMultiplier } = useGameStore.getState();
 
     if (phase !== 'running') {
       displayedRef.current = serverMultiplierRef.current;

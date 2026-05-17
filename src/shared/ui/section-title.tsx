@@ -1,10 +1,10 @@
 ﻿'use client';
 
-import * as React from 'react';
+import { type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '@/shared/lib';
 
-interface Props extends React.HTMLAttributes<HTMLDivElement> {
-  icon?: React.ReactNode;
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  icon?: ReactNode;
 }
 
 function SectionTitle({ className, icon, children, ...props }: Props) {

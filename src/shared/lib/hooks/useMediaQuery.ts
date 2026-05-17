@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { MOBILE_BREAKPOINT_PX } from '@/shared/config';
 
 export const useMediaQuery = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkMediaQuery = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT_PX);
     };
 
     checkMediaQuery();

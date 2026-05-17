@@ -8,6 +8,14 @@ import { useShallow } from 'zustand/react/shallow';
 import { useGameControlsStore } from '../model/store';
 import { type GameValidation } from '../model/useGameValidation';
 
+const BET_QUICK_ACTIONS = [
+  { label: '½', key: 'half' },
+  { label: '×2', key: 'double' },
+  { label: 'Max', key: 'max' },
+] as const;
+
+type BetActionKey = (typeof BET_QUICK_ACTIONS)[number]['key'];
+
 interface Props {
   validation: GameValidation;
 }
@@ -44,6 +52,12 @@ export const BetAmountControl = ({ validation }: Props) => {
     }
   };
 
+  const actionHandlers: Record<BetActionKey, { onClick: () => void; disabled: boolean }> = {
+    half: { onClick: halfBet, disabled: isLocked },
+    double: { onClick: doubleBet, disabled: isLocked },
+    max: { onClick: handleMax, disabled: isMaxDisabled },
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <SectionTitle>Bet Amount</SectionTitle>
@@ -57,25 +71,24 @@ export const BetAmountControl = ({ validation }: Props) => {
         disabled={isLocked}
       />
       <div className="flex gap-2 justify-between mt-3">
-        {[
-          { label: '½', onClick: halfBet, disabled: isLocked },
-          { label: '×2', onClick: doubleBet, disabled: isLocked },
-          { label: 'Max', onClick: handleMax, disabled: isMaxDisabled },
-        ].map((action) => (
-          <Button
-            key={action.label}
-            variant="betAction"
-            size="none"
-            onClick={() => {
-              soundManager.play(SOUND_NAMES.CLICK);
-              action.onClick();
-            }}
-            disabled={action.disabled}
-            className="flex-1"
-          >
-            {action.label}
-          </Button>
-        ))}
+        {BET_QUICK_ACTIONS.map(({ label, key }) => {
+          const { onClick, disabled } = actionHandlers[key];
+          return (
+            <Button
+              key={key}
+              variant="betAction"
+              size="none"
+              onClick={() => {
+                soundManager.play(SOUND_NAMES.CLICK);
+                onClick();
+              }}
+              disabled={disabled}
+              className="flex-1"
+            >
+              {label}
+            </Button>
+          );
+        })}
       </div>
     </div>
   );

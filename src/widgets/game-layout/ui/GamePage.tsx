@@ -1,28 +1,27 @@
 'use client';
 
-import { useGameSocket } from '@/entities/game';
+import { type ReactNode, useState } from 'react';
 import { GameFooter } from './GameFooter';
 import { ControlPanel } from './ControlPanel';
+import { GameSocketController } from './GameSocketController';
 import { Players } from '@/entities/players';
 import { HistoryList } from '@/entities/history';
-import { useGameActions } from '@/features/game-controls';
 import { SoundModal } from '@/features/sound-prompt';
+import { useNavigationStore } from '@/features/auth';
 import { useGamePageData } from '../model/useGamePageData';
-import { type ReactNode } from 'react';
 
 interface Props {
   stage: ReactNode;
 }
 
 export const GamePage = ({ stage }: Props) => {
-  const { soundHandlers } = useGameActions();
-  useGameSocket(soundHandlers);
-
+  const [soundModalVisible] = useState(() => !useNavigationStore.getState().consumeJustLoggedIn());
   const { rounds, players, isHistoryLoading } = useGamePageData();
 
   return (
     <div className="min-h-screen flex flex-col bg-background overflow-x-hidden">
-      <SoundModal />
+      <GameSocketController />
+      <SoundModal initialVisible={soundModalVisible} />
       <main className="flex-1 flex flex-col lg:flex-row items-start gap-4 p-4">
         <div className="w-full lg:flex-1 min-w-0 flex flex-col gap-4 self-stretch order-1 lg:order-2">
           <HistoryList rounds={rounds} isLoading={isHistoryLoading} />

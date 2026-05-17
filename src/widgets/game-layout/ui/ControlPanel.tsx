@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Image from 'next/image';
 import {
   AutoCashOutControl,
@@ -13,7 +14,7 @@ import { useBalance } from '@/entities/game';
 import CoinIcon from '@/shared/assets/icons/coin.svg';
 import { Card } from '@/shared/ui';
 
-export const ControlPanel = () => {
+const ControlPanelComponent = () => {
   const validation = useGameValidation();
   const { isLoading } = useBalance();
   const { placeBet } = useGameActions();
@@ -56,3 +57,5 @@ export const ControlPanel = () => {
     </Card>
   );
 };
+
+export const ControlPanel = memo(ControlPanelComponent);

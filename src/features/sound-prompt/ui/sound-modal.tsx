@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import { Volume2 } from 'lucide-react';
-import { useNavigationStore } from '@/features/auth';
 import { Button } from '@/shared/ui';
 
-export const SoundModal = () => {
-  const consumeJustLoggedIn = useNavigationStore((s) => s.consumeJustLoggedIn);
-  const [visible, setVisible] = useState(() => !consumeJustLoggedIn());
+interface Props {
+  initialVisible: boolean;
+}
+
+export const SoundModal = ({ initialVisible }: Props) => {
+  const [visible, setVisible] = useState(initialVisible);
 
   const handleDismiss = () => setVisible(false);
 

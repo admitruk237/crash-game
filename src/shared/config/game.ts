@@ -1,3 +1,6 @@
+export const MOBILE_BREAKPOINT_PX = 768;
+export const USERNAME_DISPLAY_MAX_CHARS = 9;
+
 export const DEFAULT_BET_AMOUNT = '10.00';
 export const DEFAULT_AUTO_CASH_OUT = '2.00';
 

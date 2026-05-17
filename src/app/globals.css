@@ -90,6 +90,7 @@
   --clr-accent-muted: #fbbf244d;
   --clr-success: #22c55e;
   --clr-error: #ef4444;
+  --clr-claim: #c084fc;
 
   --gradient-claim: linear-gradient(
     90deg,
@@ -245,6 +246,6 @@
   background-color: color-mix(in srgb, var(--bg-card) 92%, var(--clr-error) 8%);
 }
 [data-sonner-toaster] [data-sonner-toast].toast-claim {
-  border-color: #c084fc;
-  background-color: color-mix(in srgb, var(--bg-card) 92%, #c084fc 8%);
+  border-color: var(--clr-claim);
+  background-color: color-mix(in srgb, var(--bg-card) 92%, var(--clr-claim) 8%);
 }

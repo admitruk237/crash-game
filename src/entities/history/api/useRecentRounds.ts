@@ -9,7 +9,7 @@ import { type RecentRound } from '@/shared/types';
 export const useRecentRounds = (limit: number) => {
   const qc = useQueryClient();
 
-  useSocketEvent(['round:crash'], () => {
+  useSocketEvent('round:crash', () => {
     qc.invalidateQueries({ queryKey: historyQueryKey.roundsRecent });
   });
 

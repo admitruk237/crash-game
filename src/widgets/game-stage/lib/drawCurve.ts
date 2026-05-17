@@ -11,11 +11,6 @@ interface Point {
   y: number;
 }
 
-export interface LastPointCoords {
-  x: number;
-  y: number;
-}
-
 export interface DrawColors {
   success: string;
   error: string;
@@ -28,9 +23,9 @@ export const drawCurve = (
   points: Point[],
   phase: Phase,
   colors: DrawColors
-): LastPointCoords | null => {
+): void => {
   ctx.clearRect(0, 0, w, h);
-  if (points.length < 2) return null;
+  if (points.length < 2) return;
 
   const lastPoint = points[points.length - 1];
   const maxX = Math.max(CURVE_MIN_VIEW_X, lastPoint.x * CURVE_VIEW_MARGIN);
@@ -76,6 +71,4 @@ export const drawCurve = (
     ctx.fillStyle = color;
     ctx.fill();
   }
-
-  return { x: cx, y: cy };
 };

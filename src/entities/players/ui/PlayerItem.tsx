@@ -1,6 +1,7 @@
 'use client';
 
 import { Card } from '@/shared/ui';
+import { USERNAME_DISPLAY_MAX_CHARS } from '@/shared/config';
 import { type PlayerStatus, PlayerStatuses } from '../model/types';
 import { PLAYER_STATUS_COLORS } from '../model/constants';
 
@@ -22,7 +23,10 @@ const GRADIENT_CLASSES = [
 export const PlayerItem = ({ username, betAmount, status, winMultiplier }: Props) => {
   const gradIndex = username.length % GRADIENT_CLASSES.length;
   const gradClass = GRADIENT_CLASSES[gradIndex];
-  const displayName = username.length > 9 ? `${username.slice(0, 9)}...` : username;
+  const displayName =
+    username.length > USERNAME_DISPLAY_MAX_CHARS
+      ? `${username.slice(0, USERNAME_DISPLAY_MAX_CHARS)}...`
+      : username;
 
   return (
     <Card variant="player" className="w-full flex items-center justify-between p-2">
