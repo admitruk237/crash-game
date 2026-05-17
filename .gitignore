@@ -22,8 +22,11 @@
 
 
 CLAUDE.md
+REVIEW.md
 .antigravityrules
 .claude/
+.agents/
+skills-lock.json
 
 
 # misc

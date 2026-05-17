@@ -7,8 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-menlo: var(--font-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -39,6 +40,26 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-main: var(--text-main);
+  --color-description: var(--text-muted);
+  --color-btn-disabled: var(--clr-btn-disabled);
+  --color-accent-soft: var(--clr-accent-soft);
+  --color-accent-muted: var(--clr-accent-muted);
+  --color-text-bright: var(--text-bright);
+
+  /* Custom variables */
+  --color-card-inner: var(--card-inner);
+  --color-success: var(--success);
+  --color-badge-crashed-bg: var(--badge-crashed-bg);
+  --color-badge-crashed-border: var(--badge-crashed-border);
+  --color-badge-waiting-text: var(--badge-waiting-text);
+  --color-badge-waiting-bg: var(--badge-waiting-bg);
+  --color-badge-waiting-border: var(--badge-waiting-border);
+  --color-badge-win-bg: var(--badge-win-bg);
+  --color-badge-win-border: var(--badge-win-border);
+  --color-badge-win-text: var(--badge-win-text);
+  --color-badge-crashed-text: var(--badge-crashed-text);
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -46,75 +67,108 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  --shadow-accent-glow: 0 0 20px var(--clr-accent-muted);
+  --shadow-success-glow: 0 0 20px color-mix(in srgb, var(--clr-success), transparent 60%);
+
+  --font-size-2xs: 0.625rem;
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
+  /* --- Base Palette --- */
+  --bg-deep: #07080f;
+  --bg-card: #0e1119;
+  --bg-inner: #111620;
+  --text-main: #7a8599;
+  --text-bright: #e8ecf2;
+  --text-muted: #4a5568;
+  --clr-border: #1a1f2e;
+  --clr-btn-disabled: #4a5568;
+  --clr-primary: #7a8599;
+  --clr-accent: #fbbf24;
+  --clr-accent-soft: #fbbf241a;
+  --clr-accent-muted: #fbbf244d;
+  --clr-success: #22c55e;
+  --clr-error: #ef4444;
+  --clr-claim: #c084fc;
+
+  --gradient-claim: linear-gradient(
+    90deg,
+    #c084fc 0%,
+    #b884fc 7.14%,
+    #b185fb 14.29%,
+    #a985fb 21.43%,
+    #a185fa 28.57%,
+    #9985fa 35.71%,
+    #9085fa 42.86%,
+    #8885f9 50%,
+    #7f85f9 57.14%,
+    #7585f8 64.29%,
+    #6c84f8 71.43%,
+    #6184f7 78.57%,
+    #5683f7 85.71%,
+    #4a83f6 92.86%,
+    #3b82f6 100%
+  );
+
+  /* --- Semantic Mapping --- */
+  --background: var(--bg-deep);
+  --foreground: var(--text-main);
+
+  --card: var(--bg-card);
+  --card-foreground: var(--text-main);
+  --card-inner: var(--bg-inner);
+
+  --popover: var(--bg-card);
+  --popover-foreground: var(--text-main);
+
+  --primary: var(--clr-primary);
+  --primary-foreground: var(--bg-deep);
+
+  --secondary: var(--clr-primary);
+  --secondary-foreground: var(--bg-deep);
+
+  --muted: var(--bg-inner);
+  --muted-foreground: var(--text-muted);
+
+  --accent: var(--clr-accent);
+  --accent-foreground: var(--bg-deep);
+
+  --destructive: var(--clr-error);
+  --destructive-foreground: #ffffff;
+
+  --border: var(--clr-border);
+  --input: var(--clr-border);
+  --ring: var(--clr-primary);
+
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  --success: var(--clr-success);
+
+  /* Badges */
+  --badge-crashed-bg: #46080966;
+  --badge-crashed-border: #82181a;
+  --badge-crashed-text: #ff6467;
+  --badge-waiting-text: #ffb900;
+  --badge-waiting-bg: #46190166;
+  --badge-waiting-border: #7b3306;
+  --badge-win-bg: #032e1566;
+  --badge-win-border: #0d542b;
+  --badge-win-text: #05df72;
+
+  /* Sidebar */
+  --sidebar: var(--bg-card);
+  --sidebar-foreground: var(--text-main);
+  --sidebar-primary: var(--clr-primary);
+  --sidebar-primary-foreground: var(--bg-deep);
+  --sidebar-accent: var(--bg-inner);
+  --sidebar-accent-foreground: var(--text-main);
+  --sidebar-border: var(--clr-border);
+  --sidebar-ring: var(--clr-primary);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  color-scheme: dark;
 }
 
 @layer base {
@@ -127,4 +181,71 @@
   html {
     @apply font-sans;
   }
+}
+
+@layer utilities {
+  .bg-stage-waiting,
+  .bg-stage-crashed {
+    background: radial-gradient(
+      141.42% 141.42% at 0% 100%,
+      color-mix(in srgb, var(--clr-error), transparent 85%) 0%,
+      transparent 60%
+    );
+  }
+  .bg-stage-running {
+    background: radial-gradient(
+      141.42% 141.42% at 0% 100%,
+      color-mix(in srgb, var(--clr-success), transparent 85%) 0%,
+      transparent 60%
+    );
+  }
+  .bg-claim {
+    background: var(--gradient-claim);
+  }
+}
+
+.player-grad-0 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+.player-grad-1 {
+  background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+}
+.player-grad-2 {
+  background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+}
+.player-grad-3 {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+.player-grad-4 {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.font-menlo {
+  font-family: 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
+}
+
+.multiplier-glow {
+  filter: drop-shadow(var(--shadow-success-glow));
+}
+
+/* Sonner toasts */
+[data-sonner-toaster] [data-sonner-toast][data-type='success'] {
+  border-color: var(--clr-success);
+  background-color: color-mix(in srgb, var(--bg-card) 92%, var(--clr-success) 8%);
+}
+[data-sonner-toaster] [data-sonner-toast][data-type='error'] {
+  border-color: var(--clr-error);
+  background-color: color-mix(in srgb, var(--bg-card) 92%, var(--clr-error) 8%);
+}
+[data-sonner-toaster] [data-sonner-toast].toast-claim {
+  border-color: var(--clr-claim);
+  background-color: color-mix(in srgb, var(--bg-card) 92%, var(--clr-claim) 8%);
 }
