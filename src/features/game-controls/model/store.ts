@@ -32,14 +32,14 @@ export const useGameControlsStore = create<GameControlsState>()(
       setAutoCashOutMultiplier: (autoCashOutMultiplier) => set({ autoCashOutMultiplier }),
       halfBet: () => {
         const current = parseFloat(get().betAmount) || 0;
-        set({ betAmount: (current / 2).toFixed(2) });
+        set({ betAmount: (Math.floor((current / 2) * 100) / 100).toFixed(2) });
       },
       doubleBet: () => {
         const current = parseFloat(get().betAmount) || 0;
-        set({ betAmount: (current * 2).toFixed(2) });
+        set({ betAmount: (Math.floor(current * 2 * 100) / 100).toFixed(2) });
       },
       maxBet: (balance) => {
-        set({ betAmount: balance.toFixed(2) });
+        set({ betAmount: (Math.floor(balance * 100) / 100).toFixed(2) });
       },
     }),
     {

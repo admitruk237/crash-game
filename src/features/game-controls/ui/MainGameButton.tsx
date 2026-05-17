@@ -6,13 +6,14 @@ import { cn, soundManager } from '@/shared/lib';
 import { SOUND_NAMES } from '@/shared/config';
 import { useGameActions } from '../model/useGameActions';
 import { type GameValidation } from '../model/useGameValidation';
+import { CashOutButton } from './CashOutButton';
 
 interface Props {
   validation: GameValidation;
 }
 
 export const MainGameButton = ({ validation }: Props) => {
-  const { phase, displayedMultiplier, myBet, crashPoint } = useMainButtonView();
+  const { phase, myBet, crashPoint } = useMainButtonView();
   const { cashOut, isActionLoading } = useGameActions();
 
   const isButtonDisabled = isActionLoading || Boolean(myBet) || !validation.canPlaceBet;
@@ -36,17 +37,12 @@ export const MainGameButton = ({ validation }: Props) => {
 
   if (phase === 'running') {
     if (myBet) {
-      const currentWin = (myBet.amount * displayedMultiplier).toFixed(2);
       return (
-        <Button
-          type="button"
-          variant="action"
-          onClick={handleCashOut}
-          disabled={isActionLoading}
-          className="bg-success text-black border-none hover:bg-success/90"
-        >
-          Cash Out — {currentWin} USD
-        </Button>
+        <CashOutButton
+          betAmount={myBet.amount}
+          isActionLoading={isActionLoading}
+          onCashOut={handleCashOut}
+        />
       );
     }
 

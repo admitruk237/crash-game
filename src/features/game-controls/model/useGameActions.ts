@@ -2,10 +2,10 @@
 
 import { useShallow } from 'zustand/react/shallow';
 import { useGameStore } from '@/entities/game';
-import { getSocket, soundManager } from '@/shared/lib';
+import { getSocket, soundManager, useSocketEvent } from '@/shared/lib';
 import { COEF_SOUND_INTERVAL_TICKS, SOUND_NAMES } from '@/shared/config';
 import { useGameControlsStore } from './store';
-import type { BetCashedOutEvent, BetLostEvent } from '@/shared/types';
+import type { BetCashedOutEvent, BetLostEvent, BetPlacedEvent } from '@/shared/types';
 import { toast } from 'sonner';
 
 export const useGameActions = () => {
@@ -16,13 +16,22 @@ export const useGameActions = () => {
       myBet: s.myBet,
     }))
   );
-  const { betAmount, isAutoCashOutEnabled, autoCashOutMultiplier } = useGameControlsStore(
-    useShallow((s) => ({
-      betAmount: s.betAmount,
-      isAutoCashOutEnabled: s.isAutoCashOutEnabled,
-      autoCashOutMultiplier: s.autoCashOutMultiplier,
-    }))
-  );
+  const { betAmount, isAutoCashOutEnabled, autoCashOutMultiplier, setBetAmount } =
+    useGameControlsStore(
+      useShallow((s) => ({
+        betAmount: s.betAmount,
+        isAutoCashOutEnabled: s.isAutoCashOutEnabled,
+        autoCashOutMultiplier: s.autoCashOutMultiplier,
+        setBetAmount: s.setBetAmount,
+      }))
+    );
+
+  useSocketEvent<BetPlacedEvent>('bet:placed', ({ balance }) => {
+    const currentAmount = parseFloat(betAmount);
+    if (currentAmount > balance) {
+      setBetAmount((Math.floor(balance * 100) / 100).toFixed(2));
+    }
+  });
 
   const placeBet = () => {
     const amount = parseFloat(betAmount);
